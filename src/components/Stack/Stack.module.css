@@ -1,0 +1,211 @@
+/* ── Section ──────────────────────────────────────────────────── */
+.section {
+  background: var(--color-bg);
+  padding-block: var(--spacing-7xl);
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.label {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-sm);
+}
+
+.headline {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-6xl);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* ── Word reveal ──────────────────────────────────────────────── */
+.word {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0.15;
+}
+
+.wordEm {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* ── Grid wrapper ─────────────────────────────────────────────── */
+.gridWrapper {
+  position: relative;
+  border-radius: var(--rounded-xl);
+  overflow: hidden;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: var(--rounded-xl);
+}
+
+/* ── Grid ─────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--color-elevated);
+  border-radius: var(--rounded-xl);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Cell ─────────────────────────────────────────────────────── */
+.cell {
+  background: var(--color-bg);
+  padding: var(--spacing-ml);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background 0.3s;
+}
+
+.cell:hover {
+  background: var(--color-surface);
+}
+
+/* ── Shimmer ──────────────────────────────────────────────────── */
+.shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(var(--color-accent-rgb), 0.05) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cell:hover .shimmer {
+  transform: translateX(100%);
+}
+
+/* ── Cell contents ────────────────────────────────────────────── */
+.cellCat {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-sm);
+  position: relative;
+  z-index: 4;
+  transition: color 0.3s;
+}
+
+.cell:hover .cellCat {
+  color: var(--color-accent-warm);
+}
+
+.cellName {
+  font-family: var(--body-font);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--color-accent-mid);
+  position: relative;
+  z-index: 4;
+  display: inline-block;
+  transition:
+    color 0.3s,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cell:hover .cellName {
+  color: var(--color-text);
+  transform: translateY(-2px);
+}
+
+.cellDot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--rounded-full);
+  background: var(--color-elevated);
+  position: absolute;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+
+.cell:hover .cellDot {
+  background: var(--color-accent);
+  transform: scale(1.6);
+}
+
+/* ── Caption ──────────────────────────────────────────────────── */
+.captionRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-2xl);
+}
+
+.captionItem {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text-dim);
+  transition: color 0.3s;
+}
+
+.captionItem:hover {
+  color: var(--color-text-muted);
+}
+
+.captionSep {
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: var(--rounded-full);
+  background: var(--color-elevated);
+  flex-shrink: 0;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media screen and (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

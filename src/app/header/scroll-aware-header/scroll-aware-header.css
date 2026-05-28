@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 60px;
+  background-color: #111;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: top 0.8s;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 30px;
+}
+
+.main-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #00c6ff;
+}
+
+section {
+  padding: var(--spacing-9xl) 0;
+}

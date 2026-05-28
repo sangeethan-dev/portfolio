@@ -1,0 +1,413 @@
+/* ── Section ──────────────────────────────────────────────────── */
+.section {
+  background: var(--color-bg);
+  padding-block: var(--spacing-7xl);
+  position: relative;
+}
+
+/* ── Bordered card ────────────────────────────────────────────── */
+.card {
+  border: 1px solid var(--color-elevated);
+  border-radius: var(--rounded-xl);
+  padding: var(--spacing-3xl) var(--spacing-2xl);
+  position: relative;
+  overflow: visible;
+}
+
+/* ── Header (centered) ────────────────────────────────────────── */
+.header {
+  text-align: center;
+  max-width: 540px;
+  margin: 0 auto var(--spacing-3xl);
+}
+
+.label {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-ms);
+  display: block;
+}
+
+.headline {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-7xl);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+}
+
+/* ── Word reveal ──────────────────────────────────────────────── */
+.word {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0.15;
+}
+
+.wordEm {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.sub {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  line-height: 1.8;
+  color: var(--color-text-muted);
+}
+
+/* ── Form grid ────────────────────────────────────────────────── */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Field wrapper ────────────────────────────────────────────── */
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+/*
+ * Lift the dropdown field above the textarea when the menu is open.
+ * Without this, the textarea (later in DOM) paints over the menu.
+ */
+.dropAbove {
+  z-index: 10;
+}
+
+/* ── Field label (Name / Email / etc.) ────────────────────────── */
+.fieldLabel {
+  font-family: var(--body-font);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-ms);
+  pointer-events: none;
+  transition: color 0.3s;
+}
+
+.field.focused .fieldLabel {
+  color: var(--color-accent);
+}
+
+/* ── Shared control ───────────────────────────────────────────── */
+/*
+ * Applied identically to <input>, <textarea>, and the dropdown <div>.
+ * Every control gets the same height, background, bottom-border, and font.
+ */
+.control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+
+  background-color: var(--color-surface);
+  background-image: none;
+  border: none;
+  border-bottom: 1px solid var(--color-elevated);
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+
+  font-family: var(--body-font);
+  font-size: var(--font-size-md);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+
+  padding: 0 var(--spacing-md);
+  margin: 0;
+  resize: none;
+
+  transition: border-color 0.3s, color 0.3s, opacity 0.2s;
+}
+
+.control:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.control::placeholder {
+  color: var(--color-text-dim);
+  opacity: 1;
+}
+
+.control:focus {
+  color: var(--color-accent-mid);
+  border-color: var(--color-accent);
+}
+
+.control:hover:not(:disabled) {
+  border-color: var(--color-muted-bg);
+}
+
+.control:focus:hover {
+  border-color: var(--color-accent);
+}
+
+/* Autofill: can't use CSS vars for box-shadow colour in some engines;
+   #111111 is the exact value of --color-surface. */
+.control:-webkit-autofill,
+.control:-webkit-autofill:hover,
+.control:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #111111 inset !important;
+  -webkit-text-fill-color: var(--color-accent-mid) !important;
+  caret-color: var(--color-accent-mid);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Focused border from parent state class */
+.field.focused .control {
+  border-color: var(--color-accent);
+}
+
+/* ── Textarea override ────────────────────────────────────────── */
+.textarea {
+  display: block;
+  height: auto;
+  min-height: 110px;
+  padding: var(--spacing-md);
+  line-height: 1.7;
+}
+
+/* ── Dropdown trigger ─────────────────────────────────────────── */
+.dropdown {
+  position: relative;
+  cursor: pointer;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.dropVal {
+  color: var(--color-muted-bg);
+  transition: color 0.3s;
+  font-size: var(--font-size-md);
+}
+
+.dropSelected {
+  color: var(--color-text-muted);
+}
+
+.field.focused .dropVal {
+  color: var(--color-accent-mid);
+}
+
+.dropChevron {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: var(--color-text-dim);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropOpen .dropChevron {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown menu ────────────────────────────────────────────── */
+.dropMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-elevated);
+  border-radius: var(--rounded-lg);
+  overflow: hidden;
+  z-index: 100;
+
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+
+  transition:
+    max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropMenuOpen {
+  max-height: 280px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* ── Dropdown option ──────────────────────────────────────────── */
+.dropOpt {
+  padding: var(--spacing-ms) var(--spacing-md);
+  font-family: var(--body-font);
+  font-size: var(--font-size-md);
+  color: var(--color-text-dim);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.dropOpt + .dropOpt {
+  border-top: 1px solid var(--color-elevated);
+}
+
+.dropOpt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 0;
+  background: rgba(var(--color-accent-rgb), 0.05);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropOpt:hover {
+  color: var(--color-text);
+}
+
+.dropOpt:hover::before {
+  width: 100%;
+}
+
+.dropOptActive {
+  color: var(--color-accent);
+}
+
+.dropOptKb {
+  color: var(--color-text);
+  background: rgba(var(--color-accent-rgb), 0.04);
+}
+
+/* ── Submit row ───────────────────────────────────────────────── */
+.submitWrap {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.btn {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  border-radius: var(--rounded-md);
+  padding: var(--spacing-ms) var(--spacing-lg);
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  border: none;
+
+  /* Same gradient-fill slide as Hero primary button */
+  background-image: linear-gradient(
+    to top,
+    var(--color-accent) 50%,
+    var(--color-btn-fill) 50%
+  );
+  background-size: 100% 205%;
+  background-position: bottom;
+  color: var(--color-bg);
+  transition:
+    background-position 0.52s var(--ease-out-expo),
+    color 0.32s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth),
+    opacity 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  background-position: top;
+  color: var(--color-accent);
+  box-shadow: 0 6px 28px rgba(var(--color-accent-rgb), 0.15);
+}
+
+.btnBusy {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorMsg {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+  text-align: center;
+}
+
+.errorMsg a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Success state ────────────────────────────────────────────── */
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-3xl) 0;
+  text-align: center;
+}
+
+.successIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--color-accent-rgb), 0.3);
+  background: rgba(var(--color-accent-rgb), 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+}
+
+.successTitle {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-5xl);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.successSub {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  .card {
+    padding: var(--spacing-2xl) var(--spacing-md);
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    grid-column: 1;
+  }
+
+  .submitWrap {
+    grid-column: 1;
+  }
+}

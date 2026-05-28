@@ -1,0 +1,236 @@
+/* ── Section ──────────────────────────────────────────────────── */
+.section {
+  background: var(--color-bg);
+  padding-block: var(--spacing-7xl);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.label {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.headline {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-7xl);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.count {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text-dim);
+  padding-bottom: 6px;
+}
+
+/* ── Word reveal ──────────────────────────────────────────────── */
+.word {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0.15;
+}
+
+.wordEm {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* ── Cards track ──────────────────────────────────────────────── */
+.trackOuter {
+  overflow: hidden;
+  position: relative;
+  margin-block: var(--spacing-2xl);
+}
+
+/*
+ * Track is a direct child of trackOuter (full viewport width).
+ * padding-inline mirrors --container-px so the first card aligns
+ * with the rest of the page content, and the scroll-distance
+ * formula (scrollWidth - outerWidth) is exact.
+ */
+.track {
+  display: flex;
+  gap: var(--spacing-xl);
+  width: max-content;
+  padding-inline: var(--container-px);
+  will-change: transform;
+}
+
+/* ── Card ─────────────────────────────────────────────────────── */
+.card {
+  width: 380px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-elevated);
+  border-radius: var(--rounded-xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+  background: rgba(var(--color-white-rgb), 0.03);
+  border-color: rgba(var(--color-accent-rgb), 0.12);
+}
+
+.cardShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(var(--color-accent-rgb), 0.04) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cardShimmer {
+  transform: translateX(100%);
+}
+
+.cardNum {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-9xl);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-elevated);
+  line-height: 1;
+  margin-bottom: var(--spacing-lg);
+  transition: color 0.4s;
+}
+
+.card:hover .cardNum {
+  color: var(--color-muted-bg);
+}
+
+.cardTitle {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-4xl);
+  font-weight: 400;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-ms);
+  transition: color 0.3s;
+}
+
+.card:hover .cardTitle {
+  color: var(--color-text);
+}
+
+.cardDesc {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text-dim);
+  transition: color 0.3s;
+}
+
+.card:hover .cardDesc {
+  color: var(--color-text-muted);
+}
+
+.cardLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(to right, var(--color-accent), transparent);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cardLine {
+  width: 100%;
+}
+
+/* ── Controls ─────────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--spacing-xl);
+}
+
+.hint {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text-dim);
+}
+
+.pips {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.pip {
+  width: 20px;
+  height: 1px;
+  background: var(--color-muted-bg);
+  border-radius: 99px;
+  transition: background 0.3s, width 0.3s;
+}
+
+.pipActive {
+  background: var(--color-accent);
+  width: 32px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .count,
+  .hint {
+    display: none;
+  }
+
+  .trackOuter {
+    overflow: visible;
+  }
+
+  .track {
+    flex-direction: column;
+    width: 100%;
+    padding-inline: var(--container-px);
+    transform: none !important;
+  }
+
+  .card {
+    width: 100%;
+  }
+}

@@ -1,0 +1,62 @@
+/* ── Shared base ──────────────────────────────────────────────── */
+.btn {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  border-radius: var(--rounded-md);
+  padding: var(--spacing-ms) var(--spacing-lg);
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ── Primary — dark fill slides in from top on hover ─────────── */
+.primary {
+  background-image: linear-gradient(
+    to top,
+    var(--color-accent) 50%,
+    var(--color-btn-fill) 50%
+  );
+  background-size: 100% 205%;
+  background-position: bottom;
+  color: var(--color-bg);
+  border: none;
+  transition:
+    background-position 0.52s var(--ease-out-expo),
+    color 0.32s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth);
+}
+
+.primary:hover {
+  background-position: top;
+  color: var(--color-accent);
+  box-shadow: 0 6px 28px rgba(var(--color-accent-rgb), 0.15);
+}
+
+/* ── Secondary — glass, border brightens on hover ────────────── */
+.secondary {
+  background: rgba(var(--color-white-rgb), 0.04);
+  color: var(--color-accent-mid);
+  border: 1px solid rgba(var(--color-white-rgb), 0.14);
+  backdrop-filter: blur(4px);
+  transition:
+    background 0.3s var(--ease-smooth),
+    border-color 0.3s var(--ease-smooth),
+    color 0.3s var(--ease-smooth),
+    box-shadow 0.3s var(--ease-smooth);
+}
+
+.secondary:hover {
+  background: rgba(var(--color-white-rgb), 0.08);
+  border-color: rgba(var(--color-white-rgb), 0.28);
+  color: var(--color-accent);
+  box-shadow: 0 0 22px rgba(var(--color-accent-rgb), 0.08);
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-ml);
+  }
+}
