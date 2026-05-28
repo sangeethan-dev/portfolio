@@ -133,8 +133,8 @@ export default function Footer() {
               email2geethan@gmail.com
             </a>
             <span className={styles.sep} />
-            <a href="tel:+94770000000" className={styles.val}>
-              +94 77 000 0000
+            <a href="https://wa.me/94756144113" target="_blank" rel="noopener noreferrer" className={styles.val}>
+              +94 75 6144113
             </a>
           </div>
         </div>
