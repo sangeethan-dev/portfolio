@@ -169,8 +169,8 @@ export default function Hero() {
           with clean code, smooth performance, and an eye for detail.
         </p>
         <div ref={buttonsRef} className={styles.buttons}>
-          <Button variant="primary">View demos</Button>
-          <Button variant="secondary">Work with me</Button>
+          <Button variant="primary" href="#lab">View demos</Button>
+          <Button variant="secondary" href="#contact">Work with me</Button>
         </div>
       </div>
 
