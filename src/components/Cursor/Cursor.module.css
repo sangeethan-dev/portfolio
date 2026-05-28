@@ -1,0 +1,15 @@
+.cursor {
+  position: fixed;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--color-white);
+  border-radius: var(--rounded-full);
+  box-shadow: 0 0 18px 4px rgba(var(--color-white-rgb), 0.2);
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  will-change: transform;
+}

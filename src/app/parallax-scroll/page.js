@@ -3,7 +3,7 @@ import "./parallax-scroll.css";
 
 const page = () => {
   return (
-    <body>
+    <main>
       <div className="app">
         <section className="hero">
           <div className="img">
@@ -25,7 +25,7 @@ const page = () => {
         <section className="projects">
           <div className="img">
             <img
-              src="./parallax-scroll/anna-zakharova-AXUyVNmjt0M-unsplash.jpg"
+              src="/./parallax-scroll/Anna Zakharova - Nostalgic Memory Scene.jpeg"
               alt="Projects Background"
             />
           </div>
@@ -132,7 +132,7 @@ const page = () => {
           </div>
         </section>
       </div>
-    </body>
+    </main>
   );
 };
 

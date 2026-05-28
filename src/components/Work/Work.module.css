@@ -1,0 +1,305 @@
+/* ── Section ──────────────────────────────────────────────────── */
+.section {
+  background: var(--color-bg);
+  padding-block: var(--spacing-7xl);
+  position: relative;
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+.header {
+  margin-bottom: var(--spacing-2xl);
+  max-width: var(--container-md);
+}
+
+.label {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-sm);
+}
+
+.headline {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-7xl);
+  font-weight: 400;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+}
+
+.headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+/* ── Word reveal ──────────────────────────────────────────────── */
+.word {
+  display: inline-block;
+  margin-right: 0.22em;
+  opacity: 0.15;
+}
+
+.wordEm {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.sub {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+/* ── Floating preview ─────────────────────────────────────────── */
+.preview {
+  position: absolute;
+  width: 240px;
+  height: 160px;
+  border-radius: var(--rounded-xl);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(var(--color-white-rgb), 0.06);
+  opacity: 0;
+  transform: translate(-50%, -60%) scale(0.88) rotate(-3deg);
+  transition:
+    opacity 0.35s,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.preview canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.previewVisible {
+  opacity: 1;
+  transform: translate(-50%, -60%) scale(1) rotate(-2deg);
+}
+
+/* ── Rows ─────────────────────────────────────────────────────── */
+.row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-sm);
+  border-top: 1px solid var(--color-elevated);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.rowLast {
+  border-bottom: 1px solid var(--color-elevated);
+}
+
+.row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.row:hover::before {
+  transform: scaleX(1);
+}
+
+/* ── Row number ───────────────────────────────────────────────── */
+.rowNum {
+  font-family: var(--body-font);
+  font-size: var(--font-size-sm);
+  letter-spacing: 2px;
+  color: var(--color-elevated);
+  padding-left: var(--spacing-sm);
+  position: relative;
+  z-index: 1;
+  transition: color 0.35s;
+}
+
+.row:hover .rowNum {
+  color: var(--color-text-dim);
+}
+
+/* ── Row mid ──────────────────────────────────────────────────── */
+.rowMid {
+  position: relative;
+  z-index: 1;
+}
+
+.rowTitle {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-5xl);
+  font-weight: 400;
+  color: var(--color-text-dim);
+  line-height: 1;
+  display: block;
+  transition:
+    color 0.4s,
+    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.row:hover .rowTitle {
+  color: var(--color-text);
+  transform: translateX(10px);
+}
+
+.rowTags {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-ms);
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity 0.3s 0.08s,
+    transform 0.3s 0.08s;
+}
+
+.row:hover .rowTags {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rowTag {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  border: 1px solid var(--color-elevated);
+  border-radius: var(--rounded-full);
+  padding: 3px var(--spacing-ms);
+  transition:
+    border-color 0.3s,
+    color 0.3s;
+}
+
+.rowTag:hover {
+  border-color: var(--color-muted-bg);
+  color: var(--color-text-muted);
+}
+
+/* ── Row CTA ──────────────────────────────────────────────────── */
+.rowCta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding-right: var(--spacing-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.rowIndex {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-xs);
+  font-style: italic;
+  color: var(--color-elevated);
+  transition: color 0.35s;
+}
+
+.row:hover .rowIndex {
+  color: var(--color-text-dim);
+}
+
+.circleBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--color-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  transition:
+    border-color 0.3s,
+    background 0.3s,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.row:hover .circleBtn {
+  border-color: rgba(var(--color-accent-rgb), 0.3);
+  background: rgba(var(--color-accent-rgb), 0.05);
+  transform: scale(1.1);
+}
+
+.circleBtn svg {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.row:hover .circleBtn svg {
+  transform: translate(2px, -2px);
+}
+
+/* ── Row accent line ──────────────────────────────────────────── */
+.rowLine {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(
+    to right,
+    rgba(var(--color-accent-rgb), 0.3),
+    transparent
+  );
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.row:hover .rowLine {
+  width: 100%;
+}
+
+/* ── Footer ───────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-xl);
+}
+
+.footerLeft {
+  font-family: var(--body-font);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-text-dim);
+}
+
+.footerRight {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  color: var(--color-text-dim);
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  .rowTitle {
+    font-size: var(--font-size-3xl);
+  }
+
+  .rowIndex,
+  .circleBtn {
+    display: none;
+  }
+
+  .preview {
+    display: none;
+  }
+  .rowTags {
+    opacity: 1;
+  }
+}
