@@ -1,19 +1,30 @@
-import { Fraunces, Inter } from "next/font/google";
+import { Anton, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import Cursor from "@/components/Cursor/Cursor";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const anton = Anton({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: "400",
+  variable: "--font-anton",
   display: "swap",
 });
 
-const inter = Inter({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
@@ -22,9 +33,16 @@ export const metadata = {
   description: "Sangeethan's Portfolio",
 };
 
+export const viewport = {
+  themeColor: "#1D1C1C",
+};
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${anton.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+    >
       <body>
         <Cursor />
         <SmoothScroll>

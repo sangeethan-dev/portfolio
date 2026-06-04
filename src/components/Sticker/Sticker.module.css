@@ -1,0 +1,143 @@
+/* ── Sticker — Charcoal & Butter signature motif ──────────────── */
+.sticker {
+  --rot: -3deg;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+
+  font-family: var(--mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  border-radius: var(--rounded-sm);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  user-select: none;
+  transform: rotate(var(--rot));
+  transform-origin: center;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────── */
+.sm {
+  font-size: 10px;
+  padding: 6px 10px;
+}
+
+.md {
+  font-size: 11px;
+  padding: 8px 14px;
+}
+
+.lg {
+  font-size: 12px;
+  padding: 11px 18px;
+}
+
+/* ── Variant: rect (default) ──────────────────────────────────── */
+.rect {
+  border-radius: var(--rounded-sm);
+}
+
+/* ── Variant: badge — pill / seal ─────────────────────────────── */
+.badge {
+  border-radius: var(--rounded-full);
+  letter-spacing: 0.12em;
+}
+
+.badge.sm {
+  padding: 6px 12px;
+}
+
+.badge.md {
+  padding: 8px 16px;
+}
+
+.badge.lg {
+  padding: 11px 20px;
+}
+
+/* ── Variant: tag — price-tag with a punched hole ─────────────── */
+.tag {
+  position: relative;
+  border-radius: var(--rounded-sm);
+}
+
+.tag.sm {
+  padding-left: 20px;
+}
+
+.tag.md {
+  padding-left: 26px;
+}
+
+.tag.lg {
+  padding-left: 30px;
+}
+
+/* The punched hole — a charcoal disc with a thin ring */
+.tag::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+}
+
+.tag.lg::before {
+  width: 9px;
+  height: 9px;
+  left: 9px;
+}
+
+/* ── Interactive — lift + wiggle on hover ─────────────────────── */
+.interactive {
+  cursor: pointer;
+  transition:
+    transform var(--dur-base) var(--ease-spring),
+    box-shadow var(--dur-base) var(--ease-spring);
+}
+
+.interactive:hover {
+  transform: translateY(-2px) rotate(var(--rot));
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  animation: stickerWiggle 0.5s var(--ease-spring);
+}
+
+@keyframes stickerWiggle {
+  0% {
+    transform: translateY(-2px) rotate(var(--rot));
+  }
+  30% {
+    transform: translateY(-2px) rotate(calc(var(--rot) + 3deg));
+  }
+  60% {
+    transform: translateY(-2px) rotate(calc(var(--rot) - 2deg));
+  }
+  100% {
+    transform: translateY(-2px) rotate(var(--rot));
+  }
+}
+
+/* ── Respect reduced motion — no wiggle ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .interactive:hover {
+    animation: none;
+  }
+}
