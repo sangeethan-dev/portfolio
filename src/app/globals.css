@@ -23,42 +23,56 @@
 /*                          GOOGLE FONTS                          */
 /**************-------------------------------------**************/
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap");
 
 /**************-------------------------------------**************/
 /*                            VARIABLES                           */
 /**************-------------------------------------**************/
 
-/* COLORS — Mono Cinematic */
+/* COLORS — Charcoal & Butter */
 :root {
   color-scheme: dark;
-  /* ── Surfaces */
-  --color-bg: #0a0a0a; /* base background          */
-  --color-surface: #111111; /* hover lift               */
-  --color-elevated: #1e1e1e; /* borders, dividers, cards */
-  --color-muted-bg: #2e2e2e; /* badge / chip fills       */
 
-  /* ── Text */
-  --color-text: #f0ede8;
-  --color-text-muted: #888888;
-  --color-text-dim: #555555;
+  /* Surfaces */
+  --color-bg:        #1D1C1C;  /* warm charcoal base */
+  --color-bg-deep:   #141313;  /* deepest wells */
+  --color-surface:   #262525;  /* cards, raised */
+  --color-surface-2: #2E2D2C;  /* hover lift */
+  --color-line:      #3A3938;  /* borders, dividers */
+  --color-line-soft: #2D2C2C;  /* faint dividers */
 
-  /* ── Accent */
-  --color-accent: #e8dcc4; /* warm cream               */
-  --color-accent-mid: #c0bdb8; /* muted warm — titles      */
-  --color-accent-warm: #a08a60; /* golden hover             */
+  /* Text */
+  --color-text:      #F2EFE7;  /* bone */
+  --color-text-soft: #C9C7C0;
+  --color-text-mute: #8C8A82;
+  --color-text-faint:#5C5B57;
 
-  /* ── Violet — Lab section accent */
-  --color-violet: #7c6aab;
-  --color-violet-rgb: 124, 106, 171;
+  /* Accent — butter yellow */
+  --color-accent:      #FFF48D;
+  --color-accent-deep: #F0E270;
+  --color-accent-ink:  #1D1C1C;  /* text ON yellow */
 
-  /* ── Technical (not semantic colours) */
-  --color-accent-rgb: 232, 220, 196;
-  --color-white-rgb: 255, 255, 255;
+  /* technical */
+  --color-accent-rgb: 255, 244, 141;
   --color-white: #fff;
   --color-black: #000;
-  --color-btn-fill: #1c1610; /* primary button dark fill */
-  --color-badge-dark: #2a2a2a; /* ⌘K badge text in preview */
+
+  /*
+   * LEGACY ALIASES — map the old "Mono Cinematic" token names to the
+   * nearest Charcoal & Butter token so not-yet-migrated sections keep
+   * rendering. Remove each alias as its section is reworked.
+   */
+  --color-elevated:    var(--color-line);
+  --color-muted-bg:    var(--color-surface-2);
+  --color-text-muted:  var(--color-text-mute);
+  --color-text-dim:    var(--color-text-faint);
+  --color-accent-mid:  var(--color-text-soft);
+  --color-accent-warm: var(--color-accent-deep);
+  --color-btn-fill:    var(--color-accent-ink);
+  --color-white-rgb:   255, 255, 255;
+  --color-violet:      #7c6aab;
+  --color-violet-rgb:  124, 106, 171;
+  --color-badge-dark:  #2a2a2a;
 }
 
 /* SHADOWS */
@@ -81,8 +95,13 @@
 
 /* FONTS */
 :root {
-  --heading-font: "Fraunces", serif;
-  --body-font: "Inter", system-ui, -apple-system, sans-serif;
+  --display: "Anton", "Arial Black", Impact, sans-serif;
+  --serif:   "Instrument Serif", "Times New Roman", serif;
+  --mono:    "JetBrains Mono", ui-monospace, "Courier New", monospace;
+
+  /* LEGACY ALIASES — remove as sections migrate to --display / --mono */
+  --heading-font: var(--display);
+  --body-font: var(--mono);
 }
 
 /* FONT SIZE — Clamp */
@@ -327,6 +346,9 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Charcoal & Butter aliases */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Z-INDEX SCALE */
@@ -356,7 +378,7 @@ html {
 }
 
 body {
-  font-family: var(--body-font);
+  font-family: var(--mono);
   font-size: var(--font-size-md);
   line-height: 1.6;
   color: var(--color-text);
@@ -367,16 +389,29 @@ body {
   cursor: none;
 }
 
+/* Grain overlay — keeps the charcoal from reading flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  pointer-events: none;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--heading-font);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
   color: var(--color-text);
 }
 
@@ -401,7 +436,24 @@ video {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-bg);
+  color: var(--color-accent-ink);
+}
+
+/* ── Charcoal & Butter type helpers ───────────────────────────── */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+.serif-italic {
+  font-family: var(--serif);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--color-accent);
 }
 
 /**************-------------------------------------**************/
@@ -416,7 +468,7 @@ video {
 
 @media screen and (max-width: 1679px) {
   .container {
-    max-width: var(--max-width-3xl);
+    max-width: var(--max-width-4xl);
   }
 }
 
