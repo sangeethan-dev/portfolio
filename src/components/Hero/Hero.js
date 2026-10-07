@@ -1,388 +1,250 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Sticker from "@/components/Sticker/Sticker";
+import { useEffect, useRef } from "react";
+import { gsap, SplitText, MQ, useGSAP } from "@/lib/gsap";
+import { onPreloaderDone } from "@/lib/preloader";
+import { scrollToSection } from "@/lib/lenis/useLenis";
+import useMagnetic from "@/lib/gsap/useMagnetic";
+import { offer, aud } from "@/content/site";
+import BlueprintGrid from "./BlueprintGrid";
 import styles from "./Hero.module.css";
-
-/* ── Headline content — words split for clip-mask rise ──────────── */
-const LINE_LOOK = [
-  "Designers",
-  "make",
-  "it",
-  { w: "look", accent: true },
-  "right.",
-];
-const LINE_WORK = ["I", "make", "it", { w: "work", accent: true }, "right."];
-
-function clamp01(n) {
-  return Math.max(0, Math.min(1, n));
-}
 
 export default function Hero() {
   const rootRef = useRef(null);
-  const trackRef = useRef(null);
-  const labelARef = useRef(null);
-  const labelBRef = useRef(null);
+  const innerRef = useRef(null);
+  const headWrapRef = useRef(null);
+  const h1Ref = useRef(null);
+  const moveRef = useRef(null);
+  const wRef = useRef(null);
+  const hRef = useRef(null);
+  const guideXRef = useRef(null);
+  const guideYRef = useRef(null);
+  const primaryRef = useMagnetic(0.4);
 
-  const progressRef = useRef(0);
-  const draggingRef = useRef(false);
-  const interactedRef = useRef(false);
-  const autoTimers = useRef([]);
-
-  const [isLive, setIsLive] = useState(false);
-
-  /* ── Apply progress → drives everything via the --p custom prop ── */
-  function applyProgress(p) {
-    const v = clamp01(p);
-    progressRef.current = v;
-    if (rootRef.current) rootRef.current.style.setProperty("--p", v);
-    const live = v >= 0.5;
-    setIsLive((prev) => (prev === live ? prev : live));
-  }
-
-  /* ── Toggle geometry (label positions feed the thumb via CSS) ──── */
-  function measure() {
-    const track = trackRef.current;
-    const a = labelARef.current;
-    const b = labelBRef.current;
-    if (!track || !a || !b) return;
-    const t = track.getBoundingClientRect();
-    const ar = a.getBoundingClientRect();
-    const br = b.getBoundingClientRect();
-    track.style.setProperty("--a-left", ar.left - t.left + "px");
-    track.style.setProperty("--a-width", ar.width + "px");
-    track.style.setProperty("--b-left", br.left - t.left + "px");
-    track.style.setProperty("--b-width", br.width + "px");
-  }
-
+  /* ── Live dimension readout around the headline ──────────────── */
   useEffect(() => {
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (trackRef.current) ro.observe(trackRef.current);
-    window.addEventListener("resize", measure);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(measure).catch(() => {});
+    const el = headWrapRef.current;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      wRef.current.textContent = `W ${Math.round(width)}px`;
+      hRef.current.textContent = `H ${Math.round(height)}px`;
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  /* ── Ruler guides that follow the pointer ────────────────────── */
+  useEffect(() => {
+    if (!window.matchMedia(MQ.finePointer).matches) return;
+    const root = rootRef.current;
+    const gx = guideXRef.current;
+    const gy = guideYRef.current;
+    const yTo = gsap.quickTo(gx, "y", { duration: 0.25, ease: "power3.out" });
+    const xTo = gsap.quickTo(gy, "x", { duration: 0.25, ease: "power3.out" });
+
+    function onMove(e) {
+      const r = root.getBoundingClientRect();
+      yTo(e.clientY - r.top);
+      xTo(e.clientX - r.left);
+      gsap.to([gx, gy], { autoAlpha: 1, duration: 0.3, overwrite: "auto" });
     }
+    function onLeave() {
+      gsap.to([gx, gy], { autoAlpha: 0, duration: 0.3, overwrite: "auto" });
+    }
+    root.addEventListener("pointermove", onMove);
+    root.addEventListener("pointerleave", onLeave);
     return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
+      root.removeEventListener("pointermove", onMove);
+      root.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 
-  /* ── Auto-demo once (skipped under reduced motion / interaction) ── */
-  function cancelAuto() {
-    interactedRef.current = true;
-    autoTimers.current.forEach(clearTimeout);
-    autoTimers.current = [];
-  }
+  /* ── Intro, hover physics, scroll-out ─────────────────────────── */
+  useGSAP(
+    () => {
+      const q = gsap.utils.selector(rootRef);
+      const lines = q(`.${styles.line}`);
+      const split = SplitText.create(h1Ref.current, { type: "words,chars" });
+      const chars = split.chars;
+      const moveChars = chars.filter((c) => moveRef.current.contains(c));
+      const mm = gsap.matchMedia();
 
-  useEffect(() => {
-    const reduced =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+      mm.add(MQ.reduced, () => {
+        gsap.set(q("[data-hero-fade]"), { autoAlpha: 1 });
+      });
 
-    const t1 = setTimeout(() => {
-      if (interactedRef.current) return;
-      applyProgress(1);
-      const t2 = setTimeout(() => {
-        if (!interactedRef.current) applyProgress(0);
-      }, 2200);
-      autoTimers.current.push(t2);
-    }, 2500);
-    autoTimers.current.push(t1);
+      mm.add(MQ.motion, () => {
+        gsap.set(chars, { yPercent: 115 });
+        gsap.set(lines, { overflow: "hidden" });
+        gsap.set(q("[data-dim-h]"), { scaleX: 0 });
+        gsap.set(q("[data-dim-v]"), { scaleY: 0 });
+        gsap.set(q("[data-hero-fade]"), { autoAlpha: 0, y: 20 });
 
-    return () => {
-      autoTimers.current.forEach(clearTimeout);
-      autoTimers.current = [];
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+        const intro = gsap.timeline({ paused: true });
+        intro
+          .to(chars, {
+            yPercent: 0,
+            duration: 1.2,
+            ease: "expo.out",
+            stagger: 0.022,
+            onComplete: () => gsap.set(lines, { overflow: "visible" }),
+          })
+          .to(q("[data-dim-h]"), { scaleX: 1, duration: 0.9, ease: "expo.inOut" }, 0.55)
+          .to(q("[data-dim-v]"), { scaleY: 1, duration: 0.9, ease: "expo.inOut" }, 0.65)
+          .to(
+            q("[data-hero-fade]"),
+            { autoAlpha: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.07 },
+            0.7
+          );
 
-  /* ── Pointer → progress mapping (centre-to-centre travel) ──────── */
-  function progressFromX(clientX) {
-    const track = trackRef.current;
-    if (!track) return progressRef.current;
-    const t = track.getBoundingClientRect();
-    const aLeft = parseFloat(
-      getComputedStyle(track).getPropertyValue("--a-left"),
-    );
-    const aWidth = parseFloat(
-      getComputedStyle(track).getPropertyValue("--a-width"),
-    );
-    const bLeft = parseFloat(
-      getComputedStyle(track).getPropertyValue("--b-left"),
-    );
-    const bWidth = parseFloat(
-      getComputedStyle(track).getPropertyValue("--b-width"),
-    );
-    const aCenter = aLeft + aWidth / 2;
-    const bCenter = bLeft + bWidth / 2;
-    const x = clientX - t.left;
-    return clamp01((x - aCenter) / (bCenter - aCenter));
-  }
+        // "move." keeps moving — a wave every few seconds
+        const wave = gsap.timeline({ repeat: -1, repeatDelay: 2.6, paused: true });
+        wave.to(moveChars, {
+          yPercent: -28,
+          rotate: -6,
+          duration: 0.35,
+          ease: "power2.out",
+          stagger: 0.06,
+        }).to(
+          moveChars,
+          { yPercent: 0, rotate: 0, duration: 0.9, ease: "elastic.out(1, 0.35)", stagger: 0.06 },
+          0.3
+        );
 
-  function startDrag(e) {
-    cancelAuto();
-    draggingRef.current = true;
-    rootRef.current.classList.add(styles.dragging);
-    try {
-      trackRef.current.setPointerCapture(e.pointerId);
-    } catch {}
-    applyProgress(progressFromX(e.clientX));
-  }
+        const off = onPreloaderDone(() => {
+          intro.play();
+          gsap.delayedCall(2, () => wave.play());
+        });
 
-  function onTrackPointerMove(e) {
-    if (!draggingRef.current) return;
-    applyProgress(progressFromX(e.clientX));
-  }
+        // Letters hop when the pointer touches them
+        function hop(e) {
+          const c = e.currentTarget;
+          if (gsap.isTweening(c)) return;
+          gsap
+            .timeline()
+            .to(c, { yPercent: -22, duration: 0.18, ease: "power2.out" })
+            .to(c, { yPercent: 0, duration: 0.9, ease: "elastic.out(1, 0.3)" });
+        }
+        const hoppable = window.matchMedia(MQ.finePointer).matches
+          ? chars.filter((c) => !moveRef.current.contains(c))
+          : [];
+        hoppable.forEach((c) => c.addEventListener("pointerenter", hop));
 
-  function endDrag(e) {
-    if (!draggingRef.current) return;
-    draggingRef.current = false;
-    rootRef.current.classList.remove(styles.dragging);
-    try {
-      trackRef.current.releasePointerCapture(e.pointerId);
-    } catch {}
-    applyProgress(progressRef.current >= 0.5 ? 1 : 0); // snap
-  }
+        // Scroll-out: content drifts up and dims as the build story takes over
+        gsap.to(innerRef.current, {
+          yPercent: -12,
+          autoAlpha: 0.25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
 
-  function animateTo(target) {
-    cancelAuto();
-    applyProgress(target);
-  }
+        return () => {
+          off();
+          hoppable.forEach((c) => c.removeEventListener("pointerenter", hop));
+        };
+      });
 
-  function onKeyDown(e) {
-    switch (e.key) {
-      case " ":
-      case "Enter":
-        e.preventDefault();
-        animateTo(progressRef.current >= 0.5 ? 0 : 1);
-        break;
-      case "ArrowLeft":
-        e.preventDefault();
-        animateTo(0);
-        break;
-      case "ArrowRight":
-        e.preventDefault();
-        animateTo(1);
-        break;
-      default:
-        break;
-    }
-  }
-
-  /* ── Stagger delay helper for the headline entrance ────────────── */
-  let wordIndex = 0;
-  const renderWord = (item, key) => {
-    const delay = wordIndex * 0.08;
-    wordIndex += 1;
-    const isAccent = typeof item === "object";
-    const text = isAccent ? item.w : item;
-    return (
-      <span className={styles.mask} key={key}>
-        <span
-          className={`${styles.word}${isAccent ? " serif-italic" : ""}`}
-          style={{ animationDelay: `${delay}s` }}
-        >
-          {text}
-        </span>
-      </span>
-    );
-  };
+      return () => {
+        mm.revert();
+        split.revert();
+      };
+    },
+    { scope: rootRef }
+  );
 
   return (
     <section
+      id="top"
       ref={rootRef}
-      id="hero"
       className={styles.hero}
-      style={{ "--p": 0 }}
+      data-theme-section="blueprint"
     >
-      <div className={`container ${styles.inner}`}>
-        {/* ── Left column ─────────────────────────────────────── */}
-        <div className={styles.left}>
-          <p className={styles.eyebrow}>
-            <span className={styles.eyebrowDot} />
-            Creative Frontend Developer · Sri Lanka
-          </p>
+      <BlueprintGrid className={styles.grid} />
+      <span ref={guideXRef} className={styles.guideX} aria-hidden="true" />
+      <span ref={guideYRef} className={styles.guideY} aria-hidden="true" />
 
-          <h1 className={styles.headline}>
-            <span className={`${styles.line} ${styles.lnLook}`}>
-              {LINE_LOOK.map((w, i) => renderWord(w, `look-${i}`))}
-            </span>
-            <span className={`${styles.line} ${styles.lnWork}`}>
-              {LINE_WORK.map((w, i) => renderWord(w, `work-${i}`))}
-            </span>
-          </h1>
-
-          <p className={styles.sub}>
-            A designer hands me a static frame. I turn it into something that{" "}
-            <strong>moves, responds, and ships</strong> — clean code, buttery
-            motion, zero bloat. Drag the switch to watch it come alive.
-          </p>
-
-          {/* ── BuildToggle ───────────────────────────────────── */}
-          <div className={styles.toggleRow}>
-            <div
-              ref={trackRef}
-              className={styles.toggle}
-              role="switch"
-              aria-checked={isLive}
-              aria-label="Toggle between the static design and the live build"
-              tabIndex={0}
-              onPointerDown={startDrag}
-              onPointerMove={onTrackPointerMove}
-              onPointerUp={endDrag}
-              onPointerCancel={endDrag}
-              onKeyDown={onKeyDown}
-            >
-              <button
-                ref={labelARef}
-                type="button"
-                className={`${styles.label} ${styles.labelA}`}
-                onPointerDown={(e) => e.stopPropagation()}
-                onClick={() => animateTo(0)}
-                tabIndex={-1}
-              >
-                The Design
-              </button>
-              <button
-                ref={labelBRef}
-                type="button"
-                className={`${styles.label} ${styles.labelB}`}
-                onPointerDown={(e) => e.stopPropagation()}
-                onClick={() => animateTo(1)}
-                tabIndex={-1}
-              >
-                The Build
-              </button>
-              <span className={styles.thumb} aria-hidden="true" />
-            </div>
-
-            <span className={styles.toggleHint}>
-              {/* <span className={styles.toggleHintArrow} aria-hidden="true">
-                ⇆
-              </span> */}
-              Switch to compare
-            </span>
-          </div>
+      <div ref={innerRef} className={`container ${styles.inner}`}>
+        <div className={styles.topRow} data-hero-fade>
+          <span className="label">Fig. 01 — Index</span>
+          <span className="label">
+            <i className={styles.liveDot} /> Available for projects · AU
+          </span>
         </div>
 
-        {/* ── Right column — DemoStage ────────────────────────── */}
-        <div className={styles.stageCol}>
-          <div className={styles.stageFrame}>
-            <div
-              className={`${styles.stage}${isLive ? ` ${styles.live}` : ""}`}
-              aria-hidden="true"
-            >
-              <span className={styles.glow} />
-
-              {/* Browser chrome */}
-              <div className={styles.chrome}>
-                <span className={styles.chromeDots}>
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className={styles.chromeLabel}>
-                  <span className={styles.chromeStatic}>
-                    figma · static frame
-                  </span>
-                  <span className={styles.chromeLive}>▶ running · live</span>
-                </span>
-              </div>
-
-              {/* Screen */}
-              <div className={styles.screen}>
-                <span className={styles.gridBg} />
-
-                {/* Mock product card */}
-                <div className={styles.card}>
-                  <span className={styles.wash} />
-
-                  <span className={styles.cardTag}>Featured</span>
-
-                  <h3 className={styles.cardTitle}>
-                    Built to{" "}
-                    <span className={styles.cardAccent}>
-                      perform
-                      <span className={styles.underline} />
-                    </span>
-                  </h3>
-
-                  <p className={styles.cardCopy}>
-                    Motion that earns its place — fast, deliberate, on brand.
-                  </p>
-
-                  <span className={styles.cardBtn}>
-                    Get started →
-                    <span className={styles.shine} />
-                  </span>
-
-                  <span className={styles.circle} />
-                </div>
-
-                {/* Floating accent dots */}
-                <span className={styles.floatDots}>
-                  <i style={{ "--d": "0s" }} />
-                  <i style={{ "--d": "0.4s" }} />
-                  <i style={{ "--d": "0.8s" }} />
-                </span>
-
-                {/* Fake cursor + ripple */}
-                <span className={styles.cursor}>
-                  <svg viewBox="0 0 24 24" width="22" height="22">
-                    <path
-                      d="M5 3l14 7-6 2-2 6-6-15z"
-                      fill="#1D1C1C"
-                      stroke="#FFF48D"
-                      strokeWidth="1.4"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span className={styles.ripple} />
-                </span>
-
-                {/* FPS meter */}
-                <span className={styles.meter}>
-                  <span className={styles.meterBars}>
-                    <i style={{ "--d": "0s" }} />
-                    <i style={{ "--d": "0.15s" }} />
-                    <i style={{ "--d": "0.3s" }} />
-                    <i style={{ "--d": "0.45s" }} />
-                  </span>
-                  60 FPS · LIVE
-                </span>
-              </div>
-            </div>
-
-            {/* State stamp — sibling of .stage so it isn't clipped */}
-            <span className={styles.stickerWrap}>
-              {isLive ? (
-                <Sticker variant="badge" rotate={4}>
-                  IT MOVES
-                </Sticker>
-              ) : (
-                <Sticker variant="badge" rotate={-4}>
-                  LOOKS GOOD
-                </Sticker>
-              )}
+        <div ref={headWrapRef} className={styles.headWrap}>
+          {/* measurement annotations */}
+          <span className={styles.dimTop} aria-hidden="true">
+            <i className={styles.dimLineH} data-dim-h />
+            <span ref={wRef} className={styles.dimLabel} data-hero-fade>
+              W 0px
             </span>
+          </span>
+          <span className={styles.dimSide} aria-hidden="true">
+            <i className={styles.dimLineV} data-dim-v />
+            <span ref={hRef} className={`${styles.dimLabel} ${styles.dimLabelV}`} data-hero-fade>
+              H 0px
+            </span>
+          </span>
+          <i className={`${styles.corner} ${styles.tl}`} data-hero-fade />
+          <i className={`${styles.corner} ${styles.tr}`} data-hero-fade />
+          <i className={`${styles.corner} ${styles.bl}`} data-hero-fade />
+          <i className={`${styles.corner} ${styles.br}`} data-hero-fade />
+
+          <h1 ref={h1Ref} className={styles.headline}>
+            <span className={styles.line}>I design &amp;</span>
+            <span className={`${styles.line} ${styles.outline}`}>build sites</span>
+            <span className={styles.line}>
+              that{" "}
+              <span ref={moveRef} className={styles.move}>
+                move.
+              </span>
+            </span>
+          </h1>
+        </div>
+
+        <div className={styles.bottom}>
+          <p className={styles.sub} data-hero-fade>
+            Custom websites for local practices and small businesses —{" "}
+            <strong>easy to find on Google, trusted at first glance, and booked
+            in a couple of taps</strong>.
+          </p>
+
+          <div className={styles.ctas} data-hero-fade>
+            <a
+              ref={primaryRef}
+              href="#build"
+              className={styles.primary}
+              data-cursor="Scroll"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("#build", 0);
+              }}
+            >
+              <span data-magnetic-inner>Watch it build ↓</span>
+            </a>
+            <a
+              href="#pricing"
+              className={styles.secondary}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("#pricing", 0);
+              }}
+            >
+              Intro offer: websites {aud(offer.website)} →
+            </a>
           </div>
         </div>
       </div>
 
-      {/* ── Hero footer strip ─────────────────────────────────── */}
-      <div className={`container ${styles.footer}`}>
-        <span className={styles.footItem}>
-          <span className={styles.footDot} /> Available for projects
-        </span>
-        {/* <span className={`${styles.footItem} ${styles.scrollCue}`}>
-          Scroll to explore
-          <span className={styles.scrollArrow} aria-hidden="true">
-            ↓
-          </span>
-        </span> */}
+      <div className={`container ${styles.foot}`} data-hero-fade>
+        <span className="label">Scroll to compile</span>
+        <span className={styles.footRule} />
+        <span className="label">Colombo → Australia · UTC+5:30</span>
       </div>
     </section>
   );

@@ -1,74 +1,56 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { gsap, MQ } from "./index";
 
-export default function useMagnetic() {
+/*
+ * Magnetic pull toward the pointer with an elastic snap back.
+ * An optional child marked [data-magnetic-inner] travels further (parallax).
+ */
+export default function useMagnetic(strength = 0.35) {
   const ref = useRef(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (!window.matchMedia(MQ.finePointer).matches) return;
+    if (window.matchMedia(MQ.reduced).matches) return;
 
-    let ax = 0, ay = 0;
-    let rafId = null;
-    let hovering = false;
+    const inner = el.querySelector("[data-magnetic-inner]");
+    const ease = { duration: 0.6, ease: "power3.out" };
+    const xTo = gsap.quickTo(el, "x", ease);
+    const yTo = gsap.quickTo(el, "y", ease);
+    const ixTo = inner && gsap.quickTo(inner, "x", ease);
+    const iyTo = inner && gsap.quickTo(inner, "y", ease);
 
-    function loop() {
-      ax *= 0.78;
-      ay *= 0.78;
-      el.style.transform = `translate(${ax}px, ${ay}px) scale(1.02)`;
-      if (hovering) rafId = requestAnimationFrame(loop);
-    }
-
-    function onMouseEnter() {
-      hovering = true;
-      cancelAnimationFrame(rafId);
-      loop();
-    }
-
-    function onMouseMove(e) {
-      const rect = el.getBoundingClientRect();
-      ax = (e.clientX - (rect.left + rect.width / 2)) * 0.28;
-      ay = (e.clientY - (rect.top + rect.height / 2)) * 0.28;
-      el.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-      el.style.setProperty("--my", `${e.clientY - rect.top}px`);
-    }
-
-    function onMouseLeave() {
-      hovering = false;
-      cancelAnimationFrame(rafId);
-
-      let vx = ax * 0.3;
-      let vy = ay * 0.3;
-
-      function springBack() {
-        ax += -ax * 0.2 + vx;
-        ay += -ay * 0.2 + vy;
-        vx *= 0.75;
-        vy *= 0.75;
-        el.style.transform = `translate(${ax}px, ${ay}px) scale(1.02)`;
-        if (Math.abs(ax) > 0.05 || Math.abs(ay) > 0.05) {
-          rafId = requestAnimationFrame(springBack);
-        } else {
-          el.style.transform = "";
-        }
+    function onMove(e) {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      xTo(dx * strength);
+      yTo(dy * strength);
+      if (inner) {
+        ixTo(dx * strength * 0.5);
+        iyTo(dy * strength * 0.5);
       }
-
-      rafId = requestAnimationFrame(springBack);
     }
 
-    el.addEventListener("mouseenter", onMouseEnter);
-    el.addEventListener("mousemove", onMouseMove);
-    el.addEventListener("mouseleave", onMouseLeave);
+    function onLeave() {
+      const back = { x: 0, y: 0, duration: 0.9, ease: "elastic.out(1, 0.4)", overwrite: true };
+      gsap.to(el, back);
+      if (inner) gsap.to(inner, back);
+    }
 
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
     return () => {
-      el.removeEventListener("mouseenter", onMouseEnter);
-      el.removeEventListener("mousemove", onMouseMove);
-      el.removeEventListener("mouseleave", onMouseLeave);
-      cancelAnimationFrame(rafId);
-      el.style.transform = "";
+      el.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mouseleave", onLeave);
+      const targets = [el, inner].filter(Boolean);
+      gsap.killTweensOf(targets);
+      gsap.set(targets, { clearProps: "transform" });
     };
-  }, []);
+  }, [strength]);
 
   return ref;
 }

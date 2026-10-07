@@ -1,14 +1,17 @@
 /*
  * Sangeethan Portfolio — Design Tokens
- * Author: S. Sangeethan
- * Version: 1.0
+ * Identity: "Blueprint → Colour"
  *
- * Stack: Next.js · GSAP · Vanilla CSS
- * Fonts: Fraunces (headings) · Inter (body) — Google Fonts
+ * The page starts as a technical blueprint (ink + grid) and floods into
+ * colour once the site has "built itself". Sections read the SEMANTIC
+ * tokens (--bg, --fg, --accent …); the theme controller
+ * (src/lib/gsap/theme.js) tweens those between the --bp-* and --live-* sets.
+ *
+ * Stack: Next.js · GSAP · Lenis · Vanilla CSS Modules
+ * Fonts: Unbounded (display) · Inter Tight (body) · JetBrains Mono (code)
  */
 
 /*
-
 479px  - Mobile (Portrait)
 639px  - Mobile (Landscape)
 767px  - Tablet (Portrait)
@@ -16,96 +19,135 @@
 1279px - Small Desktop
 1440px - Large Desktop
 >1441px - Extra Large Desktop
-
 */
 
 /**************-------------------------------------**************/
-/*                          GOOGLE FONTS                          */
+/*                            COLOURS                             */
 /**************-------------------------------------**************/
 
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap");
-
-/**************-------------------------------------**************/
-/*                            VARIABLES                           */
-/**************-------------------------------------**************/
-
-/* COLORS — Charcoal & Butter */
 :root {
-  color-scheme: dark;
+  /* Raw palette */
+  --ink:          #0E1A2B;  /* blueprint ink */
+  --ink-2:        #142338;  /* raised on ink */
+  --ink-3:        #1B2D47;  /* hover on ink */
+  --grid:         #3D5A80;  /* blueprint lines */
+  --grid-bright:  #6F93C2;  /* lines near the cursor */
+  --mist:         #8EA3BF;  /* muted text on ink */
+  --paper:        #F4F1EA;  /* off-white */
+  --paper-2:      #E9E4D8;  /* raised on paper */
+  --paper-3:      #DED7C8;  /* hover on paper */
+  --stone:        #6B6A66;  /* muted text on paper */
+  --rule:         #D3CCBD;  /* lines on paper */
+  --signal:       #FF5B2E;  /* signal orange — primary accent */
+  --signal-deep:  #E8441A;
+  --acid:         #C6F432;  /* acid lime — secondary accent */
+  --white:        #FFFFFF;
+  --black:        #000000;
+  --shadow-ink:   rgba(4, 10, 20, 0.45);
+  --shadow-soft:  rgba(0, 0, 0, 0.25);
+  --hairline:     rgba(0, 0, 0, 0.08);
 
-  /* Surfaces */
-  --color-bg:        #1D1C1C;  /* warm charcoal base */
-  --color-bg-deep:   #141313;  /* deepest wells */
-  --color-surface:   #262525;  /* cards, raised */
-  --color-surface-2: #2E2D2C;  /* hover lift */
-  --color-line:      #3A3938;  /* borders, dividers */
-  --color-line-soft: #2D2C2C;  /* faint dividers */
+  /* RGB triplets for rgba() */
+  --ink-rgb:    14, 26, 43;
+  --grid-rgb:   61, 90, 128;
+  --paper-rgb:  244, 241, 234;
+  --signal-rgb: 255, 91, 46;
+  --acid-rgb:   198, 244, 50;
 
-  /* Text */
-  --color-text:      #F2EFE7;  /* bone */
-  --color-text-soft: #C9C7C0;
-  --color-text-mute: #8C8A82;
-  --color-text-faint:#5C5B57;
+  /* Theme sets — the controller tweens the semantic tokens between these */
+  --bp-bg:         var(--ink);
+  --bp-surface:    var(--ink-2);
+  --bp-fg:         var(--paper);
+  --bp-fg-mute:    var(--mist);
+  --bp-line:       var(--grid);
+  --bp-accent:     var(--signal);
+  --bp-accent-ink: var(--ink);
 
-  /* Accent — butter yellow */
-  --color-accent:      #FFF48D;
-  --color-accent-deep: #F0E270;
-  --color-accent-ink:  #1D1C1C;  /* text ON yellow */
+  --live-bg:         var(--paper);
+  --live-surface:    var(--paper-2);
+  --live-fg:         var(--ink);
+  --live-fg-mute:    var(--stone);
+  --live-line:       var(--rule);
+  --live-accent:     var(--signal);
+  --live-accent-ink: var(--ink);
 
-  /* technical */
-  --color-accent-rgb: 255, 244, 141;
-  --color-white: #fff;
-  --color-black: #000;
+  /* Semantic — what components use (start in blueprint) */
+  --bg:         var(--bp-bg);
+  --surface:    var(--bp-surface);
+  --fg:         var(--bp-fg);
+  --fg-mute:    var(--bp-fg-mute);
+  --line:       var(--bp-line);
+  --accent:     var(--bp-accent);
+  --accent-ink: var(--bp-accent-ink);
 
-  /*
-   * LEGACY ALIASES — map the old "Mono Cinematic" token names to the
-   * nearest Charcoal & Butter token so not-yet-migrated sections keep
-   * rendering. Remove each alias as its section is reworked.
-   */
-  --color-elevated:    var(--color-line);
-  --color-muted-bg:    var(--color-surface-2);
-  --color-text-muted:  var(--color-text-mute);
-  --color-text-dim:    var(--color-text-faint);
-  --color-accent-mid:  var(--color-text-soft);
-  --color-accent-warm: var(--color-accent-deep);
-  --color-btn-fill:    var(--color-accent-ink);
-  --color-white-rgb:   255, 255, 255;
-  --color-violet:      #7c6aab;
-  --color-violet-rgb:  124, 106, 171;
-  --color-badge-dark:  #2a2a2a;
+  /* Demo client site in The Build (BuildStory) */
+  --bloom-bg:     #F7E8DF;
+  --bloom-ink:    #1F2A1F;
+  --bloom-accent: #E2553B;
+  --bloom-leaf:   #7FA36B;
+  --bloom-petal:  #F2A7A0;
+  --bloom-sun:    #F4C152;
+
+  /* Concept brand palettes (Work section) */
+  --clinic-bg:    #E8F1EE;
+  --clinic-ink:   #0E3B3A;
+  --clinic-teal:  #1FA394;
+  --clinic-teal-rgb: 31, 163, 148;
+  --clinic-mute:  #5D7774;
+  --clinic-sand:  #F4EBDD;
+  --clinic-line:  #CFE0DB;
+
+  --cafe-bg:      #2A1F18;
+  --cafe-bg-2:    #3A2B21;
+  --cafe-cream:   #F3E6D3;
+  --cafe-latte:   #C89B6D;
+  --cafe-accent:  #E9B44C;
+  --cafe-espresso:#4A2C1D;
+  --cafe-chai:    #B9763F;
+  --cafe-cream-rgb: 243, 230, 211;
+
+
+  --store-bg:     #EFE9E1;
+  --store-bg-2:   #E3DACE;
+  --store-text:   #2B2622;
+  --store-mute:   #8C8279;
+  --store-sand:   #D8C3A5;
+  --store-sage:   #9CAF88;
+  --store-clay:   #C47A5A;
+  --store-night:  #3E4A5C;
+
+  /* Code-editor syntax (BuildStory) */
+  --code-key:    #FF8A65;
+  --code-str:    #C6F432;
+  --code-fn:     #7FC8FF;
+  --code-com:    #5F7898;
+
+  /* Window chrome dots */
+  --dot-red:    #FF5F56;
+  --dot-yellow: #FFBD2E;
+  --dot-green:  #27C93F;
+
+  /* Compat aliases — used by Sticker (/sandbox) */
+  --color-bg:         var(--bg);
+  --color-text:       var(--fg);
+  --color-text-mute:  var(--fg-mute);
+  --color-accent:     var(--accent);
+  --color-accent-ink: var(--accent-ink);
 }
 
-/* SHADOWS */
+/**************-------------------------------------**************/
+/*                             FONTS                              */
+/**************-------------------------------------**************/
+
 :root {
-  --shadow-xs: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-  --shadow-sm:
-    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-  --shadow-md:
-    rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-  --shadow-lg:
-    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-  --shadow-xl:
-    rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-
-  /* Accent glow — for hover states & focus rings on dark BG */
-  --shadow-glow: 0 0 40px rgba(var(--color-accent-rgb), 0.08);
-  --shadow-glow-strong: 0 0 60px rgba(var(--color-accent-rgb), 0.15);
-}
-
-/* FONTS */
-:root {
-  --display: "Anton", "Arial Black", Impact, sans-serif;
-  --serif:   "Instrument Serif", "Times New Roman", serif;
-  --mono:    "JetBrains Mono", ui-monospace, "Courier New", monospace;
-
-  /* LEGACY ALIASES — remove as sections migrate to --display / --mono */
-  --heading-font: var(--display);
-  --body-font: var(--mono);
+  --display: var(--font-unbounded), "Arial Black", sans-serif;
+  --sans:    var(--font-inter-tight), system-ui, -apple-system, sans-serif;
+  --mono:    var(--font-jetbrains-mono), ui-monospace, "Courier New", monospace;
 }
 
 /* FONT SIZE — Clamp */
 :root {
+  --font-size-2xs: clamp(9px, calc(8.67px + 0.09vw), 10px);
   --font-size-xs: clamp(10px, calc(9.33px + 0.19vw), 12px);
   --font-size-sm: clamp(12px, calc(11.33px + 0.19vw), 14px);
   --font-size-md: clamp(14px, calc(13.33px + 0.19vw), 16px);
@@ -120,9 +162,16 @@
   --font-size-7xl: clamp(32px, calc(22.67px + 2.59vw), 60px);
   --font-size-8xl: clamp(40px, calc(28px + 3.33vw), 80px);
   --font-size-9xl: clamp(58px, calc(45.33px + 3.52vw), 96px);
+
+  /* Viewport-scaled display sizes */
+  --font-size-mega:  clamp(56px, 13vw, 240px);
+  --font-size-giga:  clamp(64px, 17vw, 320px);
 }
 
-/* SPACING */
+/**************-------------------------------------**************/
+/*                            SPACING                             */
+/**************-------------------------------------**************/
+
 :root {
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -140,159 +189,54 @@
   --spacing-8xl: 12rem;
   --spacing-9xl: 14rem;
   --spacing-10xl: 16rem;
-  --spacing-11xl: 18rem;
-  --spacing-12xl: 20rem;
-}
-
-@media screen and (max-width: 1440px) {
-  :root {
-    --spacing-xs: calc(0.25rem * 0.9);
-    --spacing-sm: calc(0.5rem * 0.9);
-    --spacing-ms: calc(0.75rem * 0.9);
-    --spacing-md: calc(1rem * 0.9);
-    --spacing-ml: calc(1.5rem * 0.9);
-    --spacing-lg: calc(2rem * 0.9);
-    --spacing-xl: calc(3rem * 0.9);
-    --spacing-2xl: calc(4rem * 0.9);
-    --spacing-3xl: calc(5rem * 0.9);
-    --spacing-4xl: calc(6rem * 0.9);
-    --spacing-5xl: calc(7rem * 0.9);
-    --spacing-6xl: calc(8rem * 0.9);
-    --spacing-7xl: calc(10rem * 0.9);
-    --spacing-8xl: calc(12rem * 0.9);
-    --spacing-9xl: calc(14rem * 0.9);
-    --spacing-10xl: calc(16rem * 0.9);
-    --spacing-11xl: calc(18rem * 0.9);
-    --spacing-12xl: calc(20rem * 0.9);
-  }
 }
 
 @media screen and (max-width: 1279px) {
   :root {
-    --spacing-xs: calc(0.25rem * 0.8);
-    --spacing-sm: calc(0.5rem * 0.8);
-    --spacing-ms: calc(0.75rem * 0.8);
-    --spacing-md: calc(1rem * 0.8);
-    --spacing-ml: calc(1.5rem * 0.8);
-    --spacing-lg: calc(2rem * 0.8);
-    --spacing-xl: calc(3rem * 0.8);
-    --spacing-2xl: calc(4rem * 0.8);
-    --spacing-3xl: calc(5rem * 0.8);
-    --spacing-4xl: calc(6rem * 0.8);
-    --spacing-5xl: calc(7rem * 0.8);
-    --spacing-6xl: calc(8rem * 0.8);
-    --spacing-7xl: calc(10rem * 0.8);
-    --spacing-8xl: calc(12rem * 0.8);
-    --spacing-9xl: calc(14rem * 0.8);
-    --spacing-10xl: calc(16rem * 0.8);
-    --spacing-11xl: calc(18rem * 0.8);
-    --spacing-12xl: calc(20rem * 0.8);
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  :root {
-    --spacing-md: calc(1rem * 0.7);
-    --spacing-ml: calc(1.5rem * 0.7);
-    --spacing-lg: calc(2rem * 0.7);
-    --spacing-xl: calc(3rem * 0.7);
-    --spacing-2xl: calc(4rem * 0.7);
-    --spacing-3xl: calc(5rem * 0.7);
-    --spacing-4xl: calc(6rem * 0.7);
-    --spacing-5xl: calc(7rem * 0.7);
-    --spacing-6xl: calc(8rem * 0.7);
-    --spacing-7xl: calc(10rem * 0.7);
-    --spacing-8xl: calc(12rem * 0.7);
-    --spacing-9xl: calc(14rem * 0.7);
-    --spacing-10xl: calc(16rem * 0.7);
-    --spacing-11xl: calc(18rem * 0.7);
-    --spacing-12xl: calc(20rem * 0.7);
+    --spacing-lg: calc(2rem * 0.9);
+    --spacing-xl: calc(3rem * 0.85);
+    --spacing-2xl: calc(4rem * 0.85);
+    --spacing-3xl: calc(5rem * 0.85);
+    --spacing-4xl: calc(6rem * 0.85);
+    --spacing-5xl: calc(7rem * 0.85);
+    --spacing-6xl: calc(8rem * 0.85);
+    --spacing-7xl: calc(10rem * 0.85);
+    --spacing-8xl: calc(12rem * 0.85);
   }
 }
 
 @media screen and (max-width: 767px) {
   :root {
-    --spacing-lg: calc(2rem * 0.6);
-    --spacing-xl: calc(3rem * 0.6);
-    --spacing-2xl: calc(4rem * 0.6);
+    --spacing-lg: calc(2rem * 0.75);
+    --spacing-xl: calc(3rem * 0.7);
+    --spacing-2xl: calc(4rem * 0.65);
     --spacing-3xl: calc(5rem * 0.6);
     --spacing-4xl: calc(6rem * 0.6);
     --spacing-5xl: calc(7rem * 0.6);
     --spacing-6xl: calc(8rem * 0.6);
     --spacing-7xl: calc(10rem * 0.6);
     --spacing-8xl: calc(12rem * 0.6);
-    --spacing-9xl: calc(14rem * 0.6);
-    --spacing-10xl: calc(16rem * 0.6);
-    --spacing-11xl: calc(18rem * 0.6);
-    --spacing-12xl: calc(20rem * 0.6);
   }
-}
-
-@media screen and (max-width: 639px) {
-  :root {
-    --spacing-xl: calc(3rem * 0.5);
-    --spacing-2xl: calc(4rem * 0.5);
-    --spacing-3xl: calc(5rem * 0.5);
-    --spacing-4xl: calc(6rem * 0.5);
-    --spacing-5xl: calc(7rem * 0.5);
-    --spacing-6xl: calc(8rem * 0.5);
-    --spacing-7xl: calc(10rem * 0.5);
-    --spacing-8xl: calc(12rem * 0.5);
-    --spacing-9xl: calc(14rem * 0.5);
-    --spacing-10xl: calc(16rem * 0.5);
-    --spacing-11xl: calc(18rem * 0.5);
-    --spacing-12xl: calc(20rem * 0.5);
-  }
-}
-
-/* MAX WIDTH */
-:root {
-  --max-width-xs: 360px;
-  --max-width-sm: 480px;
-  --max-width-md: 640px;
-  --max-width-lg: 760px;
-  --max-width-xl: 920px;
-  --max-width-2xl: 1024px;
-  --max-width-3xl: 1440px;
-  --max-width-4xl: 1680px;
 }
 
 /* CONTAINERS */
 :root {
-  --container-sm: 700px;
-  --container-md: 900px;
-  --container-lg: 1100px;
-  --container-px: 60px;
+  --max-width-text: 620px;
+  --max-width-page: 1680px;
+  --container-px: 48px;
+  --header-h: 72px;
 }
 
 @media screen and (max-width: 1279px) {
   :root {
-    --container-sm: 70vw;
-    --container-md: 80vw;
-    --container-lg: 80vw;
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  :root {
-    --container-sm: 80vw;
-    --container-md: 80vw;
-    --container-lg: 80vw;
-  }
-}
-
-@media screen and (max-width: 1439px) {
-  :root {
-    --container-px: 20px;
+    --container-px: 32px;
   }
 }
 
 @media screen and (max-width: 639px) {
   :root {
-    --container-sm: 100%;
-    --container-md: 100%;
-    --container-lg: 100%;
-    --container-px: 15px;
+    --container-px: 16px;
+    --header-h: 60px;
   }
 }
 
@@ -301,54 +245,30 @@
   --rounded-xs: 2px;
   --rounded-sm: 4px;
   --rounded-md: 6px;
-  --rounded-lg: 8px;
-  --rounded-xl: 12px;
-  --rounded-2xl: 16px;
-  --rounded-3xl: 24px;
-  --rounded-4xl: 28px;
-  --rounded-5xl: 32px;
-  --rounded-6xl: 40px;
+  --rounded-lg: 10px;
+  --rounded-xl: 16px;
+  --rounded-2xl: 24px;
+  --rounded-3xl: 32px;
   --rounded-full: 999px;
-}
-
-@media screen and (max-width: 1023px) {
-  :root {
-    --rounded-md: 4px;
-    --rounded-lg: 6px;
-    --rounded-xl: 10px;
-    --rounded-2xl: 14px;
-    --rounded-3xl: 22px;
-    --rounded-4xl: 24px;
-    --rounded-5xl: 28px;
-    --rounded-6xl: 32px;
-  }
 }
 
 @media screen and (max-width: 639px) {
   :root {
-    --rounded-xl: 8px;
-    --rounded-2xl: 12px;
-    --rounded-3xl: 18px;
-    --rounded-4xl: 20px;
-    --rounded-5xl: 24px;
-    --rounded-6xl: 28px;
+    --rounded-xl: 12px;
+    --rounded-2xl: 18px;
+    --rounded-3xl: 22px;
   }
 }
 
-/* MOTION — durations & easings for GSAP and CSS */
+/* MOTION — durations & easings (CSS side; GSAP uses named eases) */
 :root {
   --dur-fast: 0.25s;
   --dur-base: 0.4s;
   --dur-slow: 0.8s;
-  --dur-hero: 1.2s;
 
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.65, 0, 0.35, 1);
-
-  /* Charcoal & Butter aliases */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Z-INDEX SCALE */
@@ -356,8 +276,10 @@
   --z-base: 1;
   --z-content: 10;
   --z-nav: 50;
+  --z-menu: 45;
   --z-cursor: 100;
-  --z-modal: 200;
+  --z-preloader: 150;
+  --z-grain: 200;
 }
 
 /**************-------------------------------------**************/
@@ -373,30 +295,42 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  background-color: var(--bg);
 }
 
 body {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: var(--font-size-md);
   line-height: 1.6;
-  color: var(--color-text);
-  background-color: var(--color-bg);
+  color: var(--fg);
+  background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  cursor: none;
+  overflow-x: clip;
 }
 
-/* Grain overlay — keeps the charcoal from reading flat */
+/* Custom cursor only where there is a real pointer */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label {
+    cursor: none;
+  }
+}
+
+/* Grain — keeps flat colour feeling like paper */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: var(--z-modal);
+  z-index: var(--z-grain);
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.08;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -408,52 +342,52 @@ h4,
 h5,
 h6 {
   font-family: var(--display);
-  font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: -0.005em;
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: var(--color-text);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: color var(--dur-fast) var(--ease-smooth);
 }
 
 button {
-  font-family: var(--body-font);
-  cursor: pointer;
+  font: inherit;
+  color: inherit;
   border: none;
   background: none;
 }
 
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
 img,
-video {
-  max-width: 100%;
+video,
+svg,
+canvas {
   display: block;
+  max-width: 100%;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-accent-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
-/* ── Charcoal & Butter type helpers ───────────────────────────── */
-.display {
-  font-family: var(--display);
-  font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: -0.005em;
-  text-transform: uppercase;
-}
-
-.serif-italic {
-  font-family: var(--serif);
-  font-style: italic;
-  text-transform: none;
-  letter-spacing: -0.01em;
-  color: var(--color-accent);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /**************-------------------------------------**************/
@@ -461,30 +395,46 @@ video {
 /**************-------------------------------------**************/
 
 .container {
-  max-width: var(--max-width-4xl);
+  width: 100%;
+  max-width: var(--max-width-page);
   margin: 0 auto;
   padding: 0 var(--container-px);
 }
 
-@media screen and (max-width: 1679px) {
-  .container {
-    max-width: var(--max-width-4xl);
-  }
+/* Mono eyebrow / annotation label */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-mute);
 }
 
-@media screen and (max-width: 639px) {
-  .container {
-    padding: 0 var(--container-px);
-  }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* Section base — all main sections use this */
-.section {
-  padding-block: var(--spacing-7xl);
+/* SplitText line masks */
+.split-line {
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
 }
 
-/* Lenis smooth scroll — prevents conflict with native scroll-behavior */
-html.lenis {
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -496,7 +446,11 @@ html.lenis {
   overscroll-behavior: contain;
 }
 
-/* Reduced motion support — accessibility */
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Reduced motion — CSS-side safety net (GSAP handles its own via matchMedia) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
