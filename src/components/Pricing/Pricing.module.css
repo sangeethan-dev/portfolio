@@ -1,0 +1,375 @@
+.section {
+  padding-block: var(--spacing-7xl);
+}
+
+/* ── Header ────────────────────────────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 420px);
+  grid-template-areas:
+    "label label"
+    "title intro";
+  align-items: end;
+  gap: var(--spacing-lg) var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.head > :global(.label) {
+  grid-area: label;
+}
+
+.title {
+  grid-area: title;
+  font-size: clamp(40px, 6.4vw, 120px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  color: var(--fg);
+}
+
+.intro {
+  grid-area: intro;
+  font-size: var(--font-size-lg);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+/* ── Cards ─────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  align-items: stretch;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  border-radius: var(--rounded-2xl);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--fg);
+}
+
+/* Featured card inverts to blueprint ink */
+.featured {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+  background-image:
+    linear-gradient(rgba(var(--grid-rgb), 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--grid-rgb), 0.28) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xl);
+}
+
+.cardNum {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  opacity: 0.6;
+}
+
+.flag {
+  padding: 5px 11px;
+  border-radius: var(--rounded-full);
+  background: var(--acid);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  min-height: 2em;
+}
+
+/* ── Offer: struck-through usual price + note ──────────────────── */
+.was {
+  position: relative;
+  align-self: flex-start;
+  margin-top: var(--spacing-lg);
+  font-family: var(--mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+}
+
+.strike {
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  top: 52%;
+  height: 2px;
+  background: var(--signal);
+  transform-origin: left center;
+}
+
+.offerNote {
+  margin: calc(var(--spacing-md) * -1) 0 var(--spacing-lg);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
+  color: var(--signal);
+}
+
+.featured .offerNote {
+  color: var(--acid);
+}
+
+/* ── Price ─────────────────────────────────────────────────────── */
+.price.priceOffer {
+  margin-top: var(--spacing-sm);
+}
+
+.price {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 0 var(--spacing-sm);
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md) 0;
+  border-block: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.priceMeta {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.55em;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.amount {
+  font-family: var(--display);
+  font-size: clamp(48px, 5.4vw, 96px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--signal);
+}
+
+.amountText {
+  font-size: clamp(36px, 3.6vw, 64px);
+  text-transform: uppercase;
+}
+
+/* odometer */
+.odo {
+  display: inline-flex;
+}
+
+.odoVisual {
+  display: inline-flex;
+}
+
+.digit {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+
+.sizer {
+  display: block;
+  line-height: 1;
+  visibility: hidden;
+}
+
+.strip {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -0.5em;
+  width: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.strip span {
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+}
+
+.sep {
+  display: inline-block;
+}
+
+/* ── Care Plan switch ──────────────────────────────────────────── */
+.addonWrap {
+  margin-bottom: var(--spacing-lg);
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-ms);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.switchTrack {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: var(--rounded-full);
+  background: rgba(var(--paper-rgb), 0.18);
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.switchThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--rounded-full);
+  background: var(--paper);
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.switch[aria-checked="true"] .switchTrack {
+  background: var(--acid);
+}
+
+.switch[aria-checked="true"] .switchThumb {
+  background: var(--ink);
+}
+
+.addon {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.addon p {
+  padding-top: var(--spacing-ms);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--acid);
+}
+
+/* ── Copy + features ───────────────────────────────────────────── */
+.desc {
+  font-size: var(--font-size-md);
+  line-height: 1.55;
+  opacity: 0.75;
+  margin-bottom: var(--spacing-lg);
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-ms);
+  margin-bottom: var(--spacing-xl);
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-ms);
+  font-size: var(--font-size-md);
+}
+
+.tick {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  padding: 2px;
+  border-radius: var(--rounded-full);
+  background: var(--signal);
+}
+
+.tick path {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── CTA ───────────────────────────────────────────────────────── */
+.cta {
+  margin-top: auto;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  padding: 18px 24px;
+  border-radius: var(--rounded-full);
+  border: 1px solid currentColor;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background var(--dur-fast) var(--ease-smooth), color var(--dur-fast) var(--ease-smooth);
+}
+
+.cta span {
+  display: inline-block;
+}
+
+.cta:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.ctaFeatured {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--ink);
+}
+
+.ctaFeatured:hover {
+  background: var(--signal-deep);
+  color: var(--ink);
+}
+
+.note {
+  margin-top: var(--spacing-lg);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media screen and (max-width: 1023px) {
+  .head {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "title"
+      "intro";
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cardTitle {
+    min-height: 0;
+  }
+}

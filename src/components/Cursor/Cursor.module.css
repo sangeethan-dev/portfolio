@@ -1,15 +1,111 @@
 .cursor {
   position: fixed;
-  top: -5px;
-  left: -5px;
-  width: 10px;
-  height: 10px;
-  background: var(--color-white);
-  border-radius: var(--rounded-full);
-  box-shadow: 0 0 18px 4px rgba(var(--color-white-rgb), 0.2);
-  pointer-events: none;
+  top: 0;
+  left: 0;
   z-index: var(--z-cursor);
+  pointer-events: none;
+  visibility: hidden;
   opacity: 0;
-  transition: opacity 0.25s ease;
   will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .cursor {
+    display: none;
+  }
+}
+
+/* ── Crosshair (blueprint) ─────────────────────────────────────── */
+.cross {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transition: opacity var(--dur-fast) var(--ease-smooth);
+}
+
+.h,
+.v {
+  position: absolute;
+  background: var(--accent);
+}
+
+.h {
+  width: 22px;
+  height: 1px;
+  left: -11px;
+  top: 0;
+}
+
+.v {
+  width: 1px;
+  height: 22px;
+  left: 0;
+  top: -11px;
+}
+
+.coords {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--accent);
+  transition: opacity var(--dur-fast) var(--ease-smooth);
+}
+
+/* ── Blob (live dot + labelled pill) ───────────────────────────── */
+.blob {
+  position: absolute;
+  top: -44px;
+  left: -44px;
+  width: 88px;
+  height: 88px;
+  border-radius: var(--rounded-full);
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-smooth);
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Live mode: hide the crosshair, show the dot */
+:global(html[data-theme="live"]) .blob {
+  opacity: 1;
+}
+
+:global(html[data-theme="live"]) .cross,
+:global(html[data-theme="live"]) .coords {
+  opacity: 0;
+}
+
+/* Blueprint mode: blob only appears when hovering something */
+.cursor[data-state="hover"] .blob,
+.cursor[data-state="label"] .blob {
+  opacity: 1;
+}
+
+.cursor[data-state="label"] .cross,
+.cursor[data-state="label"] .coords {
+  opacity: 0;
+}
+
+.cursor[data-state="hover"] .blob {
+  mix-blend-mode: difference;
 }

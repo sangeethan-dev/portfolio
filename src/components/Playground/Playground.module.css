@@ -1,0 +1,182 @@
+.section {
+  padding-block: var(--spacing-5xl) var(--spacing-3xl);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 420px);
+  grid-template-areas:
+    "label label"
+    "title side";
+  align-items: end;
+  gap: var(--spacing-lg) var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.head > :global(.label) {
+  grid-area: label;
+}
+
+.title {
+  grid-area: title;
+  font-size: clamp(44px, 9vw, 168px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+  color: var(--fg);
+}
+
+.side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+}
+
+.intro {
+  font-size: var(--font-size-lg);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+.link {
+  display: inline-flex;
+  padding: 14px 22px;
+  border-radius: var(--rounded-full);
+  border: 1px solid var(--fg);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background var(--dur-fast) var(--ease-smooth), color var(--dur-fast) var(--ease-smooth);
+}
+
+.link:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.link span {
+  display: inline-block;
+}
+
+/* ── The pit ───────────────────────────────────────────────────── */
+.pit {
+  position: relative;
+  height: min(72svh, 640px);
+  border-radius: var(--rounded-2xl);
+  overflow: hidden;
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(rgba(var(--grid-rgb), 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--grid-rgb), 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+  user-select: none;
+}
+
+.pit[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.pitLabel {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.08em;
+  color: var(--mist);
+}
+
+.pitLabel b {
+  font-weight: 500;
+  color: var(--acid);
+}
+
+.shake {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  z-index: 2;
+  padding: 10px 18px;
+  border-radius: var(--rounded-full);
+  background: var(--acid);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  padding: 0.55em 1.1em;
+  border-radius: var(--rounded-full);
+  font-family: var(--display);
+  font-size: clamp(16px, 2vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.t0 {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.t1 {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+.t2 {
+  background: transparent;
+  color: var(--paper);
+  box-shadow: inset 0 0 0 2px var(--paper);
+}
+
+.t3 {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+/* Reduced motion: no physics — a tidy wrapped cloud instead */
+.pit[data-static="true"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  gap: var(--spacing-sm);
+  height: auto;
+  padding: var(--spacing-4xl) var(--spacing-lg) var(--spacing-lg);
+}
+
+.pit[data-static="true"] .tag {
+  position: static;
+  visibility: visible;
+}
+
+.pit[data-static="true"] .shake {
+  display: none;
+}
+
+@media screen and (max-width: 1023px) {
+  .head {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "title"
+      "side";
+  }
+
+  .pit {
+    height: 64svh;
+  }
+}
