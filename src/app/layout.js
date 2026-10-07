@@ -1,4 +1,5 @@
 import { Unbounded, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Cursor from "@/components/Cursor/Cursor";
 import Header from "@/components/Header/Header";
 import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
         </SmoothScroll>
+        <Analytics />
       </body>
     </html>
   );
