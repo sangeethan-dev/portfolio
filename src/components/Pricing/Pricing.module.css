@@ -58,10 +58,6 @@
   background: var(--ink);
   border-color: var(--ink);
   color: var(--paper);
-  background-image:
-    linear-gradient(rgba(var(--grid-rgb), 0.28) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--grid-rgb), 0.28) 1px, transparent 1px);
-  background-size: 28px 28px;
 }
 
 .cardTop {

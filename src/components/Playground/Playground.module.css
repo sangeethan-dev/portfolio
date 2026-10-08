@@ -69,10 +69,6 @@
   border-radius: var(--rounded-2xl);
   overflow: hidden;
   background-color: var(--ink);
-  background-image:
-    linear-gradient(rgba(var(--grid-rgb), 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--grid-rgb), 0.35) 1px, transparent 1px);
-  background-size: 48px 48px;
   user-select: none;
 }
 

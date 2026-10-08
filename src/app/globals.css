@@ -116,6 +116,13 @@
   --store-clay:   #C47A5A;
   --store-night:  #3E4A5C;
 
+  /* Chat bubbles (FAQ) — fixed, so they read the same on paper and on ink */
+  --chat-in:       #FFFFFF;
+  --chat-in-ink:   #111B21;
+  --chat-out:      #2B5CE6;
+  --chat-out-ink:  #FFFFFF;
+  --chat-shadow:   rgba(17, 27, 33, 0.08);
+
   /* Code-editor syntax (BuildStory) */
   --code-key:    #FF8A65;
   --code-str:    #C6F432;

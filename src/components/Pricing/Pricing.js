@@ -109,8 +109,8 @@ export default function Pricing() {
           Clear pricing. No surprises.
         </h2>
         <p className={styles.intro}>
-          One fixed price to build your website, and one small monthly fee to keep it healthy. You&apos;ll know
-          the total before any work starts.
+          You pay one fixed price to build your website, and a small monthly fee if you&apos;d like me to look
+          after it. You&apos;ll know the full cost before I start.
         </p>
       </div>
 
@@ -170,8 +170,8 @@ export default function Pricing() {
                 </button>
                 <div ref={addonRef} className={styles.addon}>
                   <p>
-                    + {aud(offer.care)} / month for your first {offer.careMonths} months — updates, backups,
-                    monitoring and monthly edits from launch day.
+                    + {aud(offer.care)}/month for your first {offer.careMonths} months. I&apos;ll handle updates,
+                    backups, monitoring and small edits from launch day.
                   </p>
                 </div>
               </div>
@@ -201,8 +201,8 @@ export default function Pricing() {
       </div>
 
       <p className={`container ${styles.note}`}>
-        All prices in AUD. Not sure what you need? Tell me about your practice and I&apos;ll recommend the right
-        option.
+        All prices are in AUD. Not sure what you need? Tell me about your practice and I&apos;ll point you in
+        the right direction.
       </p>
     </section>
   );

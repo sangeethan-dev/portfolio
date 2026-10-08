@@ -274,7 +274,7 @@ export default function BuildStory() {
             </div>
 
             <p className={styles.capHint}>
-              {reduced ? "My process, from first sketch to launch." : "Keep scrolling — watch a real site get built."}
+              {reduced ? "How I work, from first sketch to launch." : "Keep scrolling and watch a real site come together."}
             </p>
           </aside>
 

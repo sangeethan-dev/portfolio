@@ -209,9 +209,9 @@ export default function Hero() {
 
         <div className={styles.bottom}>
           <p className={styles.sub} data-hero-fade>
-            Custom websites for local practices and small businesses —{" "}
-            <strong>easy to find on Google, trusted at first glance, and booked
-            in a couple of taps</strong>.
+            I design and build websites for local practices and small businesses.{" "}
+            <strong>The kind people find on Google, trust straight away, and book
+            from in a couple of taps.</strong>
           </p>
 
           <div className={styles.ctas} data-hero-fade>
@@ -242,7 +242,7 @@ export default function Hero() {
       </div>
 
       <div className={`container ${styles.foot}`} data-hero-fade>
-        <span className="label">Scroll to compile</span>
+        <span className="label">Scroll to watch it build</span>
         <span className={styles.footRule} />
         <span className="label">Colombo → Australia · UTC+5:30</span>
       </div>

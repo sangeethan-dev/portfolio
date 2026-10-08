@@ -167,8 +167,9 @@ export default function Playground() {
         </h2>
         <div className={styles.side}>
           <p className={styles.intro}>
-            Outside client work, I experiment with physics, motion and interaction. It keeps my craft sharp,
-            and the best ideas end up in client sites. Grab a tag and throw it.
+            When I&apos;m not working on client sites, I play around with physics, motion and small
+            interactions. It keeps me sharp, and the good ideas usually end up in real projects. Grab a tag and
+            throw it.
           </p>
           <a
             ref={linkRef}

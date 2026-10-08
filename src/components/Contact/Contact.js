@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap, MQ } from "@/lib/gsap";
 import useSplitReveal from "@/lib/gsap/useSplitReveal";
 import useMagnetic from "@/lib/gsap/useMagnetic";
@@ -98,7 +99,13 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" ref={rootRef} className={styles.section} data-theme-section="blueprint">
+    <section
+      id="contact"
+      ref={rootRef}
+      className={styles.section}
+      data-theme-section="blueprint"
+      data-theme-start="top 20%"
+    >
       <div className={`container ${styles.grid}`}>
         <div className={styles.side}>
           <span className="label">Fig. 08 — Contact</span>
@@ -106,9 +113,23 @@ export default function Contact() {
             Let&apos;s build <span className={styles.accent}>yours.</span>
           </h2>
           <p className={styles.sub}>
-            Tell me a little about your practice and what you&apos;d like your website to do. I&apos;ll reply
-            within 24 hours with honest advice and next steps.
+            Tell me a bit about your practice and what you want from your website. I&apos;ll get back to you
+            within 24 hours with honest advice and what I&apos;d suggest next.
           </p>
+
+          <div className={styles.me}>
+            <Image
+              src="/portfolio/profile-headshot.webp"
+              alt="Sangeethan"
+              width={112}
+              height={112}
+              className={styles.mephoto}
+            />
+            <p className={styles.meText}>
+              <b>You&apos;ll be talking to me.</b>
+              No account managers or hand-offs. The person you talk to is the person who builds your site.
+            </p>
+          </div>
 
           <ul className={styles.direct}>
             <li>
@@ -186,7 +207,7 @@ export default function Contact() {
               rows={5}
               value={form.message}
               onChange={update}
-              placeholder="What you do, who you help, and what you'd like the website to achieve — more bookings, a fresh look, easier updates…"
+              placeholder="What you do, who you help, and what you'd like the website to do for you. More bookings? A fresh look? Easier updates?"
             />
           </label>
 
