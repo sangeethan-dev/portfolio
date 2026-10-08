@@ -9,10 +9,13 @@
   isolation: isolate;
 }
 
+/* Grid fades out toward the bottom so it blends into the next section */
 .grid {
   position: absolute;
   inset: 0;
   z-index: -1;
+  -webkit-mask-image: linear-gradient(to bottom, var(--black) 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, var(--black) 55%, transparent 100%);
 }
 
 /* ── Pointer ruler guides ──────────────────────────────────────── */

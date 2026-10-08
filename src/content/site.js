@@ -44,12 +44,12 @@ export const packages = [
     currency: "AUD",
     amount: offer.website,
     was: offer.websiteWas,
-    note: "One fixed price, agreed before work starts",
-    desc: "A custom website that makes a great first impression and turns a quick search into a booked appointment.",
+    note: "Fixed price, agreed before we start",
+    desc: "A website made for your practice, not a template with your logo on it. It looks the part and makes booking easy.",
     features: [
-      "Up to 7 pages — services, team, fees and more",
-      "Custom design — no templates",
-      "Fast and easy to use on a phone",
+      "Up to 7 pages (services, team, fees and so on)",
+      "Designed from scratch for you",
+      "Works properly on phones",
       "Basic SEO so people nearby can find you",
       "Book Now buttons linked to your booking system",
     ],
@@ -65,12 +65,12 @@ export const packages = [
     was: offer.careWas,
     suffix: "/ month",
     note: `First ${offer.careMonths} months, then ${aud(offer.careWas)}/month`,
-    desc: "Your website looked after every month, so you can focus on your clients — not plugins, passwords and backups.",
+    desc: "I look after your website every month, so you never have to think about updates, backups or something breaking.",
     features: [
       "Software and security updates",
       "Regular backups",
       "Uptime monitoring",
-      "Monthly content edits — new staff, hours, fees",
+      "Small edits each month, like new staff, hours or fees",
     ],
     cta: "Add the Care Plan",
   },
@@ -80,7 +80,7 @@ export const packages = [
     title: "Online Stores & Custom Projects",
     amount: null,
     priceLabel: "Custom quote",
-    desc: "For bigger ideas: an online shop for your products, a site for several locations, or features built around how you work.",
+    desc: "Need more than a standard site? An online shop, several locations, or something built around how you work. I'll quote it properly.",
     features: [
       "Shopify online stores",
       "Sites beyond 7 pages",
@@ -107,22 +107,22 @@ export const buildSteps = [
   {
     num: "01",
     title: "Wireframe",
-    desc: "We plan what visitors need to find fast — services, fees, location — and where the Book button goes.",
+    desc: "First we work out what people need to find quickly: your services, fees, where you are, and how to book.",
   },
   {
     num: "02",
     title: "Design",
-    desc: "A look that feels like your practice: calm, credible and unmistakably yours. You review it and we refine it together.",
+    desc: "Then I design it to feel like your practice. You see it, tell me what you think, and we adjust it together.",
   },
   {
     num: "03",
     title: "Code",
-    desc: "Hand-built to load fast on a phone, with basic SEO so people searching nearby can find you.",
+    desc: "I build it by hand so it loads quickly on a phone, with basic SEO set up so local searches can find you.",
   },
   {
     num: "04",
     title: "Live",
-    desc: "Tested, launched and taking bookings. On the Care Plan, I keep it updated, backed up and secure.",
+    desc: "We test it, launch it, and it starts taking bookings. On the Care Plan, I keep it updated and backed up after that.",
   },
 ];
 
@@ -132,7 +132,7 @@ export const concepts = [
     name: "Tidewater Physio",
     sector: "Physiotherapy · Burleigh Heads",
     package: "Business Website + Care Plan",
-    brief: "A two-physio practice whose old site hid the Book button three clicks deep. The new one puts services, fees and next available times up front — so new clients can book in under a minute.",
+    brief: "Two physios whose old site hid the Book button three clicks deep. Now services, fees and the next free times are right there, so a new client can book in under a minute.",
     built: ["6 pages", "Online booking flow", "Practitioner profiles", "Fees & rebates page"],
     hint: "Book an appointment",
   },
@@ -141,7 +141,7 @@ export const concepts = [
     name: "Grounds & Co.",
     sector: "Café · Melbourne",
     package: "Business Website",
-    brief: "A neighbourhood café that wanted its website to feel as warm as walking in, with the menu one tap away.",
+    brief: "A local café that wanted its website to feel as warm as walking in, with the menu one tap away.",
     built: ["5 pages", "Interactive menu", "Opening hours & map", "Mobile-first"],
     hint: "Try the menu",
   },
@@ -150,7 +150,7 @@ export const concepts = [
     name: "Salt & Fern",
     sector: "Homewares · Byron Bay",
     package: "Online Store — custom quote",
-    brief: "A small homewares brand moving from weekend markets to online. Product pages that feel tactile, and a checkout that stays out of the way.",
+    brief: "A small homewares brand moving from weekend markets to selling online. Product pages you almost want to touch, and a checkout that doesn't get in the way.",
     built: ["Shopify store", "Colour variants", "Animated cart", "Product storytelling"],
     hint: "Pick a colour, add to bag",
   },
@@ -159,7 +159,7 @@ export const concepts = [
 export const stats = [
   { value: 8, suffix: "", label: "Years building websites" },
   { value: 30, suffix: "+", label: "Websites delivered" },
-  { value: 1, suffix: "", label: "Point of contact" },
+  { value: 1, suffix: "", label: "Person you deal with" },
 ];
 
 export const skills = [
@@ -171,42 +171,61 @@ export const skills = [
 export const faqs = [
   {
     q: `What do I get for ${aud(offer.website)}?`,
-    a: `A custom-designed website of up to 7 pages — typically home, services, team, fees, about, contact and a booking page. It's built to be fast on phones, set up with basic SEO so people nearby can find you, and your Book Now buttons are linked to your booking system. One fixed price, agreed before any work starts.`,
+    a: [
+      "A website of up to 7 pages, designed for your practice. Usually that's home, services, team, fees, about, contact and booking.",
+      "It works well on phones, it's set up so people nearby can find you on Google, and every Book Now button goes straight to your booking system.",
+      `${aud(offer.website)} is an introductory price. It's normally ${aud(offer.websiteWas)}, and we agree the final price before I start.`,
+    ],
   },
   {
-    q: `Is ${aud(offer.website)} the normal price?`,
-    a: `No — it's an introductory offer. The standard price is ${aud(offer.websiteWas)}, and the Care Plan is normally ${aud(offer.careWas)}/month. With the offer, care is ${aud(offer.care)}/month for your first ${offer.careMonths} months.`,
-  },
-  {
-    q: "Will it work with my online booking system?",
-    a: "Yes. I link your website to the booking system you already use — Cliniko, Nookal, Halaxy, HotDoc, Jane and similar — so clients can book in a couple of taps, from any page.",
+    q: "Will it work with my booking system?",
+    a: [
+      "Yes. I'll connect it to whatever you already use, whether that's Cliniko, Nookal, Halaxy, HotDoc, Jane or something else.",
+      "Clients can book from any page in a couple of taps.",
+    ],
   },
   {
     q: "What does the Care Plan cover?",
-    a: `Software and security updates, regular backups, uptime monitoring, and your monthly content edits — a new team member, changed hours, updated fees. It's ${aud(offer.care)}/month for the first ${offer.careMonths} months, then ${aud(offer.careWas)}/month. It's optional, but it means your site never falls behind.`,
+    a: [
+      "Updates, security, backups, and keeping an eye on whether your site is up.",
+      "It also covers small changes each month, like a new team member, different hours or updated fees.",
+      `It's ${aud(offer.care)}/month for the first ${offer.careMonths} months, then ${aud(offer.careWas)}. It's optional, but it means nothing gets left to slide.`,
+    ],
   },
   {
     q: "I already have a website. Can you redesign it?",
-    a: "Yes. I can rebuild it on your existing domain, bring across the content worth keeping, and set up redirects from your old pages so you don't lose the Google visibility you've already built.",
+    a: [
+      "Yes. I'll rebuild it on the domain you already have and bring over anything worth keeping.",
+      "I'll also redirect your old pages, so you don't lose the Google visibility you've built up.",
+    ],
   },
   {
-    q: "Do I need to write all the content myself?",
-    a: "You know your services best, so you'll give me the essentials — what you offer, your fees, your team. I'll shape it into clear, scannable pages and you approve every word before launch.",
+    q: "Do I need to write all the content?",
+    a: [
+      "No. Send me the basics: what you offer, your fees and who's on the team.",
+      "I'll turn that into clear pages, and nothing goes live until you've approved every word.",
+    ],
   },
   {
-    q: "Does the website need to follow health advertising rules?",
-    a: "If your profession is registered with Ahpra, its advertising guidelines apply to your website — for example, no testimonials about clinical care and no promised outcomes. I keep those rules in mind when shaping your content, and you sign off everything before it goes live.",
+    q: "Does my website have to follow health advertising rules?",
+    a: [
+      "If your profession is registered with Ahpra, then yes, its advertising guidelines cover your website too.",
+      "For example, no testimonials about clinical care and no promises about outcomes.",
+      "I keep those rules in mind while writing, and you sign off everything before it goes live.",
+    ],
   },
   {
     q: "How long does it take?",
-    a: "Usually 2–4 weeks from our first call to launch. Most of that time depends on how quickly content and feedback come through. Online stores and custom projects get a timeline with their quote.",
+    a: [
+      "Usually 2 to 4 weeks from our first call to launch.",
+      "The biggest factor is how quickly content and feedback come back to me.",
+    ],
   },
   {
-    q: "You're in Sri Lanka — how does that work?",
-    a: "Easily. I'm 4.5 hours behind AEST, so your afternoon is my morning and there's plenty of overlap for calls. Day to day we talk by email, phone or WhatsApp — whatever suits you.",
-  },
-  {
-    q: "Are the projects on this site real businesses?",
-    a: "They're concept projects. My past client work is under NDA, so I built these to show the kind of website you'd get. The businesses are fictional — the code and every animation are real.",
+    q: "You're in Sri Lanka. How does that work?",
+    a: [
+      "Pretty smoothly. I'm 4.5 hours behind AEST, so your afternoon is my morning.",
+      "Day to day we can talk by email, phone or WhatsApp, whatever suits you.",
+    ],
   },
 ];

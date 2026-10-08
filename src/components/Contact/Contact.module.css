@@ -36,6 +36,42 @@
   color: var(--fg-mute);
 }
 
+/* the person behind the form */
+.me {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  max-width: 460px;
+  margin-top: var(--spacing-sm);
+}
+
+.mephoto {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--rounded-full);
+  object-fit: cover;
+  background: var(--paper-2);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+.meText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--fg-mute);
+}
+
+.meText b {
+  font-family: var(--display);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
 .direct {
   display: flex;
   flex-direction: column;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap, ScrollTrigger, MQ, useGSAP } from "@/lib/gsap";
 import useSplitReveal from "@/lib/gsap/useSplitReveal";
 import { SCRAMBLE_CHARS } from "@/lib/gsap/useScramble";
@@ -102,10 +103,10 @@ export default function About() {
         <div className={styles.copy}>
           <span className="label">Fig. 06 — About</span>
           <p ref={statementRef} className={styles.statement}>
-            I&apos;m Sangeethan, a web developer with eight years of experience and a background in digital
-            marketing. I build websites for small practices and local businesses that need to look credible,
-            show up in local searches, and make booking the easy part. You work with me directly — no account
-            managers, no hand-offs, no jargon.
+            Hi, I&apos;m Sangeethan. I&apos;ve been building websites for eight years, and I started out at a
+            digital marketing agency. Now I build sites for small practices and local businesses that want to
+            look professional, show up in local searches, and make booking easy. You&apos;ll work with me
+            directly, from the first call to launch day.
           </p>
 
           <dl className={styles.stats}>
@@ -127,9 +128,16 @@ export default function About() {
               <span>Developer ID</span>
               <span className={styles.cardNo}>No. 0008-SG</span>
             </div>
-            <div className={styles.avatar} aria-hidden="true">
-              <span className={styles.avatarInitials}>SG</span>
-              <span className={styles.avatarRing} />
+            <div className={styles.avatar}>
+              <Image
+                src="/portfolio/profile-portrait.webp"
+                alt="Portrait of Sangeethan"
+                width={720}
+                height={900}
+                sizes="140px"
+                className={styles.photo}
+              />
+              <span className={styles.avatarRing} aria-hidden="true" />
             </div>
             <dl className={styles.idRows}>
               {ID_ROWS.map(([k, v]) => (

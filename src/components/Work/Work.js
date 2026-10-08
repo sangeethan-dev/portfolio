@@ -69,9 +69,9 @@ export default function Work() {
           Concept projects
         </h2>
         <p className={styles.intro}>
-          My client work is under NDA, so I built these instead. The businesses are
-          fictional; the websites are real, working code — each one designed around
-          what that business needs most. Go on, try them.
+          My client work is under NDA, so I can&apos;t show it here. Instead I built
+          these three. The businesses are made up, but the websites are real and they
+          work, so go ahead and try them.
         </p>
       </div>
 

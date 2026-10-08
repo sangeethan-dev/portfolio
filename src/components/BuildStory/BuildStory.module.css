@@ -13,23 +13,6 @@
   padding-bottom: var(--spacing-lg);
 }
 
-/* Blueprint grid, faded toward the edges (own layer so the mask
-   doesn't touch the content) */
-.pin::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: center;
-  opacity: 0.6;
-  -webkit-mask-image: radial-gradient(ellipse at center, var(--black) 40%, transparent 85%);
-  mask-image: radial-gradient(ellipse at center, var(--black) 40%, transparent 85%);
-}
-
 .layout {
   position: relative;
   display: grid;
@@ -262,10 +245,6 @@
   container-type: inline-size;
   overflow: hidden;
   background-color: var(--ink-2);
-  background-image:
-    linear-gradient(rgba(var(--grid-rgb), 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--grid-rgb), 0.35) 1px, transparent 1px);
-  background-size: 4cqw 4cqw;
 }
 
 .screenFill {

@@ -6,22 +6,37 @@ import { setTheme } from "./theme";
 
 /*
  * Watches every element with data-theme-section="blueprint|live" and
- * switches the global theme while it holds the middle of the viewport.
+ * switches the global theme when it arrives.
+ *
+ *   data-theme-start  ScrollTrigger start for the switch (default "top 50%").
+ *                     e.g. "top 20%" waits until the section above has
+ *                     almost fully scrolled away before switching.
+ *
+ * Scrolling back up past the start restores the theme of the section right
+ * before it (when that section declares one), so the switch happens at the
+ * same boundary in both directions.
+ *
  * Mount once, after the page's sections, so pins above are measured first.
  */
 export default function useThemeFlip() {
   useEffect(() => {
     const sections = document.querySelectorAll("[data-theme-section]");
-    const triggers = Array.from(sections).map((el) =>
-      ScrollTrigger.create({
+    const triggers = Array.from(sections).map((el) => {
+      const theme = el.dataset.themeSection;
+      const prev = el.previousElementSibling;
+      const prevTheme = prev && prev.dataset.themeSection;
+
+      return ScrollTrigger.create({
         trigger: el,
-        start: "top 50%",
+        start: el.dataset.themeStart || "top 50%",
         end: "bottom 50%",
-        onToggle(self) {
-          if (self.isActive) setTheme(el.dataset.themeSection);
+        onEnter: () => setTheme(theme),
+        onEnterBack: () => setTheme(theme),
+        onLeaveBack: () => {
+          if (prevTheme) setTheme(prevTheme);
         },
-      })
-    );
+      });
+    });
 
     // Webfonts change layout heights — re-measure once they're ready
     let cancelled = false;
