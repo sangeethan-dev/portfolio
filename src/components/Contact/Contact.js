@@ -108,7 +108,7 @@ export default function Contact() {
     >
       <div className={`container ${styles.grid}`}>
         <div className={styles.side}>
-          <span className="label">Fig. 08 — Contact</span>
+          <span className="label">Fig. 09 — Contact</span>
           <h2 ref={titleRef} className={styles.title}>
             Let&apos;s build <span className={styles.accent}>yours.</span>
           </h2>

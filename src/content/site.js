@@ -126,6 +126,26 @@ export const buildSteps = [
   },
 ];
 
+/* "Who I build for" magnetic strip — photos from Unsplash (free licence) */
+export const spotlight = {
+  title: "Built for the people who keep you moving",
+  sub: "Websites for local practices and studios",
+  copy: [
+    "You spend your day looking after people. Your website should do some of that work for you: answer the common questions, show who you are, and make booking easy.",
+    "I build sites for small practices and studios that want to look as good online as they are in person, without spending their evenings fixing them.",
+  ],
+  frames: [
+    { src: "/portfolio/practices/01-assess.webp", alt: "Practitioner assessing a patient's leg on a treatment table", caption: "Assess" },
+    { src: "/portfolio/practices/02-reformer.webp", alt: "Woman stretching on a Pilates reformer in a bright arched studio", caption: "Reformer" },
+    { src: "/portfolio/practices/03-coastline.webp", alt: "Aerial view of a coastline with a headland and long beach", caption: "Coastline" },
+    { src: "/portfolio/practices/04-adjust.webp", alt: "Hands-on treatment to a patient's upper back", caption: "Adjust" },
+    { src: "/portfolio/practices/05-studio.webp", alt: "Modern Pilates studio with rows of reformer machines", caption: "Studio" },
+    { src: "/portfolio/practices/06-release.webp", alt: "Close-up of a massage therapist's hands at work", caption: "Release" },
+    { src: "/portfolio/practices/07-golden-hour.webp", alt: "Surfers in the water at sunset beside a rocky shore", caption: "Golden hour" },
+    { src: "/portfolio/practices/08-recover.webp", alt: "Practitioner supporting a patient's shoulder during an assessment", caption: "Recover" },
+  ],
+};
+
 export const concepts = [
   {
     id: "clinic",

@@ -1,6 +1,7 @@
 import Preloader from "@/components/Preloader/Preloader";
 import Hero from "@/components/Hero/Hero";
 import BuildStory from "@/components/BuildStory/BuildStory";
+import Spotlight from "@/components/Spotlight/Spotlight";
 import Work from "@/components/Work/Work";
 import Playground from "@/components/Playground/Playground";
 import Pricing from "@/components/Pricing/Pricing";
@@ -17,6 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <BuildStory />
+        <Spotlight />
         <Work />
         <Playground />
         <Pricing />

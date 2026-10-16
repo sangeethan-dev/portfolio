@@ -161,7 +161,7 @@ export default function Playground() {
   return (
     <section id="playground" className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 04 — Playground</span>
+        <span className="label">Fig. 05 — Playground</span>
         <h2 ref={titleRef} className={styles.title}>
           Off the clock
         </h2>

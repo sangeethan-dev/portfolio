@@ -104,7 +104,7 @@ export default function Pricing() {
   return (
     <section id="pricing" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 05 — Pricing</span>
+        <span className="label">Fig. 06 — Pricing</span>
         <h2 ref={titleRef} className={styles.title}>
           Clear pricing. No surprises.
         </h2>

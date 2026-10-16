@@ -212,7 +212,7 @@ export default function FAQ() {
   return (
     <section id="faq" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 07 — FAQ</span>
+        <span className="label">Fig. 08 — FAQ</span>
         <h2 ref={titleRef} className={styles.title}>
           Questions, answered.
         </h2>

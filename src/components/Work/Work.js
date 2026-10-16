@@ -64,7 +64,7 @@ export default function Work() {
   return (
     <section id="work" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 03 — Work</span>
+        <span className="label">Fig. 04 — Work</span>
         <h2 ref={headRef} className={styles.title}>
           Concept projects
         </h2>

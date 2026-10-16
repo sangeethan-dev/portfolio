@@ -1,0 +1,164 @@
+/* Magnetic marquee — the copy sits above the photo strip with
+   mix-blend-mode: difference, so white text reads as ink on the paper
+   background and inverts wherever a photo slides underneath it. */
+.section {
+  position: relative;
+  height: 100svh;
+  min-height: 680px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg);
+  user-select: none;
+}
+
+/* ── Top / bottom annotation bars ──────────────────────────────── */
+.bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  pointer-events: none;
+}
+
+.barTop {
+  top: calc(var(--header-h) + var(--spacing-sm));
+}
+
+.barBottom {
+  bottom: var(--spacing-lg);
+  align-items: flex-end;
+}
+
+.hint {
+  color: var(--fg);
+}
+
+/* ── Photo strip ───────────────────────────────────────────────── */
+.strip {
+  position: absolute;
+  top: 0;
+  left: -5%;
+  width: 110%;
+  display: flex;
+  z-index: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.track {
+  display: flex;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+.item {
+  flex-shrink: 0;
+  width: clamp(200px, 19vw, 300px);
+  padding: 0 7px;
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--rounded-md);
+  background: var(--paper-2);
+  transform: scale(var(--img-scale, 1));
+}
+
+.item figcaption {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+/* ── Copy ──────────────────────────────────────────────────────── */
+.content {
+  position: relative;
+  z-index: 2;
+  width: min(46rem, 100%);
+  height: 100%;
+  margin: 0 auto;
+  padding: 13rem var(--container-px) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  color: var(--white);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.title {
+  font-size: clamp(34px, 4.6vw, 76px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+.sub {
+  font-family: var(--mono);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.copy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  width: min(36rem, 100%);
+  font-size: var(--font-size-md);
+  line-height: 1.45;
+}
+
+.copy p:first-child {
+  text-align: right;
+}
+
+/* SplitText line wrappers */
+.line {
+  display: block;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media screen and (max-width: 767px) {
+  .content {
+    padding-top: 12rem;
+    gap: var(--spacing-md);
+  }
+
+  .copy {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .copy p:first-child {
+    text-align: left;
+  }
+
+  /* touch: the strip runs on autopilot, so the mouse hint goes */
+  .barTop :global(.label):last-child,
+  .barBottom .hint,
+  .barBottom :global(.label):last-child {
+    display: none;
+  }
+
+  .barBottom {
+    justify-content: center;
+  }
+}
