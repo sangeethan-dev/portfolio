@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: var(--z-preloader);
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .half {
@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   height: 50.5%;
-  background: var(--ink);
+  background: var(--panel);
 }
 
 .top {
@@ -30,7 +30,7 @@
 }
 
 .grid line {
-  stroke: var(--grid);
+  stroke: var(--panel-line);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -51,14 +51,14 @@
   font-size: var(--font-size-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mist);
+  color: var(--graphite);
 }
 
 .count {
   font-family: var(--display);
   font-size: var(--font-size-9xl);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   line-height: 0.8;
-  letter-spacing: -0.04em;
-  color: var(--paper);
+  letter-spacing: -0.06em;
+  color: var(--ink);
 }

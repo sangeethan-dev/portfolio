@@ -244,7 +244,7 @@ export default function Spotlight() {
       data-cursor="Steer"
     >
       <div ref={barTopRef} className={`container ${styles.bar} ${styles.barTop}`}>
-        <span className="label">Fig. 03 — Who I build for</span>
+        <span className="label">Fig. 04 — Who I build for</span>
         <span className="label">Practices · Studios · Clinics</span>
       </div>
 

@@ -7,6 +7,7 @@ import { concepts } from "@/content/site";
 import ClinicConcept from "./concepts/ClinicConcept";
 import CafeConcept from "./concepts/CafeConcept";
 import StoreConcept from "./concepts/StoreConcept";
+import RecentFixes from "./RecentFixes";
 import styles from "./Work.module.css";
 
 const PREVIEWS = {
@@ -15,7 +16,17 @@ const PREVIEWS = {
   store: StoreConcept,
 };
 
-export default function Work() {
+const DEFAULT_INTRO =
+  "My client work is under NDA, so I can't show it here. Instead I built these three. The businesses are made up, but the websites are real and they work, so go ahead and try them.";
+
+/* Reused on /agencies with its own label, intro and no fixes strip */
+export default function Work({
+  fig = "Fig. 05 — Work",
+  title = "Concept projects",
+  intro = DEFAULT_INTRO,
+  note = null,
+  showFixes = true,
+}) {
   const rootRef = useRef(null);
   const headRef = useSplitReveal({ type: "lines" });
 
@@ -64,15 +75,14 @@ export default function Work() {
   return (
     <section id="work" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 04 — Work</span>
+        <span className="label">{fig}</span>
         <h2 ref={headRef} className={styles.title}>
-          Concept projects
+          {title}
         </h2>
-        <p className={styles.intro}>
-          My client work is under NDA, so I can&apos;t show it here. Instead I built
-          these three. The businesses are made up, but the websites are real and they
-          work, so go ahead and try them.
-        </p>
+        <div className={styles.intro}>
+          {note && <p className={styles.note}>{note}</p>}
+          <p>{intro}</p>
+        </div>
       </div>
 
       <div className={`container ${styles.stack}`}>
@@ -118,6 +128,8 @@ export default function Work() {
           );
         })}
       </div>
+
+      {showFixes && <RecentFixes />}
     </section>
   );
 }

@@ -1,16 +1,44 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { gsap, MQ } from "@/lib/gsap";
-import { scrollToSection } from "@/lib/lenis/useLenis";
-import { contact, offerLine } from "@/content/site";
+import useSplitReveal from "@/lib/gsap/useSplitReveal";
+import useSectionNav, { sectionHref } from "@/lib/lenis/useSectionNav";
+import { contact, pageLinks, signoff } from "@/content/site";
 import styles from "./Footer.module.css";
 
 const WORD = "SANGEETHAN";
 
+function timeIn(zone) {
+  return new Intl.DateTimeFormat("en-AU", {
+    timeZone: zone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date());
+}
+
 export default function Footer() {
   const rootRef = useRef(null);
   const wordRef = useRef(null);
+  const myTimeRef = useRef(null);
+  const auTimeRef = useRef(null);
+  const titleRef = useSplitReveal({ type: "lines" });
+  const pathname = usePathname();
+  const go = useSectionNav();
+
+  /* Live clocks: my time → yours */
+  useEffect(() => {
+    function tick() {
+      myTimeRef.current.textContent = timeIn(contact.timeZone);
+      auTimeRef.current.textContent = timeIn(contact.clientTimeZone);
+    }
+    tick();
+    const id = setInterval(tick, 15000);
+    return () => clearInterval(id);
+  }, []);
 
   /* Letters rise toward the pointer and lean away from it */
   useEffect(() => {
@@ -49,27 +77,58 @@ export default function Footer() {
   return (
     <footer ref={rootRef} className={styles.footer}>
       <div className={`container ${styles.top}`}>
-        <p className={styles.tag}>
-          {offerLine}
-        </p>
-        <nav className={styles.links} aria-label="Footer">
-          <a href={`mailto:${contact.email}`}>Email</a>
-          <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
-            WhatsApp
-          </a>
-          <a href={contact.inspirations} target="_blank" rel="noopener noreferrer">
-            Experiments
-          </a>
+        <div className={styles.lead}>
+          <span className="label">{signoff.kicker}</span>
+          <h2 ref={titleRef} className={styles.title}>
+            {signoff.title}
+          </h2>
+        </div>
+
+        <div className={styles.side}>
+          <p className={`label ${styles.clock}`}>
+            {contact.city} <span ref={myTimeRef}>--:--</span>
+            <span aria-hidden="true">→</span>
+            {contact.clientTimeLabel} <span ref={auTimeRef}>--:--</span>
+          </p>
           <a
-            href="#top"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("#top");
-            }}
+            href={sectionHref("#contact", pathname)}
+            className={styles.cta}
+            onClick={(e) => go("#contact", e)}
           >
-            Back to top ↑
+            Start a project <span aria-hidden="true">→</span>
+          </a>
+          <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className={styles.cta}>
+            Chat on WhatsApp <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div className={`container ${styles.cols}`}>
+        <div className={styles.col}>
+          <span className={styles.colLabel}>Enquiries</span>
+          <a href={`mailto:${contact.email}`}>E. {contact.email}</a>
+          <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+            W. {contact.phoneDisplay}
+          </a>
+        </div>
+        <nav className={styles.col} aria-label="Footer">
+          <span className={styles.colLabel}>Pages</span>
+          {pathname.startsWith("/agencies") ? (
+            <Link href="/">For small businesses →</Link>
+          ) : (
+            <Link href={pageLinks.agencies.href}>{pageLinks.agencies.label} →</Link>
+          )}
+          <Link href={pageLinks.privacy.href}>{pageLinks.privacy.label}</Link>
+          <a href={contact.inspirations} target="_blank" rel="noopener noreferrer">
+            Experiments ↗
           </a>
         </nav>
+        <div className={`${styles.col} ${styles.colEnd}`}>
+          <span className={styles.colLabel}>© {new Date().getFullYear()} Sangeethan</span>
+          <a href="#top" onClick={(e) => go("#top", e)}>
+            Back to top ↑
+          </a>
+        </div>
       </div>
 
       <div ref={wordRef} className={styles.word} aria-label={WORD} role="img">
@@ -78,11 +137,6 @@ export default function Footer() {
             {ch}
           </span>
         ))}
-      </div>
-
-      <div className={`container ${styles.bottom}`}>
-        <span>© {new Date().getFullYear()} Sangeethan</span>
-        <span>Designed &amp; built from a blueprint — Next.js · GSAP · Lenis · Matter.js</span>
       </div>
     </footer>
   );

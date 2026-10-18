@@ -1,14 +1,16 @@
 /*
  * Sangeethan Portfolio — Design Tokens
- * Identity: "Blueprint → Colour"
+ * Identity: "Blueprint → Colour", skinned "Void → Bone"
  *
  * The page starts as a technical blueprint (ink + grid) and floods into
- * colour once the site has "built itself". Sections read the SEMANTIC
+ * colour once the site has "built itself". The blueprint is a near-black
+ * studio canvas with bone type; "live" is pale bone paper. One ember
+ * accent is used sparingly across both. Sections read the SEMANTIC
  * tokens (--bg, --fg, --accent …); the theme controller
  * (src/lib/gsap/theme.js) tweens those between the --bp-* and --live-* sets.
  *
  * Stack: Next.js · GSAP · Lenis · Vanilla CSS Modules
- * Fonts: Unbounded (display) · Inter Tight (body) · JetBrains Mono (code)
+ * Fonts: Familjen Grotesk (display) · Inter Tight (body) · JetBrains Mono (code)
  */
 
 /*
@@ -26,38 +28,43 @@
 /**************-------------------------------------**************/
 
 :root {
-  /* Raw palette */
-  --ink:          #0E1A2B;  /* blueprint ink */
-  --ink-2:        #142338;  /* raised on ink */
-  --ink-3:        #1B2D47;  /* hover on ink */
-  --grid:         #3D5A80;  /* blueprint lines */
-  --grid-bright:  #6F93C2;  /* lines near the cursor */
-  --mist:         #8EA3BF;  /* muted text on ink */
-  --paper:        #F4F1EA;  /* off-white */
-  --paper-2:      #E9E4D8;  /* raised on paper */
-  --paper-3:      #DED7C8;  /* hover on paper */
-  --stone:        #6B6A66;  /* muted text on paper */
-  --rule:         #D3CCBD;  /* lines on paper */
-  --signal:       #FF5B2E;  /* signal orange — primary accent */
-  --signal-deep:  #E8441A;
-  --acid:         #C6F432;  /* acid lime — secondary accent */
+  /* Raw palette — "Void → Bone" (dark studio canvas, bone type, one ember) */
+  --ink:          #050608;  /* void — the dark canvas */
+  --ink-2:        #0E0F12;  /* raised on void */
+  --ink-3:        #18191D;  /* hover on void */
+  --grid:         #2B2C31;  /* graphite hairlines */
+  --grid-bright:  #6E6E70;  /* lines near the cursor */
+  --mist:         #8C8C8C;  /* muted text on void */
+  --paper:        #E2E2DF;  /* bone — the light canvas */
+  --paper-2:      #F2F2F0;  /* raised on bone */
+  --paper-3:      #D2D2CE;  /* hover on bone */
+  --stone:        #5C5C5C;  /* muted text on bone */
+  --rule:         #C2C2BE;  /* lines on bone */
+  --bone:         #D8D8D8;  /* type on void */
+  --graphite:     #434343;  /* mid grey details */
+  --panel:        #C8C8C8;  /* preloader sheet */
+  --panel-line:   #A8A8A8;  /* grid on the preloader sheet */
+  --signal:       #E0452B;  /* ember — the only accent */
+  --signal-deep:  #BF3520;
+  --glow:         #FF7A5C;  /* ember highlight — flags, live dots, switches */
   --white:        #FFFFFF;
   --black:        #000000;
-  --shadow-ink:   rgba(4, 10, 20, 0.45);
+  --shadow-ink:   rgba(0, 0, 0, 0.55);
   --shadow-soft:  rgba(0, 0, 0, 0.25);
   --hairline:     rgba(0, 0, 0, 0.08);
 
   /* RGB triplets for rgba() */
-  --ink-rgb:    14, 26, 43;
-  --grid-rgb:   61, 90, 128;
-  --paper-rgb:  244, 241, 234;
-  --signal-rgb: 255, 91, 46;
-  --acid-rgb:   198, 244, 50;
+  --ink-rgb:    5, 6, 8;
+  --grid-rgb:   67, 67, 67;
+  --paper-rgb:  226, 226, 223;
+  --bone-rgb:   216, 216, 216;
+  --signal-rgb: 224, 69, 43;
+  --glow-rgb:   255, 122, 92;
 
   /* Theme sets — the controller tweens the semantic tokens between these */
   --bp-bg:         var(--ink);
   --bp-surface:    var(--ink-2);
-  --bp-fg:         var(--paper);
+  --bp-fg:         var(--bone);
   --bp-fg-mute:    var(--mist);
   --bp-line:       var(--grid);
   --bp-accent:     var(--signal);
@@ -147,9 +154,13 @@
 /**************-------------------------------------**************/
 
 :root {
-  --display: var(--font-unbounded), "Arial Black", sans-serif;
+  --display: var(--font-familjen), "Helvetica Neue", Arial, sans-serif;
   --sans:    var(--font-inter-tight), system-ui, -apple-system, sans-serif;
   --mono:    var(--font-jetbrains-mono), ui-monospace, "Courier New", monospace;
+
+  /* Display voice: big, sentence-case, tightly tracked grotesk */
+  --display-weight: 500;
+  --display-track:  -0.055em;
 }
 
 /* FONT SIZE — Clamp */
@@ -349,10 +360,9 @@ h4,
 h5,
 h6 {
   font-family: var(--display);
-  font-weight: 600;
+  font-weight: var(--display-weight);
   line-height: 0.95;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  letter-spacing: var(--display-track);
 }
 
 a {
@@ -435,8 +445,8 @@ canvas {
 
 /* SplitText line masks */
 .split-line {
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
 }
 
 /* Lenis smooth scroll */

@@ -47,7 +47,8 @@ export default function Preloader() {
       markPreloaderDone();
     }
 
-    if (readSeen() || window.matchMedia(MQ.reduced).matches) {
+    // skip it when arriving on a section link ("/#pricing") from another page
+    if (readSeen() || window.location.hash || window.matchMedia(MQ.reduced).matches) {
       finish();
       return;
     }

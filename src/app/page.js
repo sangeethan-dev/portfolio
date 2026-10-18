@@ -1,5 +1,7 @@
 import Preloader from "@/components/Preloader/Preloader";
 import Hero from "@/components/Hero/Hero";
+import Manifesto from "@/components/Manifesto/Manifesto";
+import Mantra from "@/components/Mantra/Mantra";
 import BuildStory from "@/components/BuildStory/BuildStory";
 import Spotlight from "@/components/Spotlight/Spotlight";
 import Work from "@/components/Work/Work";
@@ -17,6 +19,8 @@ export default function Home() {
       <Preloader />
       <main>
         <Hero />
+        <Manifesto />
+        <Mantra />
         <BuildStory />
         <Spotlight />
         <Work />

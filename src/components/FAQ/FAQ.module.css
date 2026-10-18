@@ -21,7 +21,7 @@
 .title {
   grid-area: title;
   font-size: clamp(40px, 6.4vw, 120px);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   line-height: 0.9;
   letter-spacing: -0.055em;
   color: var(--fg);
@@ -110,8 +110,8 @@
   width: 7px;
   height: 7px;
   border-radius: var(--rounded-full);
-  background: var(--acid);
-  box-shadow: 0 0 0 3px rgba(var(--acid-rgb), 0.25);
+  background: var(--glow);
+  box-shadow: 0 0 0 3px rgba(var(--glow-rgb), 0.25);
 }
 
 .list {

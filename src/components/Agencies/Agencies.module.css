@@ -1,0 +1,377 @@
+/* Shared by the /agencies content sections (Why, Services, Rates, Process) */
+
+.section {
+  position: relative;
+  padding-block: var(--spacing-6xl);
+}
+
+/* ── Section head ──────────────────────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 420px);
+  grid-template-areas:
+    "label label"
+    "title intro";
+  align-items: end;
+  gap: var(--spacing-lg) var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.head > :global(.label) {
+  grid-area: label;
+}
+
+.title {
+  grid-area: title;
+  max-width: 16ch;
+  font-size: clamp(38px, 5.8vw, 108px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  color: var(--fg);
+}
+
+.intro {
+  grid-area: intro;
+  font-size: var(--font-size-lg);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+/* ── Why: numbered rows ────────────────────────────────────────── */
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1.2fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: baseline;
+  padding-block: var(--spacing-xl);
+}
+
+.rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left center;
+}
+
+.rowNum {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--accent);
+}
+
+.rowTitle {
+  font-size: clamp(26px, 3.2vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--fg);
+}
+
+.rowDesc {
+  font-size: var(--font-size-md);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+/* ── Services: card grid ───────────────────────────────────────── */
+.services {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-height: 240px;
+  padding: var(--spacing-lg);
+  border: 1px solid var(--line);
+  border-radius: var(--rounded-xl);
+  background: var(--surface);
+  color: var(--fg);
+  transition: background var(--dur-fast) var(--ease-smooth),
+    color var(--dur-fast) var(--ease-smooth);
+}
+
+.service:hover {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.serviceNum {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  opacity: 0.6;
+}
+
+.serviceTitle {
+  margin-top: auto;
+  font-size: var(--font-size-3xl);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.serviceDesc {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+/* ── Rates ─────────────────────────────────────────────────────── */
+.rateWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.offer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-ms);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--rounded-full);
+  background: var(--ink);
+  color: var(--bone);
+  font-size: var(--font-size-md);
+}
+
+.offerTag {
+  padding: 4px 10px;
+  border-radius: var(--rounded-full);
+  background: var(--glow);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rates {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.rate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.rate + .rate {
+  padding-left: var(--spacing-lg);
+  border-left: 1px solid var(--line);
+}
+
+.rateLabel {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.rateAmount {
+  font-family: var(--display);
+  font-size: clamp(32px, 3.2vw, 56px);
+  font-weight: var(--display-weight);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--accent);
+}
+
+.rateSuffix {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  color: var(--fg-mute);
+}
+
+.rateAsk {
+  color: var(--fg);
+}
+
+.rateCta {
+  align-self: flex-start;
+  display: inline-flex;
+  justify-content: space-between;
+  gap: var(--spacing-2xl);
+  min-width: 230px;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--fg);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg);
+  transition: color var(--dur-fast) var(--ease-smooth),
+    border-color var(--dur-fast) var(--ease-smooth);
+}
+
+.rateCta:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── Process: one track, six stops ─────────────────────────────── */
+.process {
+  position: relative;
+}
+
+.track {
+  position: absolute;
+  top: 6px;
+  left: var(--container-px);
+  right: var(--container-px);
+  height: 1px;
+  background: var(--line);
+}
+
+.trackFill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+.steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.stepDot {
+  width: 13px;
+  height: 13px;
+  margin-bottom: var(--spacing-md);
+  border: 1px solid var(--accent);
+  border-radius: var(--rounded-full);
+  background: var(--bg);
+}
+
+.stepNum {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.stepTitle {
+  font-size: var(--font-size-2xl);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+}
+
+.stepDesc {
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--fg-mute);
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media screen and (max-width: 1279px) {
+  .services {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .head {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "title"
+      "intro";
+  }
+
+  .row {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .rowDesc {
+    grid-column: 2;
+  }
+
+  .services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rates {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rate:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  /* track turns vertical down the left edge */
+  .track {
+    top: 0;
+    bottom: 0;
+    left: calc(var(--container-px) + 6px);
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .trackFill {
+    transform-origin: center top;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .step {
+    padding-left: var(--spacing-2xl);
+  }
+
+  .stepDot {
+    position: absolute;
+    left: 0;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .services {
+    grid-template-columns: 1fr;
+  }
+
+  .service {
+    min-height: 0;
+  }
+
+  .rates {
+    grid-template-columns: 1fr;
+  }
+
+  .rate + .rate {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

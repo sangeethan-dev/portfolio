@@ -21,6 +21,16 @@ import { setTheme } from "./theme";
 export default function useThemeFlip() {
   useEffect(() => {
     const sections = document.querySelectorAll("[data-theme-section]");
+
+    // Arriving from another page can leave the previous page's theme on —
+    // start from the theme of the section under the middle of the screen.
+    const mid = window.innerHeight / 2;
+    const under =
+      Array.from(sections).find((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top <= mid && r.bottom > mid;
+      }) || sections[0];
+    if (under) setTheme(under.dataset.themeSection, { immediate: true });
     const triggers = Array.from(sections).map((el) => {
       const theme = el.dataset.themeSection;
       const prev = el.previousElementSibling;

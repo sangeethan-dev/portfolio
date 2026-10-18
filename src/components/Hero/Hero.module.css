@@ -64,8 +64,8 @@
   width: 7px;
   height: 7px;
   border-radius: var(--rounded-full);
-  background: var(--acid);
-  box-shadow: 0 0 0 4px rgba(var(--acid-rgb), 0.18);
+  background: var(--glow);
+  box-shadow: 0 0 0 4px rgba(var(--glow-rgb), 0.18);
 }
 
 /* ── Headline + measurement box ────────────────────────────────── */
@@ -77,10 +77,10 @@
 }
 
 .headline {
-  font-size: clamp(34px, 8.2vw, 156px);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-size: clamp(40px, 9.4vw, 180px);
+  font-weight: var(--display-weight);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
   color: var(--fg);
 }
 
@@ -89,12 +89,9 @@
   white-space: nowrap;
 }
 
-/* Variable fonts have overlapping contours; painting the fill over a
-   double-width stroke hides the inner overlaps, leaving a clean outline. */
+/* Second line steps back a tone — the two-tone studio headline */
 .outline {
-  color: var(--bg);
-  -webkit-text-stroke: 3px var(--fg);
-  paint-order: stroke fill;
+  color: var(--fg-mute);
 }
 
 .move {
@@ -223,18 +220,6 @@
   flex-wrap: wrap;
 }
 
-.sub {
-  max-width: 470px;
-  font-size: var(--font-size-lg);
-  line-height: 1.55;
-  color: var(--fg-mute);
-}
-
-.sub strong {
-  color: var(--fg);
-  font-weight: 500;
-}
-
 .ctas {
   display: flex;
   align-items: center;
@@ -242,40 +227,94 @@
   flex-wrap: wrap;
 }
 
+/* Underlined mono links with a trailing arrow */
 .primary,
 .secondary {
   display: inline-flex;
   align-items: center;
-  height: 56px;
-  padding: 0 28px;
-  border-radius: var(--rounded-full);
+  justify-content: space-between;
+  gap: var(--spacing-2xl);
+  min-width: 230px;
+  height: 44px;
+  border-bottom: 1px solid var(--fg);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
-}
-
-.primary {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-
-.primary span {
-  display: inline-block;
-}
-
-.secondary {
-  border: 1px solid var(--line);
   color: var(--fg);
-  transition: border-color var(--dur-fast) var(--ease-smooth),
-    color var(--dur-fast) var(--ease-smooth);
+  transition: color var(--dur-fast) var(--ease-smooth),
+    border-color var(--dur-fast) var(--ease-smooth);
 }
 
+.primary > span {
+  display: inline-flex;
+  justify-content: space-between;
+  gap: var(--spacing-2xl);
+  width: 100%;
+}
+
+.primary:hover,
 .secondary:hover {
-  border-color: var(--accent);
   color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── Info plate (bottom right) ─────────────────────────────────── */
+.plate {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.plateCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-ml);
+  text-align: center;
+}
+
+.plateCell + .plateCell {
+  border-left: 1px solid var(--line);
+  align-items: flex-start;
+  text-align: left;
+  max-width: 190px;
+  line-height: 1.5;
+}
+
+.plateIcon {
+  width: 28px;
+  height: 28px;
+}
+
+.plateIcon circle,
+.plateIcon path {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 1;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-md);
+}
+
+.sideNote {
+  max-width: 300px;
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  color: var(--fg-mute);
 }
 
 /* ── Foot strip ────────────────────────────────────────────────── */
@@ -297,11 +336,7 @@
 /* ── Responsive ────────────────────────────────────────────────── */
 @media screen and (max-width: 767px) {
   .headline {
-    font-size: clamp(30px, 9.6vw, 72px);
-  }
-
-  .outline {
-    -webkit-text-stroke-width: 2px;
+    font-size: clamp(40px, 14.6vw, 96px);
   }
 
   .headWrap {
@@ -309,9 +344,6 @@
     margin-top: var(--spacing-xl);
   }
 
-  .sub {
-    font-size: var(--font-size-md);
-  }
 
   .ctas {
     width: 100%;
@@ -319,8 +351,12 @@
 
   .primary,
   .secondary {
-    height: 50px;
-    padding: 0 20px;
+    min-width: 0;
+    flex: 1 1 200px;
+  }
+
+  .side {
+    align-items: flex-start;
   }
 
   .foot :global(.label):last-child {

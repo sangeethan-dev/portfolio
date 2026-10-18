@@ -5,7 +5,7 @@ import { gsap, SplitText, MQ, useGSAP } from "@/lib/gsap";
 import { onPreloaderDone } from "@/lib/preloader";
 import { scrollToSection } from "@/lib/lenis/useLenis";
 import useMagnetic from "@/lib/gsap/useMagnetic";
-import { offer, aud } from "@/content/site";
+import { offer, aud, stats } from "@/content/site";
 import BlueprintGrid from "./BlueprintGrid";
 import styles from "./Hero.module.css";
 
@@ -208,12 +208,6 @@ export default function Hero() {
         </div>
 
         <div className={styles.bottom}>
-          <p className={styles.sub} data-hero-fade>
-            I design and build websites for local practices and small businesses.{" "}
-            <strong>The kind people find on Google, trust straight away, and book
-            from in a couple of taps.</strong>
-          </p>
-
           <div className={styles.ctas} data-hero-fade>
             <a
               ref={primaryRef}
@@ -225,7 +219,9 @@ export default function Hero() {
                 scrollToSection("#build", 0);
               }}
             >
-              <span data-magnetic-inner>Watch it build ↓</span>
+              <span data-magnetic-inner>
+                Watch it build <span aria-hidden="true">↓</span>
+              </span>
             </a>
             <a
               href="#pricing"
@@ -235,8 +231,25 @@ export default function Hero() {
                 scrollToSection("#pricing", 0);
               }}
             >
-              Intro offer: websites {aud(offer.website)} →
+              Websites {aud(offer.website)} <span aria-hidden="true">→</span>
             </a>
+          </div>
+
+          <div className={styles.side} data-hero-fade>
+            <div className={styles.plate}>
+              <span className={styles.plateCell}>
+                <svg viewBox="0 0 28 28" className={styles.plateIcon} aria-hidden="true">
+                  <circle cx="14" cy="14" r="12.5" />
+                  <path d="M1.5 14h25M14 1.5c-4 4-4 21 0 25M14 1.5c4 4 4 21 0 25" />
+                </svg>
+                {stats[0].value} yrs
+              </span>
+              <span className={styles.plateCell}>Building websites people find, trust &amp; book.</span>
+            </div>
+            <p className={styles.sideNote}>
+              Websites for local practices and small businesses. The kind people find on Google, trust straight
+              away, and book from in a couple of taps.
+            </p>
           </div>
         </div>
       </div>

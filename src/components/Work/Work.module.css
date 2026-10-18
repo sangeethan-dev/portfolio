@@ -23,7 +23,7 @@
 .title {
   grid-area: title;
   font-size: clamp(44px, 10.5vw, 200px);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   line-height: 0.88;
   letter-spacing: -0.06em;
   color: var(--fg);
@@ -31,9 +31,19 @@
 
 .intro {
   grid-area: intro;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
   font-size: var(--font-size-lg);
   line-height: 1.55;
   color: var(--fg-mute);
+}
+
+/* Highlighted lead-in (e.g. the white-label note on /agencies) */
+.note {
+  padding-left: var(--spacing-md);
+  border-left: 2px solid var(--accent);
+  color: var(--fg);
 }
 
 /* ── Stacked cards ─────────────────────────────────────────────── */
@@ -102,7 +112,7 @@
 
 .name {
   font-size: var(--font-size-6xl);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   letter-spacing: -0.05em;
   color: var(--fg);
 }

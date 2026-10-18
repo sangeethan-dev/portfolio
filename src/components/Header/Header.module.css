@@ -81,14 +81,21 @@
   align-items: center;
   padding: 12px 22px;
   border-radius: var(--rounded-full);
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--fg);
+  color: var(--bg);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-smooth),
+    color var(--dur-fast) var(--ease-smooth);
+}
+
+.cta:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .cta span {
@@ -132,6 +139,9 @@
 .menuMask {
   display: block;
   overflow: hidden;
+  /* room for descenders (g, p) inside the reveal mask */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 .menuLink {
@@ -140,10 +150,15 @@
   gap: var(--spacing-ms);
   font-family: var(--display);
   font-size: clamp(44px, 14vw, 88px);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   line-height: 1;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
+  letter-spacing: -0.05em;
+}
+
+/* Links to other pages read as a quieter secondary row */
+.menuPage {
+  margin-top: var(--spacing-md);
+  font-size: clamp(28px, 8vw, 52px);
 }
 
 .menuNum {

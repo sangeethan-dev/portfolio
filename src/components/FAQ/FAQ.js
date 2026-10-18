@@ -9,6 +9,7 @@ import { faqs } from "@/content/site";
 import styles from "./FAQ.module.css";
 
 const DOT = 52; // collapsed "typing" bubble size (px)
+const DEFAULT_INTRO = "The questions practice owners ask me most, answered the way I'd answer them over chat.";
 const HEADSHOT = "/portfolio/profile-headshot.webp";
 
 function Typing() {
@@ -28,8 +29,14 @@ function Typing() {
  * on the page jumps while bubbles grow.
  *
  * Without motion (or JS) every bubble is simply shown in full.
+ * Reused on /agencies with its own questions.
  */
-export default function FAQ() {
+export default function FAQ({
+  items = faqs,
+  fig = "Fig. 09 — FAQ",
+  title = "Questions, answered.",
+  intro = DEFAULT_INTRO,
+}) {
   const rootRef = useRef(null);
   const titleRef = useSplitReveal({ type: "lines" });
 
@@ -212,12 +219,12 @@ export default function FAQ() {
   return (
     <section id="faq" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 08 — FAQ</span>
+        <span className="label">{fig}</span>
         <h2 ref={titleRef} className={styles.title}>
-          Questions, answered.
+          {title}
         </h2>
         <p className={styles.intro}>
-          The questions practice owners ask me most, answered the way I&apos;d answer them over chat.
+          {intro}
         </p>
       </div>
 
@@ -237,11 +244,11 @@ export default function FAQ() {
                 <i /> Usually replies within 24 hours
               </span>
             </span>
-            <span className={styles.count}>{String(faqs.length).padStart(2, "0")} questions</span>
+            <span className={styles.count}>{String(items.length).padStart(2, "0")} questions</span>
           </div>
 
           <dl className={styles.list}>
-            {faqs.map((f) => (
+            {items.map((f) => (
               <div key={f.q} className={styles.pair}>
                 <dt className={`${styles.row} ${styles.rowQ}`} data-row="q">
                   <div className={`${styles.msg} ${styles.q}`} data-msg>

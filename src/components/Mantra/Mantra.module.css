@@ -1,0 +1,106 @@
+.section {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* don't let the long tracks widen the cell */
+  place-items: center;
+  min-height: 92svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.kicker {
+  position: absolute;
+  top: var(--spacing-2xl);
+  left: var(--container-px);
+  max-width: 200px;
+  color: var(--fg);
+}
+
+.caption {
+  position: absolute;
+  bottom: var(--spacing-2xl);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: var(--fg);
+}
+
+/* Both bands sit in the same grid cell so they cross in the middle */
+.band {
+  grid-area: 1 / 1;
+  width: 130%;
+  padding-block: 0.12em;
+  font-family: var(--display);
+  font-size: clamp(56px, 9vw, 170px);
+  font-weight: var(--display-weight);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Bone band in front, dark type on it */
+.front {
+  z-index: 2;
+  background: var(--fg);
+  color: var(--bg);
+  transform: rotate(-4deg);
+  box-shadow: 0 30px 80px var(--shadow-ink);
+}
+
+/* Hairline band behind, reads like a ghost of the first */
+.back {
+  z-index: 1;
+  border-block: 1px solid var(--line);
+  color: var(--fg);
+  opacity: 0.35;
+  transform: rotate(5deg);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* The "+" between words */
+.plus {
+  position: relative;
+  width: 0.36em;
+  height: 0.36em;
+  margin-inline: 0.45em;
+}
+
+.plus::before,
+.plus::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 2px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.plus::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.front .plus::before,
+.front .plus::after {
+  background: var(--accent);
+}
+
+@media screen and (max-width: 767px) {
+  .section {
+    min-height: 70svh;
+  }
+
+  .band {
+    width: 160%;
+  }
+}

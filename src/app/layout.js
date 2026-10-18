@@ -1,15 +1,15 @@
-import { Unbounded, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Familjen_Grotesk, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Cursor from "@/components/Cursor/Cursor";
 import Header from "@/components/Header/Header";
 import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
-import { offer, aud } from "@/content/site";
+import { offer, aud, siteUrl } from "@/content/site";
 import "./globals.css";
 
-const unbounded = Unbounded({
+const familjen = Familjen_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "600", "800"],
-  variable: "--font-unbounded",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-familjen",
   display: "swap",
 });
 
@@ -27,13 +27,28 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const title = "Sangeethan — Custom Websites for Local Practices & Small Businesses";
+const description = `Custom websites for local practices and small businesses — easy to find on Google, trusted at first glance and simple to book. ${offer.label}: websites ${aud(offer.website)}, Care Plan ${aud(offer.care)}/month for the first ${offer.careMonths} months.`;
+
+/* Pages override title / description / alternates / openGraph.url;
+   relative URLs resolve against metadataBase (siteUrl in content/site.js). */
 export const metadata = {
-  title: "Sangeethan — Custom Websites for Local Practices & Small Businesses",
-  description: `Custom websites for local practices and small businesses — easy to find on Google, trusted at first glance and simple to book. ${offer.label}: websites ${aud(offer.website)}, Care Plan ${aud(offer.care)}/month for the first ${offer.careMonths} months.`,
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Sangeethan",
+    locale: "en_AU",
+    title,
+    description,
+  },
 };
 
 export const viewport = {
-  themeColor: "#0E1A2B",
+  themeColor: "#050608",
 };
 
 export default function RootLayout({ children }) {
@@ -41,7 +56,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       data-theme="blueprint"
-      className={`${unbounded.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
+      className={`${familjen.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         <Cursor />

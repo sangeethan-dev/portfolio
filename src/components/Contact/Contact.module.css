@@ -19,7 +19,7 @@
 
 .title {
   font-size: clamp(48px, 7.4vw, 140px);
-  font-weight: 800;
+  font-weight: var(--display-weight);
   line-height: 0.88;
   letter-spacing: -0.06em;
   color: var(--fg);
@@ -135,7 +135,7 @@
 
 .formStatus {
   text-transform: uppercase;
-  color: var(--acid);
+  color: var(--glow);
 }
 
 .formStatus[data-status="error"] {
@@ -253,7 +253,7 @@
 }
 
 .submit[data-status="sent"] {
-  background: var(--acid);
+  background: var(--glow);
 }
 
 .submit:disabled {
@@ -263,7 +263,7 @@
 .bar {
   position: absolute;
   inset: 0;
-  background: var(--acid);
+  background: var(--glow);
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -313,4 +313,22 @@
   .directLabel {
     grid-column: 1 / -1;
   }
+}
+
+/* ── Privacy note under the form ───────────────────────────────── */
+.privacy {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-xs);
+  color: var(--fg-mute);
+}
+
+.privacy a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-smooth);
+}
+
+.privacy a:hover {
+  color: var(--accent);
 }

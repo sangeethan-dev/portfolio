@@ -1,0 +1,105 @@
+.section {
+  position: relative;
+  padding-block: var(--spacing-6xl) var(--spacing-5xl);
+}
+
+.statement {
+  max-width: 22ch;
+  margin-top: var(--spacing-xl);
+  font-family: var(--display);
+  font-size: clamp(34px, 6.2vw, 120px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: var(--display-track);
+  color: var(--fg);
+}
+
+/* Hairline with a "+" registration mark, like a cutting mat */
+.cross {
+  position: relative;
+  display: block;
+  height: 1px;
+  margin-block: var(--spacing-4xl) var(--spacing-xl);
+  background: var(--line);
+}
+
+.cross::before,
+.cross::after {
+  content: "";
+  position: absolute;
+  left: 62%;
+  top: 50%;
+  background: var(--fg);
+}
+
+.cross::before {
+  width: 15px;
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.cross::after {
+  width: 1px;
+  height: 15px;
+  transform: translate(-50%, -50%);
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 380px);
+  gap: var(--spacing-2xl);
+  align-items: start;
+}
+
+.pillars {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.mission {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  font-size: var(--font-size-md);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+.more {
+  align-self: flex-start;
+  display: inline-flex;
+  justify-content: space-between;
+  gap: var(--spacing-2xl);
+  min-width: 200px;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--fg);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg);
+  transition: color var(--dur-fast) var(--ease-smooth),
+    border-color var(--dur-fast) var(--ease-smooth);
+}
+
+.more:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+@media screen and (max-width: 767px) {
+  .foot {
+    grid-template-columns: 1fr;
+  }
+
+  .cross::before,
+  .cross::after {
+    left: 80%;
+  }
+}

@@ -104,13 +104,13 @@ export default function Pricing() {
   return (
     <section id="pricing" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 06 — Pricing</span>
+        <span className="label">Fig. 07 — Pricing</span>
         <h2 ref={titleRef} className={styles.title}>
           Clear pricing. No surprises.
         </h2>
         <p className={styles.intro}>
-          You pay one fixed price to build your website, and a small monthly fee if you&apos;d like me to look
-          after it. You&apos;ll know the full cost before I start.
+          Fix what&apos;s broken, build something new, or have me look after it every month. Every job has a
+          fixed price, and you&apos;ll know it before I start.
         </p>
       </div>
 
@@ -140,6 +140,7 @@ export default function Pricing() {
               {p.amount ? (
                 <>
                   <span className={styles.priceMeta}>
+                    {p.prefix && <span>{p.prefix}</span>}
                     <span>{p.currency}</span>
                   </span>
                   <span className={styles.amount}>
@@ -192,7 +193,9 @@ export default function Pricing() {
 
             <Cta
               featured={p.featured}
-              onClick={() => selectService(p.id === "website" && withCare ? WEBSITE_WITH_CARE : p.title)}
+              onClick={() =>
+                selectService(p.id === "website" && withCare ? WEBSITE_WITH_CARE : p.service || p.title)
+              }
             >
               {p.cta}
             </Cta>

@@ -7,11 +7,20 @@
  * not about frameworks.
  */
 
+/* ── Site URL — the ONE place to change when moving to a custom domain.
+   Used for canonical tags, og:url, sitemap.xml and robots.txt.
+   Can also be set per environment with NEXT_PUBLIC_SITE_URL. ───────── */
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://sangeethan.vercel.app").replace(/\/$/, "");
+
 export const contact = {
   email: "email2geethan@gmail.com",
   phoneDisplay: "+94 75 6144113",
   whatsapp: "https://wa.me/94756144113",
   inspirations: "https://sangee-inspirations.vercel.app/",
+  city: "Colombo",
+  timeZone: "Asia/Colombo",
+  clientTimeZone: "Australia/Brisbane",
+  clientTimeLabel: "AEST",
 };
 
 /* ── Pricing / introductory offer — change prices here only ──────── */
@@ -36,10 +45,66 @@ export const nav = [
   { label: "Contact", href: "#contact" },
 ];
 
+/* Header nav on /agencies */
+export const agencyNav = [
+  { label: "Services", href: "#services" },
+  { label: "Rates", href: "#rates" },
+  { label: "Work", href: "#work" },
+  { label: "Contact", href: "#contact" },
+];
+
+/* Pages linked from the footer and the mobile menu (not the desktop nav) */
+export const pageLinks = {
+  agencies: { label: "For agencies", href: "/agencies" },
+  privacy: { label: "Privacy", href: "/privacy" },
+};
+
+/* ── Story beats (Statement + Mantra) ────────────────────────────── */
+export const manifesto = {
+  statement:
+    "I'm an independent web developer building websites that get local practices found, trusted and booked.",
+  pillars: ["Clarity first.", "Craft always.", "Built to last."],
+  mission:
+    "Your website should do some of the work for you: answer the common questions, show who you are, and make booking easy. That's the whole job, and I do it by hand.",
+};
+
+export const mantra = {
+  label: "Found, trusted, booked",
+  kicker: "Three jobs. One website.",
+  words: ["Found", "Trusted", "Booked"],
+  caption: "From first search to first booking",
+};
+
+/* Footer sign-off */
+export const signoff = {
+  kicker: "Let's build a website that works as hard as you do.",
+  title: "Ready to build something bold?",
+};
+
+/* Contact-form option the Website Fixes card preselects */
+export const FIX_SERVICE = "Fix something on my website";
+
 export const packages = [
   {
-    id: "website",
+    id: "fixes",
     num: "01",
+    title: "Website Fixes",
+    prefix: "From",
+    currency: "AUD",
+    amount: 100,
+    desc: "Something on your current site not working? A broken booking button, a page showing 'Page not found', a security warning, a phone number that won't call? I fix it for a fixed price, agreed before I start.",
+    features: [
+      "Small fix: AUD 100 (includes a full link check)",
+      "Fix bundle (up to 4 issues): AUD 150",
+      "Usually done within a day",
+      "Pay after it's fixed",
+    ],
+    cta: "Report an issue",
+    service: FIX_SERVICE,
+  },
+  {
+    id: "website",
+    num: "02",
     title: "Business Website",
     currency: "AUD",
     amount: offer.website,
@@ -58,7 +123,7 @@ export const packages = [
   },
   {
     id: "care",
-    num: "02",
+    num: "03",
     title: "Website Care Plan",
     currency: "AUD",
     amount: offer.care,
@@ -76,7 +141,7 @@ export const packages = [
   },
   {
     id: "custom",
-    num: "03",
+    num: "04",
     title: "Online Stores & Custom Projects",
     amount: null,
     priceLabel: "Custom quote",
@@ -95,6 +160,7 @@ export const packages = [
 export const WEBSITE_WITH_CARE = "Business Website + Care Plan";
 
 export const serviceOptions = [
+  FIX_SERVICE,
   "Business Website",
   WEBSITE_WITH_CARE,
   "Redesign of my current website",
@@ -249,3 +315,121 @@ export const faqs = [
     ],
   },
 ];
+
+/* ── /agencies — white-label offer ─────────────────────────────────
+   Rates are null until set: a null rate shows "On request" and a null
+   firstProject hides the offer line, so the page is safe to ship as is. */
+export const agency = {
+  meta: {
+    title: "White-Label Web Developer Australia — Sangeethan",
+    description:
+      "White-label web developer for Australian digital marketing agencies. WordPress, Shopify and Next.js builds, landing pages, fixes and care plans, delivered under your brand. NDA by default, fixed quotes.",
+  },
+  hero: {
+    title: "Your white-label web developer.",
+    sub: "I build and maintain websites for Australian digital marketing agencies, under your brand. You keep the client relationship; I deliver on time and stay invisible.",
+  },
+  why: [
+    { title: "8 years' experience", desc: "I started at a digital marketing agency, so I know how briefs, deadlines and client sign-offs really work." },
+    { title: "White-label & NDA by default", desc: "Your brand on everything. I sign your NDA before we start, and I never appear in front of your client." },
+    { title: "Fixed quotes before starting", desc: "You get a fixed price up front, so your margin is known before a line of code is written." },
+    { title: "Ready by your next morning", desc: "I'm 4.5 hours behind AEST. Send changes at the end of your day and they're done when you're back in." },
+    { title: "One developer, no hand-offs", desc: "The person who quotes your project is the person who builds it. Nothing gets lost between teams." },
+  ],
+  services: [
+    { title: "WordPress", desc: "Elementor or custom themes, built so your team can edit them." },
+    { title: "Shopify", desc: "Theme builds and customisation, with product pages that sell." },
+    { title: "Next.js builds", desc: "Fast, custom sites for when a page builder won't cut it." },
+    { title: "Landing pages", desc: "Campaign pages built to your designs, ready for tracking." },
+    { title: "Redesigns & migrations", desc: "Move a client site without losing content or Google rankings." },
+    { title: "Speed, SEO & technical fixes", desc: "Core Web Vitals, broken pages, redirects, schema and security warnings." },
+    { title: "Ongoing maintenance", desc: "Updates, backups and small edits for your clients' sites, every month." },
+  ],
+  rates: [
+    { label: "5-page website", amount: null, suffix: "" },
+    { label: "Landing page", amount: null, suffix: "" },
+    { label: "Hourly / overflow", amount: null, suffix: "/ hr" },
+    { label: "Care plan per client site", amount: null, suffix: "/ month" },
+  ],
+  firstProject: null, // e.g. "20% off your first project"
+  process: [
+    { title: "Brief", desc: "You send the brief, the designs or a call recording." },
+    { title: "Fixed quote", desc: "A fixed price and timeline, usually within a day." },
+    { title: "Build on staging", desc: "I build on a private staging link, never on the live site." },
+    { title: "Your review", desc: "You and your client review it. Revisions are part of the quote." },
+    { title: "Launch under your brand", desc: "It goes live with your agency's name on it, not mine." },
+    { title: "Optional care", desc: "I keep the site updated and backed up, billed to you." },
+  ],
+  workNote:
+    "Agency work is white-label, so it can't be shown publicly. Samples are available on request under NDA.",
+  faqs: [
+    {
+      q: "Will you sign our NDA?",
+      a: ["Yes, always, and before I see the brief. If you don't have one, I'll send mine. White-label is the default, not an extra."],
+    },
+    {
+      q: "How do we communicate?",
+      a: [
+        "Whatever your team already uses: Slack, email or WhatsApp. I can join your Slack as a guest.",
+        "You get one point of contact, me, for every project.",
+      ],
+    },
+    {
+      q: "How do the time zones work?",
+      a: [
+        "I'm 4.5 hours behind AEST. My working day overlaps your afternoon, so we can talk live, and I keep working after you've logged off.",
+        "Changes you send in the afternoon are usually ready by your next morning.",
+      ],
+    },
+    {
+      q: "How many revisions are included?",
+      a: ["Two rounds of revisions are included in every fixed quote. Anything outside the brief gets a quick quote before I start on it."],
+    },
+    {
+      q: "What are your payment terms?",
+      a: [
+        "For builds, 50% upfront and 50% at launch. Fixes and hourly work are invoiced when done. Care plans are billed monthly.",
+        "All prices are in AUD and invoiced to your agency, never to your client.",
+      ],
+    },
+    {
+      q: "Will you ever contact our clients?",
+      a: ["Never. I only talk to your team, unless you ask me to join a call as part of your agency."],
+    },
+  ],
+  needs: ["Overflow builds", "Ongoing partnership", "One project", "Maintenance"],
+};
+
+/* ── /privacy ──────────────────────────────────────────────────────── */
+export const privacy = {
+  updated: "18 October 2026",
+  sections: [
+    {
+      title: "What the contact forms collect",
+      body: [
+        "When you send an enquiry, I collect what you type in: your name, email address, the package or service you choose, and your message.",
+        "The agency form also collects your agency's name, its website and the kind of help you need.",
+        "A hidden spam-trap field is checked and thrown away. The forms don't set cookies.",
+      ],
+    },
+    {
+      title: "Why I collect it",
+      body: [
+        "Only to reply to your enquiry, prepare a quote, and do the work if we go ahead. I don't add you to a mailing list, and I never sell or share your details.",
+      ],
+    },
+    {
+      title: "Where it's stored",
+      body: [
+        "The form sends your message to my Gmail inbox (Google) through this website, which is hosted on Vercel. It stays in that inbox and isn't saved in any other database.",
+        "This site uses Vercel Analytics to count page views. It doesn't use cookies or identify you personally.",
+      ],
+    },
+    {
+      title: "Asking for deletion",
+      body: [
+        "You can ask to see, correct or delete what I hold about you at any time. Email me and I'll do it within 30 days, unless I need to keep an invoice record for tax.",
+      ],
+    },
+  ],
+};
