@@ -38,10 +38,10 @@ const VARIANTS = {
     file: "new-enquiry.form",
   },
   agency: {
-    fig: "Fig. 08 — Contact",
+    fig: "Fig. 09 — Contact",
     title: "Let's work",
     titleAccent: "together.",
-    sub: "Tell me about your agency and the work you have coming up. I'll reply within 24 hours, and I'm happy to sign your NDA before you share any client details.",
+    sub: "Tell me about your agency and the work you have coming up. I'll reply within 24 hours with questions, a rough timeline and how I'd quote it.",
     serviceLabel: "What do you need?",
     servicePlaceholder: "Choose one",
     options: agency.needs,

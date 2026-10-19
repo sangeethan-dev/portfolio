@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap, MQ, useGSAP } from "@/lib/gsap";
+import { gsap, ScrollTrigger, MQ, useGSAP } from "@/lib/gsap";
 import useSplitReveal from "@/lib/gsap/useSplitReveal";
 import { agency } from "@/content/site";
 import styles from "./Agencies.module.css";
@@ -15,11 +15,16 @@ export default function AgencyWhy() {
     () => {
       const mm = gsap.matchMedia();
       mm.add(MQ.motion, () => {
+        // A paused timeline played by a plain trigger: a timeline that owns a
+        // `once` ScrollTrigger is still waiting for its first tick when the
+        // next section's triggers are created, which crashes ScrollTrigger's
+        // refresh in GSAP 3.13.
         gsap.utils.toArray("[data-row]", rootRef.current).forEach((row) => {
-          gsap
-            .timeline({ scrollTrigger: { trigger: row, start: "top 88%", once: true } })
+          const tl = gsap
+            .timeline({ paused: true })
             .from(row.querySelector("[data-rule]"), { scaleX: 0, duration: 1, ease: "expo.inOut" })
             .from(row.querySelectorAll("[data-cell]"), { y: 30, autoAlpha: 0, duration: 0.8, ease: "expo.out", stagger: 0.08 }, 0.25);
+          ScrollTrigger.create({ trigger: row, start: "top 88%", once: true, onEnter: () => tl.play() });
         });
       });
       return () => mm.revert();
@@ -30,7 +35,7 @@ export default function AgencyWhy() {
   return (
     <section ref={rootRef} className={styles.section} data-theme-section="blueprint">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 02 — Why agencies use me</span>
+        <span className="label">Fig. 03 — Why agencies use me</span>
         <h2 ref={titleRef} className={styles.title}>
           An extra developer, without the extra hire.
         </h2>

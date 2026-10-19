@@ -49,7 +49,7 @@ export const nav = [
 export const agencyNav = [
   { label: "Services", href: "#services" },
   { label: "Rates", href: "#rates" },
-  { label: "Work", href: "#work" },
+  { label: "Lab", href: "#playground" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -81,30 +81,13 @@ export const signoff = {
   title: "Ready to build something bold?",
 };
 
-/* Contact-form option the Website Fixes card preselects */
+/* Contact-form option for one-off fixes to an existing site */
 export const FIX_SERVICE = "Fix something on my website";
 
 export const packages = [
   {
-    id: "fixes",
-    num: "01",
-    title: "Website Fixes",
-    prefix: "From",
-    currency: "AUD",
-    amount: 100,
-    desc: "Something on your current site not working? A broken booking button, a page showing 'Page not found', a security warning, a phone number that won't call? I fix it for a fixed price, agreed before I start.",
-    features: [
-      "Small fix: AUD 100 (includes a full link check)",
-      "Fix bundle (up to 4 issues): AUD 150",
-      "Usually done within a day",
-      "Pay after it's fixed",
-    ],
-    cta: "Report an issue",
-    service: FIX_SERVICE,
-  },
-  {
     id: "website",
-    num: "02",
+    num: "01",
     title: "Business Website",
     currency: "AUD",
     amount: offer.website,
@@ -123,7 +106,7 @@ export const packages = [
   },
   {
     id: "care",
-    num: "03",
+    num: "02",
     title: "Website Care Plan",
     currency: "AUD",
     amount: offer.care,
@@ -141,7 +124,7 @@ export const packages = [
   },
   {
     id: "custom",
-    num: "04",
+    num: "03",
     title: "Online Stores & Custom Projects",
     amount: null,
     priceLabel: "Custom quote",
@@ -244,7 +227,7 @@ export const concepts = [
 
 export const stats = [
   { value: 8, suffix: "", label: "Years building websites" },
-  { value: 30, suffix: "+", label: "Websites delivered" },
+  { value: 50, suffix: "+", label: "Projects delivered" },
   { value: 1, suffix: "", label: "Person you deal with" },
 ];
 
@@ -253,6 +236,101 @@ export const skills = [
   "Shopify", "Liquid", "PHP", "Figma", "Lenis", "Canvas", "SEO",
   "Node.js", "Vercel", "Matter.js", "Framer Motion",
 ];
+
+/* ── The Lab (Experiments section) ─────────────────────────────────
+   The experiments live in a separate project (sangee-inspirations). Each
+   one's thumbnail is its preview.webp, copied to public/portfolio/lab/<id>.webp,
+   and its page is <inspirations>/showcase/<id>. Copy from its meta.json. */
+const labItem = (item) => ({
+  ...item,
+  href: `${contact.inspirations}showcase/${item.id}`,
+  img: `/portfolio/lab/${item.id}.webp`,
+});
+
+export const lab = {
+  title: "Things I build for fun.",
+  intro:
+    "When I'm not on client work, I build experiments: cursors, loaders, marquees and other small interactions. The good ones end up in real projects. Drag one into the scanner to see it.",
+  items: [
+    {
+      id: "ascii-glyph-field",
+      title: "ASCII Glyph Field",
+      category: "Cursor",
+      desc: "A word built from thousands of scrambling glyphs that scatter from your cursor, heat up as they move, and morph on every click.",
+      tech: ["Canvas", "Physics", "ASCII"],
+    },
+    {
+      id: "ink-fluid-cursor",
+      title: "Ink Fluid Cursor",
+      category: "Cursor",
+      desc: "A GPU fluid simulation that pours ink from the cursor and inverts the editorial page beneath it.",
+      tech: ["WebGL", "Three.js", "Fluid Sim"],
+    },
+    {
+      id: "guiding-light",
+      title: "Guiding Light",
+      category: "Cursor",
+      desc: "A procedural flame follows your cursor through a dark forest, revealing only what its light touches.",
+      tech: ["Canvas", "Particles", "CSS Mask"],
+    },
+    {
+      id: "magnetic-marquee",
+      title: "Magnetic Marquee",
+      category: "Cursor",
+      desc: "An image strip that follows the cursor, steers with your sideways motion and shoulders the copy out of its way.",
+      tech: ["Marquee", "Physics", "Blend Mode"],
+    },
+    {
+      id: "untouchable-contact",
+      title: "Untouchable Contact",
+      category: "Scroll",
+      desc: "An endless contact list that parts around a chrome object as you scroll — and an object that dodges every attempt to touch it.",
+      tech: ["Infinite Scroll", "Physics", "Cursor"],
+    },
+    {
+      id: "magnetic-cards",
+      title: "Magnetic Cards",
+      category: "Cards",
+      desc: "A photo zine's four prints held in a stack — push them with your cursor and they spring back, dragging their neighbours along.",
+      tech: ["GSAP", "Physics", "Cursor"],
+    },
+    {
+      id: "testimonials-marquee",
+      title: "Testimonials Marquee",
+      category: "Testimonials",
+      desc: "Guest notes for a coastal hotel in three columns drifting at different speeds — hover eases a column to rest.",
+      tech: ["Framer Motion", "Marquee", "Cards"],
+    },
+    {
+      id: "scroll-reveal-grid",
+      title: "Scroll Reveal Grid",
+      category: "Reveal",
+      desc: "An architecture portfolio whose projects wipe into view with settling zoom and parallax as you scroll.",
+      tech: ["IntersectionObserver", "Clip Path", "Parallax"],
+    },
+    {
+      id: "morph-loader",
+      title: "Morph Loader",
+      category: "Loader",
+      desc: "A photographer's intro: a morphing shape flip-books portraits while loading, then blooms into the full-screen hero.",
+      tech: ["SVG", "Path Morph", "Clip Path"],
+    },
+    {
+      id: "infinite-marquee",
+      title: "Infinite Marquee",
+      category: "Marquee",
+      desc: "A film studio's reel in three seamless rows — hover eases a row to rest, scroll speeds it up, drag scrubs with inertia.",
+      tech: ["Vanilla JS", "Loop", "Drag"],
+    },
+    {
+      id: "liquid-reveal-hero",
+      title: "Liquid Reveal Hero",
+      category: "Hero",
+      desc: "A fashion lookbook hero where photography pours in through a liquid displacement field, with a word-by-word headline reveal.",
+      tech: ["SVG Filter", "Displacement", "Reveal"],
+    },
+  ].map(labItem),
+};
 
 export const faqs = [
   {
@@ -323,15 +401,28 @@ export const agency = {
   meta: {
     title: "White-Label Web Developer Australia — Sangeethan",
     description:
-      "White-label web developer for Australian digital marketing agencies. WordPress, Shopify and Next.js builds, landing pages, fixes and care plans, delivered under your brand. NDA by default, fixed quotes.",
+      "White-label web developer for Australian digital marketing agencies. WordPress, Shopify and Next.js builds, landing pages, fixes and care plans, delivered under your brand with fixed quotes.",
   },
   hero: {
     title: "Your white-label web developer.",
     sub: "I build and maintain websites for Australian digital marketing agencies, under your brand. You keep the client relationship; I deliver on time and stay invisible.",
   },
+  statement: {
+    statement:
+      "I'm the developer behind the websites your agency sells. You keep the client and the credit. I keep the deadline.",
+    pillars: ["Your brand.", "Fixed quotes.", "On time."],
+    mission:
+      "Overflow work, a one-off build or care for every client site. I fit into the way your team already works, and nobody outside it needs to know I'm there.",
+  },
+  mantra: {
+    label: "Your brand, my code, on time",
+    kicker: "Three promises. Every project.",
+    words: ["Your brand", "My code", "On time"],
+    caption: "Invisible on purpose",
+  },
   why: [
-    { title: "8 years' experience", desc: "I started at a digital marketing agency, so I know how briefs, deadlines and client sign-offs really work." },
-    { title: "White-label & NDA by default", desc: "Your brand on everything. I sign your NDA before we start, and I never appear in front of your client." },
+    { title: "8 years, 50+ projects", desc: "I started at a digital marketing agency, so I know how briefs, deadlines and client sign-offs really work." },
+    { title: "White-label by default", desc: "Your brand on everything: the site, the staging link, the handover. I never appear in front of your client." },
     { title: "Fixed quotes before starting", desc: "You get a fixed price up front, so your margin is known before a line of code is written." },
     { title: "Ready by your next morning", desc: "I'm 4.5 hours behind AEST. Send changes at the end of your day and they're done when you're back in." },
     { title: "One developer, no hand-offs", desc: "The person who quotes your project is the person who builds it. Nothing gets lost between teams." },
@@ -345,11 +436,26 @@ export const agency = {
     { title: "Speed, SEO & technical fixes", desc: "Core Web Vitals, broken pages, redirects, schema and security warnings." },
     { title: "Ongoing maintenance", desc: "Updates, backups and small edits for your clients' sites, every month." },
   ],
+  // prefix "From" = starting price; a null amount shows "On request"
   rates: [
-    { label: "5-page website", amount: null, suffix: "" },
-    { label: "Landing page", amount: null, suffix: "" },
-    { label: "Hourly / overflow", amount: null, suffix: "/ hr" },
-    { label: "Care plan per client site", amount: null, suffix: "/ month" },
+    {
+      label: "5–7 page website",
+      prefix: "From",
+      amount: 1800,
+      note: "Built from your design. AUD 2,200 if I design it too.",
+    },
+    {
+      label: "Landing page",
+      prefix: "From",
+      amount: 400,
+      note: "Built from your design, ready for tracking. AUD 550 if I design it.",
+    },
+    {
+      label: "Hourly / overflow",
+      amount: 35,
+      suffix: "/ hr",
+      note: "Invoiced when done.",
+    },
   ],
   firstProject: null, // e.g. "20% off your first project"
   process: [
@@ -360,12 +466,17 @@ export const agency = {
     { title: "Launch under your brand", desc: "It goes live with your agency's name on it, not mine." },
     { title: "Optional care", desc: "I keep the site updated and backed up, billed to you." },
   ],
-  workNote:
-    "Agency work is white-label, so it can't be shown publicly. Samples are available on request under NDA.",
+  lab: {
+    title: "What I can build for you.",
+    intro:
+      "Agency work goes out under your brand, so I don't show it publicly. These experiments show the motion and interaction I can bring to your clients' sites. Drag one into the scanner to see it, and ask me for relevant examples on a call.",
+  },
   faqs: [
     {
-      q: "Will you sign our NDA?",
-      a: ["Yes, always, and before I see the brief. If you don't have one, I'll send mine. White-label is the default, not an extra."],
+      q: "Whose name goes on the site?",
+      a: [
+        "Yours. White-label is the default, not an extra: no credits in the footer, no mention of me in the code or the handover.",
+      ],
     },
     {
       q: "How do we communicate?",

@@ -1,4 +1,7 @@
 .hero {
+  /* 0 = the finished site, 1 = its blueprint (tweened by the hold) */
+  --xray: 0;
+
   position: relative;
   min-height: 100svh;
   display: flex;
@@ -7,13 +10,16 @@
   padding-bottom: var(--spacing-lg);
   overflow: hidden;
   isolation: isolate;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
-/* Grid fades out toward the bottom so it blends into the next section */
+/* Grid fades out toward the bottom; the blueprint view turns it right up */
 .grid {
   position: absolute;
   inset: 0;
   z-index: -1;
+  opacity: calc(0.55 + var(--xray) * 0.45);
   -webkit-mask-image: linear-gradient(to bottom, var(--black) 55%, transparent 100%);
   mask-image: linear-gradient(to bottom, var(--black) 55%, transparent 100%);
 }
@@ -42,6 +48,41 @@
   border-left: 1px dashed rgba(var(--signal-rgb), 0.35);
 }
 
+/* ── "+" registration marks in the corners ─────────────────────── */
+.mark {
+  position: absolute;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+}
+
+.mark::before,
+.mark::after {
+  content: "";
+  position: absolute;
+  background: var(--fg-mute);
+}
+
+.mark::before {
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 1px;
+}
+
+.mark::after {
+  top: 0;
+  bottom: 0;
+  left: 6px;
+  width: 1px;
+}
+
+.mTL { top: calc(var(--header-h) - 6px); left: calc(var(--container-px) - 6px); }
+.mTR { top: calc(var(--header-h) - 6px); right: calc(var(--container-px) - 6px); }
+.mBL { bottom: 10px; left: calc(var(--container-px) - 6px); }
+.mBR { bottom: 10px; right: calc(var(--container-px) - 6px); }
+
 /* ── Layout ────────────────────────────────────────────────────── */
 .inner {
   position: relative;
@@ -68,20 +109,17 @@
   box-shadow: 0 0 0 4px rgba(var(--glow-rgb), 0.18);
 }
 
-/* ── Headline + measurement box ────────────────────────────────── */
-.headWrap {
-  position: relative;
-  align-self: flex-start;
-  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-md) var(--spacing-md);
-  margin-top: var(--spacing-lg);
-}
-
+/* ── Headline ──────────────────────────────────────────────────── */
 .headline {
-  font-size: clamp(40px, 9.4vw, 180px);
+  position: relative;
+  margin-top: var(--spacing-lg);
+  font-size: clamp(44px, 9.6vw, 184px);
   font-weight: var(--display-weight);
-  line-height: 0.9;
+  line-height: 0.92;
   letter-spacing: -0.06em;
-  color: var(--fg);
+  /* blueprint view: the fill fades out and a hairline outline takes over */
+  color: color-mix(in srgb, var(--fg) calc((1 - var(--xray)) * 100%), transparent);
+  -webkit-text-stroke: calc(var(--xray) * 1px) var(--fg);
 }
 
 .line {
@@ -89,231 +127,231 @@
   white-space: nowrap;
 }
 
-/* Second line steps back a tone — the two-tone studio headline */
-.outline {
-  color: var(--fg-mute);
-}
-
-.move {
+.word {
   display: inline-block;
-  color: var(--accent);
+  will-change: transform, filter;
 }
 
-/* dimension lines */
-.dimTop {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(var(--spacing-md) * -1.6);
-  display: flex;
-  justify-content: center;
+.accent {
+  color: color-mix(in srgb, var(--accent) calc((1 - var(--xray)) * 100%), transparent);
+  -webkit-text-stroke-color: var(--accent);
 }
 
-.dimLineH {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: var(--accent);
-  transform-origin: center;
-}
-
-.dimLineH::before,
-.dimLineH::after {
-  content: "";
-  position: absolute;
-  top: -4px;
-  width: 1px;
-  height: 9px;
-  background: var(--accent);
-}
-
-.dimLineH::before {
-  left: 0;
-}
-
-.dimLineH::after {
-  right: 0;
-}
-
-.dimSide {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: calc(var(--spacing-md) * -1.6);
-  display: flex;
-  align-items: center;
-}
-
-.dimLineV {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: var(--accent);
-  transform-origin: center;
-}
-
-.dimLineV::before,
-.dimLineV::after {
-  content: "";
-  position: absolute;
-  left: -4px;
-  width: 9px;
-  height: 1px;
-  background: var(--accent);
-}
-
-.dimLineV::before {
-  top: 0;
-}
-
-.dimLineV::after {
-  bottom: 0;
-}
-
-.dimLabel {
+/* ── Photo pills inside the type ───────────────────────────────── */
+.pill {
   position: relative;
-  padding: 2px 8px;
+  display: inline-block;
+  height: 0.74em;
+  vertical-align: -0.04em;
+  overflow: hidden;
+  background: var(--ink-3);
+  -webkit-text-stroke: 0;
+}
+
+.face {
+  width: 0.78em;
+  border-radius: var(--rounded-full);
+}
+
+.reelPill {
+  width: 1.9em;
+  border-radius: var(--rounded-full);
+}
+
+.pill img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(var(--xray));
+  opacity: calc(1 - var(--xray) * 0.85);
+}
+
+.reel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  height: 700%; /* 6 frames + the loop copy */
+}
+
+.frame {
+  position: relative;
+  flex: 1;
+}
+
+/* Wireframe box drawn over each image in the blueprint view */
+.wire {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--accent);
+  border-radius: inherit;
+  opacity: var(--xray);
+  background:
+    linear-gradient(to top right, transparent calc(50% - 0.5px), rgba(var(--signal-rgb), 0.6) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom right, transparent calc(50% - 0.5px), rgba(var(--signal-rgb), 0.6) 50%, transparent calc(50% + 0.5px));
+  pointer-events: none;
+}
+
+.wire span {
+  padding: 2px 6px;
   background: var(--bg);
   font-family: var(--mono);
   font-size: var(--font-size-2xs);
+  font-weight: 400;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--accent);
-  white-space: nowrap;
+  -webkit-text-stroke: 0;
 }
 
-.dimLabelV {
-  writing-mode: vertical-rl;
-  padding: 8px 2px;
-}
-
-.corner {
+/* Build notes that only show in the blueprint view */
+.note,
+.boxTag {
   position: absolute;
-  width: 7px;
-  height: 7px;
-  border: 1px solid var(--accent);
-  background: var(--bg);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  -webkit-text-stroke: 0;
+  white-space: nowrap;
+  opacity: var(--xray);
+  pointer-events: none;
 }
 
-.tl { top: -3px; left: -3px; }
-.tr { top: -3px; right: -3px; }
-.bl { bottom: -3px; left: -3px; }
-.br { bottom: -3px; right: -3px; }
+.note {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 10px;
+}
 
-.headWrap::before {
+/* Elements that get a dashed box in the blueprint view */
+.box {
+  position: relative;
+}
+
+.box::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border: 1px dashed rgba(var(--grid-rgb), 0.9);
+  inset: -10px;
+  border: 1px dashed var(--accent);
+  opacity: var(--xray);
   pointer-events: none;
+}
+
+.boxTag {
+  top: -24px;
+  left: -10px;
 }
 
 /* ── Bottom row ────────────────────────────────────────────────── */
 .bottom {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
   gap: var(--spacing-xl);
-  flex-wrap: wrap;
 }
 
 .ctas {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  justify-self: start;
 }
 
-/* Underlined mono links with a trailing arrow */
-.primary,
-.secondary {
+/* Hold-to-blueprint hint */
+.hold {
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-2xl);
-  min-width: 230px;
-  height: 44px;
-  border-bottom: 1px solid var(--fg);
-  font-family: var(--mono);
-  font-size: var(--font-size-xs);
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--fg);
-  transition: color var(--dur-fast) var(--ease-smooth),
-    border-color var(--dur-fast) var(--ease-smooth);
-}
-
-.primary > span {
-  display: inline-flex;
-  justify-content: space-between;
-  gap: var(--spacing-2xl);
-  width: 100%;
-}
-
-.primary:hover,
-.secondary:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
-/* ── Info plate (bottom right) ─────────────────────────────────── */
-.plate {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  border: 1px solid var(--line);
+  gap: var(--spacing-sm);
   font-family: var(--mono);
   font-size: var(--font-size-2xs);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--fg);
 }
 
-.plateCell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md) var(--spacing-ml);
-  text-align: center;
+.ring {
+  width: 22px;
+  height: 22px;
+  transform: rotate(-90deg);
 }
 
-.plateCell + .plateCell {
-  border-left: 1px solid var(--line);
-  align-items: flex-start;
-  text-align: left;
-  max-width: 190px;
-  line-height: 1.5;
-}
-
-.plateIcon {
-  width: 28px;
-  height: 28px;
-}
-
-.plateIcon circle,
-.plateIcon path {
+.ringTrack,
+.ringFill {
   fill: none;
-  stroke: var(--fg);
-  stroke-width: 1;
+  stroke-width: 1.5;
+}
+
+.ringTrack {
+  stroke: var(--line);
+}
+
+.ringFill {
+  stroke: var(--accent);
+}
+
+.holdText {
+  min-width: 25ch;
 }
 
 .side {
+  justify-self: end;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: var(--spacing-md);
+}
+
+.plate {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--line);
+  color: var(--fg);
+}
+
+.plateNum {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: var(--spacing-md) var(--spacing-ml);
+  font-family: var(--display);
+  font-size: var(--font-size-5xl);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.plateNum small {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.plateText {
+  display: flex;
+  align-items: center;
+  max-width: 190px;
+  padding: var(--spacing-md) var(--spacing-ml);
+  border-left: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .sideNote {
   max-width: 300px;
   font-size: var(--font-size-md);
   line-height: 1.5;
+  text-align: right;
   color: var(--fg-mute);
 }
 
@@ -334,29 +372,42 @@
 }
 
 /* ── Responsive ────────────────────────────────────────────────── */
+@media screen and (max-width: 1023px) {
+  .bottom {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .hold {
+    order: 3;
+  }
+
+  .side {
+    justify-self: start;
+    align-items: flex-start;
+  }
+
+  .sideNote {
+    text-align: left;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .headline {
-    font-size: clamp(40px, 14.6vw, 96px);
-  }
-
-  .headWrap {
-    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-sm);
     margin-top: var(--spacing-xl);
+    font-size: clamp(34px, 10.2vw, 96px);
   }
 
+  .note {
+    display: none;
+  }
 
   .ctas {
     width: 100%;
   }
 
-  .primary,
-  .secondary {
-    min-width: 0;
-    flex: 1 1 200px;
-  }
-
-  .side {
-    align-items: flex-start;
+  .ctas > * {
+    width: 100%;
   }
 
   .foot :global(.label):last-child {

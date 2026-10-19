@@ -38,10 +38,18 @@
   (--bg, --fg, --fg-mute, --line, --surface, --accent, --accent-ink).
   The theme controller tweens them between --bp-* and --live-* as sections
   marked `data-theme-section="blueprint|live"` scroll into view.
+  `useThemeFlip` resolves the theme from positions on every scroll update
+  (the last section whose top crossed its start line wins); smaller areas
+  can override it with `data-tone="blueprint|live"` while they cover the
+  middle of the screen (Work rooms, BuildStory). Call `syncTheme()` from
+  `@/lib/gsap/theme` if something moves sections without a scroll.
 - Skin "Void → Bone" (inspired by trionn.com): near-black canvas, bone type,
   graphite hairlines, ONE ember accent (--signal) used sparingly. Headlines
   are big sentence-case grotesk (--display-weight, --display-track);
-  CTAs are underlined mono links with a trailing arrow.
+  CTAs are underlined mono links with a trailing arrow — always use
+  `components/ArrowLink` (a port of trionn's letter-slide hover); don't
+  hand-roll new link/button styles.
+- Prefer real images (public/portfolio/…) over drawn vector illustrations.
 
 ## CSS Rules
 

@@ -45,3 +45,17 @@ export function onThemeChange(fn) {
   listeners.add(fn);
   return () => listeners.delete(fn);
 }
+
+/* useThemeFlip registers how to work out the theme from what's on screen;
+   anything that moves sections without a scroll (e.g. a scrubbed slide
+   catching up) can call syncTheme() to re-check. */
+let resolver = null;
+
+export function setThemeResolver(fn) {
+  resolver = fn;
+}
+
+export function syncTheme() {
+  const theme = resolver && resolver();
+  if (theme) setTheme(theme);
+}

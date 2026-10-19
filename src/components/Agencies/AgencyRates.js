@@ -5,6 +5,7 @@ import { gsap, MQ, useGSAP } from "@/lib/gsap";
 import useSplitReveal from "@/lib/gsap/useSplitReveal";
 import useSectionNav from "@/lib/lenis/useSectionNav";
 import { agency, aud } from "@/content/site";
+import ArrowLink from "@/components/ArrowLink/ArrowLink";
 import styles from "./Agencies.module.css";
 
 /* Rate sheet. A null amount reads "On request" until it's set in site.js. */
@@ -34,7 +35,7 @@ export default function AgencyRates() {
   return (
     <section id="rates" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 04 — Rates</span>
+        <span className="label">Fig. 05 — Rates</span>
         <h2 ref={titleRef} className={styles.title}>
           Fixed rates. Your margin stays yours.
         </h2>
@@ -55,23 +56,27 @@ export default function AgencyRates() {
           {agency.rates.map((r) => (
             <div key={r.label} className={styles.rate} data-rate>
               <dt className={styles.rateLabel}>{r.label}</dt>
-              <dd className={styles.rateAmount}>
-                {r.amount ? (
-                  <>
-                    {aud(r.amount)}
-                    {r.suffix && <span className={styles.rateSuffix}> {r.suffix}</span>}
-                  </>
-                ) : (
-                  <span className={styles.rateAsk}>On request</span>
-                )}
+              <dd className={styles.rateBody}>
+                <span className={styles.rateAmount}>
+                  {r.amount ? (
+                    <>
+                      {r.prefix && <span className={styles.ratePrefix}>{r.prefix} </span>}
+                      {aud(r.amount)}
+                      {r.suffix && <span className={styles.rateSuffix}> {r.suffix}</span>}
+                    </>
+                  ) : (
+                    <span className={styles.rateAsk}>On request</span>
+                  )}
+                </span>
+                {r.note && <span className={styles.rateNote}>{r.note}</span>}
               </dd>
             </div>
           ))}
         </dl>
 
-        <a href="#contact" className={styles.rateCta} onClick={(e) => go("#contact", e)}>
-          Get a fixed quote <span aria-hidden="true">→</span>
-        </a>
+        <ArrowLink href="#contact" className={styles.rateCta} onClick={(e) => go("#contact", e)}>
+          Get a fixed quote
+        </ArrowLink>
       </div>
     </section>
   );

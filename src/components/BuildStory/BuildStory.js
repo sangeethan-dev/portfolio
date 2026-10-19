@@ -136,6 +136,8 @@ export default function BuildStory() {
         });
         badgeRef.current.textContent = BADGES[i];
         badgeRef.current.dataset.live = i === 3 ? "true" : "false";
+        // data-tone lets the theme resolver (useThemeFlip) agree while pinned
+        rootRef.current.dataset.tone = i === 3 ? "live" : "blueprint";
         setTheme(i === 3 ? "live" : "blueprint");
         if (i === 3) {
           marquee.play();
@@ -247,7 +249,12 @@ export default function BuildStory() {
   );
 
   return (
-    <section id="build" ref={rootRef} className={`${styles.section}${reduced ? ` ${styles.static}` : ""}`}>
+    <section
+      id="build"
+      ref={rootRef}
+      className={`${styles.section}${reduced ? ` ${styles.static}` : ""}`}
+      data-tone="blueprint"
+    >
       <div ref={pinRef} className={styles.pin}>
         <div className={`container ${styles.layout}`}>
           {/* ── Captions ─────────────────────────────────────────── */}

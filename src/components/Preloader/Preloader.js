@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { gsap, MQ } from "@/lib/gsap";
 import { setScrollLocked } from "@/lib/lenis/useLenis";
 import { markPreloaderDone } from "@/lib/preloader";
+import { spotlight, mantra } from "@/content/site";
 import styles from "./Preloader.module.css";
 
 const SEEN_KEY = "sg-preloaded";
-
-const V_LINES = [10, 22.5, 35, 47.5, 60, 72.5, 85];
-const H_LINES = [18, 36, 54, 72, 90];
+const PHOTOS = spotlight.frames;
 
 function readSeen() {
   try {
@@ -26,17 +26,15 @@ function writeSeen() {
 }
 
 /*
- * ~1.4s intro: the blueprint grid draws itself, a counter compiles to 100,
- * then the sheet splits open. Once per session; click to skip.
+ * ~3s intro on a pale sheet: a framed box draws itself between four "+"
+ * marks, real practices flick through it like a contact sheet while the
+ * counter runs to 100, ink fills the frame, and the frame opens up to
+ * become the (ink) hero. Once per session; click to skip.
  */
 export default function Preloader() {
   const rootRef = useRef(null);
+  const frameRef = useRef(null);
   const countRef = useRef(null);
-  const statusRef = useRef(null);
-  const topRef = useRef(null);
-  const bottomRef = useRef(null);
-  const gridRef = useRef(null);
-  const metaRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -47,7 +45,7 @@ export default function Preloader() {
       markPreloaderDone();
     }
 
-    // skip it when arriving on a section link ("/#pricing") from another page
+    // skip on a repeat visit, on a section link ("/#pricing"), or reduced motion
     if (readSeen() || window.location.hash || window.matchMedia(MQ.reduced).matches) {
       finish();
       return;
@@ -56,8 +54,13 @@ export default function Preloader() {
     setScrollLocked(true);
     window.scrollTo(0, 0);
 
+    const q = gsap.utils.selector(root);
+    const frame = frameRef.current;
+    const photos = q("[data-photo]");
     const counter = { v: 0 };
-    const lines = root.querySelectorAll("line");
+    const step = 0.16;
+
+    gsap.set(photos, { autoAlpha: 0 });
 
     const tl = gsap.timeline({
       onComplete() {
@@ -66,33 +69,36 @@ export default function Preloader() {
       },
     });
 
-    tl.from(lines, {
-      drawSVG: "0%",
-      duration: 0.9,
-      ease: "power2.inOut",
-      stagger: { each: 0.04, from: "random" },
-    })
+    tl.from(q("[data-cross]"), { scale: 0, rotate: -90, duration: 0.6, ease: "expo.out", stagger: 0.05 })
+      .from(q("[data-edge='h']"), { scaleX: 0, duration: 0.7, ease: "expo.inOut" }, 0.15)
+      .from(q("[data-edge='v']"), { scaleY: 0, duration: 0.7, ease: "expo.inOut" }, 0.15)
+      .from(q("[data-word]"), { yPercent: 110, duration: 0.7, ease: "expo.out", stagger: 0.08 }, 0.5)
       .to(
         counter,
         {
           v: 100,
-          duration: 1.1,
+          duration: 2,
           ease: "power2.inOut",
           onUpdate() {
             countRef.current.textContent = String(Math.round(counter.v)).padStart(3, "0");
           },
         },
-        0
-      )
-      .to(statusRef.current, {
-        duration: 0.35,
-        scrambleText: { text: "build complete", chars: "01<>/_", speed: 0.8 },
-      }, 0.75)
-      .to([gridRef.current, metaRef.current], { autoAlpha: 0, duration: 0.3 }, "+=0.15")
-      .to(topRef.current, { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "-=0.1")
-      .to(bottomRef.current, { yPercent: 100, duration: 0.9, ease: "expo.inOut" }, "<")
-      // let the hero start its entrance while the curtain is still opening
-      .add(() => markPreloaderDone(), "-=0.55");
+        0.2
+      );
+
+    // contact-sheet flicker: each photo holds for one step, the last one stays
+    photos.forEach((p, i) => {
+      const at = 0.55 + i * step;
+      tl.set(p, { autoAlpha: 1 }, at);
+      if (i > 0) tl.set(photos[i - 1], { autoAlpha: 0 }, at);
+    });
+
+    tl.fromTo(q("[data-fill]"), { scaleY: 0 }, { scaleY: 1, duration: 0.55, ease: "expo.inOut" }, 2.05)
+      .to(q("[data-fade]"), { autoAlpha: 0, duration: 0.3 }, 2.35)
+      // the frame opens up into the hero
+      .to(frame, { width: "100vw", height: "100svh", duration: 0.95, ease: "expo.inOut" }, 2.45)
+      .add(() => markPreloaderDone(), "-=0.5")
+      .to(root, { autoAlpha: 0, duration: 0.25 });
 
     function skip() {
       tl.progress(1);
@@ -107,26 +113,47 @@ export default function Preloader() {
 
   return (
     <div ref={rootRef} className={styles.preloader} data-cursor="Skip" aria-hidden="true">
-      <div ref={topRef} className={`${styles.half} ${styles.top}`} />
-      <div ref={bottomRef} className={`${styles.half} ${styles.bottom}`} />
+      <div ref={frameRef} className={styles.frame}>
+        <i className={`${styles.edge} ${styles.top}`} data-edge="h" />
+        <i className={`${styles.edge} ${styles.bottom}`} data-edge="h" />
+        <i className={`${styles.edge} ${styles.left}`} data-edge="v" />
+        <i className={`${styles.edge} ${styles.right}`} data-edge="v" />
 
-      <svg ref={gridRef} className={styles.grid} viewBox="0 0 100 100" preserveAspectRatio="none">
-        {V_LINES.map((x) => (
-          <line key={`v${x}`} x1={x} y1="0" x2={x} y2="100" />
-        ))}
-        {H_LINES.map((y) => (
-          <line key={`h${y}`} x1="0" y1={y} x2="100" y2={y} />
-        ))}
-      </svg>
+        <div className={styles.photos}>
+          {PHOTOS.map((p) => (
+            <Image
+              key={p.src}
+              src={p.src}
+              alt=""
+              fill
+              sizes="260px"
+              loading="eager"
+              className={styles.photo}
+              data-photo
+            />
+          ))}
+        </div>
+        <span className={styles.fill} data-fill />
 
-      <div ref={metaRef} className={styles.meta}>
-        <span ref={statusRef} className={styles.status}>
-          compiling blueprint
-        </span>
-        <span className={styles.count}>
-          <span ref={countRef}>000</span>%
-        </span>
+        <i className={`${styles.cross} ${styles.cTL}`} data-cross data-fade />
+        <i className={`${styles.cross} ${styles.cTR}`} data-cross data-fade />
+        <i className={`${styles.cross} ${styles.cBL}`} data-cross data-fade />
+        <i className={`${styles.cross} ${styles.cBR}`} data-cross data-fade />
+
+        <p className={styles.caption} data-fade>
+          {mantra.words.map((w) => (
+            <span key={w} className={styles.mask}>
+              <span className={styles.captionWord} data-word>
+                {w}
+              </span>
+            </span>
+          ))}
+        </p>
       </div>
+
+      <span className={styles.count} data-fade>
+        <span ref={countRef}>000</span>
+      </span>
     </div>
   );
 }

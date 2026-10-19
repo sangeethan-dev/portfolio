@@ -52,26 +52,6 @@
   color: var(--accent);
 }
 
-.cta {
-  display: inline-flex;
-  justify-content: space-between;
-  gap: var(--spacing-2xl);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--fg);
-  font-family: var(--mono);
-  font-size: var(--font-size-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--fg);
-  transition: color var(--dur-fast) var(--ease-smooth),
-    border-color var(--dur-fast) var(--ease-smooth);
-}
-
-.cta:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-}
-
 /* ── Columns ───────────────────────────────────────────────────── */
 .cols {
   display: grid;
@@ -110,37 +90,6 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--fg-mute);
-}
-
-/* ── Giant striped wordmark ────────────────────────────────────── */
-.word {
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
-  padding: var(--spacing-3xl) var(--container-px) var(--spacing-md);
-  font-family: var(--display);
-  font-size: clamp(40px, 14.2vw, 300px);
-  font-weight: 700;
-  line-height: 0.78;
-  letter-spacing: -0.06em;
-  user-select: none;
-}
-
-/* Horizontal scan-line stripes clipped to the letters */
-.letter {
-  display: inline-block;
-  transform-origin: 50% 100%;
-  color: transparent;
-  background: repeating-linear-gradient(
-    180deg,
-    var(--fg) 0,
-    var(--fg) 0.045em,
-    transparent 0.045em,
-    transparent 0.09em
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  opacity: 0.5;
 }
 
 @media screen and (max-width: 767px) {

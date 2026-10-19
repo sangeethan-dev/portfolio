@@ -109,8 +109,8 @@ export default function Pricing() {
           Clear pricing. No surprises.
         </h2>
         <p className={styles.intro}>
-          Fix what&apos;s broken, build something new, or have me look after it every month. Every job has a
-          fixed price, and you&apos;ll know it before I start.
+          You pay one fixed price to build your website, and a small monthly fee if you&apos;d like me to look
+          after it. You&apos;ll know the full cost before I start.
         </p>
       </div>
 
@@ -140,7 +140,6 @@ export default function Pricing() {
               {p.amount ? (
                 <>
                   <span className={styles.priceMeta}>
-                    {p.prefix && <span>{p.prefix}</span>}
                     <span>{p.currency}</span>
                   </span>
                   <span className={styles.amount}>

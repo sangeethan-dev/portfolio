@@ -2,63 +2,91 @@
 
 import { useEffect } from "react";
 import { ScrollTrigger } from "./index";
-import { setTheme } from "./theme";
+import { setTheme, setThemeResolver, syncTheme } from "./theme";
 
 /*
- * Watches every element with data-theme-section="blueprint|live" and
- * switches the global theme when it arrives.
+ * Keeps the global theme in step with what's on screen.
  *
- *   data-theme-start  ScrollTrigger start for the switch (default "top 50%").
- *                     e.g. "top 20%" waits until the section above has
- *                     almost fully scrolled away before switching.
+ *   data-theme-section="blueprint|live"  on page sections
+ *   data-theme-start="top 20%"           optional: switch to this section only
+ *                                        once its top reaches 20% of the
+ *                                        viewport (default 50%)
+ *   data-tone="blueprint|live"           on smaller areas inside a section
+ *                                        (e.g. the Work rooms, which also
+ *                                        slide in sideways); wins while it
+ *                                        covers the middle of the screen
  *
- * Scrolling back up past the start restores the theme of the section right
- * before it (when that section declares one), so the switch happens at the
- * same boundary in both directions.
+ * One scroll listener resolves the theme from positions every update, rather
+ * than one callback per section — so a fast jump across many sections (a nav
+ * link, a deep link) always lands on the right theme, whatever order the
+ * callbacks would have fired in.
  *
  * Mount once, after the page's sections, so pins above are measured first.
  */
+function startLine(el) {
+  const m = /top\s+(\d+(?:\.\d+)?)%/.exec(el.dataset.themeStart || "");
+  return m ? Number(m[1]) / 100 : 0.5;
+}
+
 export default function useThemeFlip() {
   useEffect(() => {
-    const sections = document.querySelectorAll("[data-theme-section]");
+    const sections = Array.from(document.querySelectorAll("[data-theme-section]"));
+    const tones = Array.from(document.querySelectorAll("[data-tone]"));
 
-    // Arriving from another page can leave the previous page's theme on —
-    // start from the theme of the section under the middle of the screen.
-    const mid = window.innerHeight / 2;
-    const under =
-      Array.from(sections).find((el) => {
+    function resolve() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const tone = tones.find((el) => {
         const r = el.getBoundingClientRect();
-        return r.top <= mid && r.bottom > mid;
-      }) || sections[0];
-    if (under) setTheme(under.dataset.themeSection, { immediate: true });
-    const triggers = Array.from(sections).map((el) => {
-      const theme = el.dataset.themeSection;
-      const prev = el.previousElementSibling;
-      const prevTheme = prev && prev.dataset.themeSection;
-
-      return ScrollTrigger.create({
-        trigger: el,
-        start: el.dataset.themeStart || "top 50%",
-        end: "bottom 50%",
-        onEnter: () => setTheme(theme),
-        onEnterBack: () => setTheme(theme),
-        onLeaveBack: () => {
-          if (prevTheme) setTheme(prevTheme);
-        },
+        return r.left <= vw / 2 && r.right > vw / 2 && r.top <= vh / 2 && r.bottom > vh / 2;
       });
-    });
+      if (tone) return tone.dataset.tone;
 
-    // Webfonts change layout heights — re-measure once they're ready
-    let cancelled = false;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        if (!cancelled) ScrollTrigger.refresh();
+      // the last section (in page order) whose top has crossed its start line
+      let theme = sections[0] && sections[0].dataset.themeSection;
+      sections.forEach((el) => {
+        if (el.getBoundingClientRect().top <= vh * startLine(el)) theme = el.dataset.themeSection;
       });
+      return theme;
     }
+
+    // Arriving from another page can leave the previous page's theme on
+    const first = resolve();
+    if (first) setTheme(first, { immediate: true });
+
+    setThemeResolver(resolve);
+    const st = ScrollTrigger.create({ start: 0, end: "max", onUpdate: syncTheme, onRefresh: syncTheme });
+
+    // Webfonts, pins and late-mounting sections change layout heights after
+    // mount — re-measure once things settle, and whenever the page grows.
+    let cancelled = false;
+    let timer = 0;
+    let lastH = document.documentElement.scrollHeight;
+    const refresh = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (cancelled) return;
+        lastH = document.documentElement.scrollHeight;
+        ScrollTrigger.refresh();
+      }, 150);
+    };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+    if (document.readyState === "complete") refresh();
+    else window.addEventListener("load", refresh, { once: true });
+
+    const ro = new ResizeObserver(() => {
+      if (Math.abs(document.documentElement.scrollHeight - lastH) > 2) refresh();
+    });
+    ro.observe(document.body);
 
     return () => {
       cancelled = true;
-      triggers.forEach((t) => t.kill());
+      clearTimeout(timer);
+      ro.disconnect();
+      window.removeEventListener("load", refresh);
+      st.kill();
+      setThemeResolver(null);
     };
   }, []);
 }

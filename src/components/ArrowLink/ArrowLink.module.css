@@ -1,0 +1,104 @@
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 240px;
+  min-height: 40px;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: inherit;
+  transition: opacity var(--dur-fast) var(--ease-smooth);
+}
+
+.link:hover {
+  opacity: 0.95;
+}
+
+/* Two stacked 1px lines: the right one retracts, the left one redraws */
+.underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+}
+
+.u {
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  will-change: transform;
+}
+
+.u + .u {
+  transform: scaleX(0);
+}
+
+/* the right margin keeps the arrow clear at rest; it isn't part of the
+   word's box, so on hover the word still travels to the very edge */
+.word {
+  position: relative;
+  display: inline-flex;
+  padding-right: 1px;
+  margin-right: 36px;
+}
+
+.char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ── Arrows ────────────────────────────────────────────────────── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.arrowRight {
+  right: 0;
+  justify-content: flex-end;
+}
+
+.arrowLeft {
+  left: 0;
+  justify-content: flex-start;
+}
+
+.sprite {
+  display: flex;
+  will-change: transform, opacity;
+}
+
+.arrowLeft .sprite {
+  opacity: 0;
+}
+
+.svg {
+  width: 10px;
+  height: 9px;
+}
+
+.svg path {
+  fill: currentColor;
+}
+
+/* Arrow direction variants */
+.down .svg {
+  transform: rotate(90deg);
+}
+
+.out .svg {
+  transform: rotate(-45deg);
+}

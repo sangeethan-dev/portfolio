@@ -1,9 +1,11 @@
 import AgencyHero from "@/components/Agencies/AgencyHero";
 import AgencyWhy from "@/components/Agencies/AgencyWhy";
+import Manifesto from "@/components/Manifesto/Manifesto";
+import Mantra from "@/components/Mantra/Mantra";
 import AgencyServices from "@/components/Agencies/AgencyServices";
 import AgencyRates from "@/components/Agencies/AgencyRates";
 import AgencyProcess from "@/components/Agencies/AgencyProcess";
-import Work from "@/components/Work/Work";
+import Playground from "@/components/Playground/Playground";
 import FAQ from "@/components/FAQ/FAQ";
 import Contact from "@/components/Contact/Contact";
 import Footer from "@/components/Footer/Footer";
@@ -18,20 +20,20 @@ export default function AgenciesPage() {
     <>
       <main>
         <AgencyHero />
+        <Manifesto
+          fig="Fig. 02 — Statement"
+          content={agency.statement}
+          more={{ href: "#services", label: "What I build" }}
+        />
         <AgencyWhy />
+        <Mantra content={agency.mantra} />
         <AgencyServices />
         <AgencyRates />
         <AgencyProcess />
-        <Work
-          fig="Fig. 06 — Work"
-          title="The standard"
-          note={agency.workNote}
-          intro="In the meantime, these three concept projects show the quality you'd get. The businesses are made up, but the sites are real and they work, so try them."
-          showFixes={false}
-        />
+        <Playground fig="Fig. 07 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
         <FAQ
           items={agency.faqs}
-          fig="Fig. 07 — FAQ"
+          fig="Fig. 08 — FAQ"
           title="Agency questions."
           intro="What agency owners and project managers ask before sending the first brief."
         />

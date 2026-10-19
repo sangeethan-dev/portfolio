@@ -1,36 +1,65 @@
+/*
+ * Default (phones, tablets, reduced motion): index + rooms stacked.
+ * [data-mode="horizontal"] (set by JS on desktop): one 100vw panel each,
+ * laid in a row and slid sideways inside a pinned viewport.
+ */
 .section {
   position: relative;
-  padding-block: var(--spacing-7xl) var(--spacing-6xl);
+  padding-bottom: var(--spacing-6xl);
 }
 
-/* ── Header ────────────────────────────────────────────────────── */
-.head {
-  display: grid;
-  grid-template-columns: 1fr minmax(260px, 440px);
-  grid-template-areas:
-    "label label"
-    "title title"
-    ". intro";
-  align-items: end;
-  gap: var(--spacing-lg) var(--spacing-2xl);
-  margin-bottom: var(--spacing-4xl);
+.pin {
+  position: relative;
+  overflow: hidden;
 }
 
-.head > :global(.label) {
-  grid-area: label;
+.track {
+  display: flex;
+  flex-direction: column;
+}
+
+.section[data-mode="horizontal"] .pin {
+  height: 100svh;
+}
+
+.section[data-mode="horizontal"] .track {
+  flex-direction: row;
+  height: 100%;
+  width: max-content;
+  will-change: transform;
+}
+
+.section[data-mode="horizontal"] .index,
+.section[data-mode="horizontal"] .room {
+  flex: 0 0 100vw;
+  height: 100%;
+}
+
+/* ── Index panel ───────────────────────────────────────────────── */
+.index {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  padding: calc(var(--header-h) + var(--spacing-3xl)) var(--container-px) var(--spacing-3xl);
 }
 
 .title {
-  grid-area: title;
-  font-size: clamp(44px, 10.5vw, 200px);
-  font-weight: var(--display-weight);
+  font-size: clamp(48px, 11vw, 210px);
   line-height: 0.88;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.065em;
   color: var(--fg);
 }
 
+.indexFoot {
+  display: grid;
+  grid-template-columns: minmax(260px, 440px) 1fr;
+  gap: var(--spacing-3xl);
+  align-items: end;
+}
+
 .intro {
-  grid-area: intro;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -46,42 +75,120 @@
   color: var(--fg);
 }
 
-/* ── Stacked cards ─────────────────────────────────────────────── */
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
+.toc {
+  border-top: 1px solid var(--line);
 }
 
-.card {
-  position: sticky;
-  top: calc(var(--header-h) + var(--spacing-md));
-  transform-origin: center top;
-  border-radius: var(--rounded-2xl);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  overflow: hidden;
-  will-change: transform;
-}
-
-.shade {
-  position: absolute;
-  inset: 0;
-  background: var(--ink);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.cardInner {
+.tocLink {
   display: grid;
-  grid-template-columns: minmax(300px, 0.8fr) 1.4fr;
-  gap: var(--spacing-xl);
-  padding: var(--spacing-xl);
-  min-height: min(78svh, 760px);
+  grid-template-columns: 48px 1fr auto;
+  align-items: baseline;
+  gap: var(--spacing-md);
+  padding-block: var(--spacing-md);
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  transition: color var(--dur-fast) var(--ease-smooth);
 }
 
-/* ── Info column ───────────────────────────────────────────────── */
+.tocLink:hover {
+  color: var(--accent);
+}
+
+.tocNum,
+.tocSector {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.tocName {
+  font-family: var(--display);
+  font-size: var(--font-size-4xl);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.scrollHint {
+  display: none;
+  position: absolute;
+  right: var(--container-px);
+  bottom: var(--spacing-2xl);
+}
+
+.section[data-mode="horizontal"] .scrollHint {
+  display: inline-flex;
+}
+
+/* ── Rooms: each one painted in its client's brand ─────────────── */
+.room {
+  --room-mute: color-mix(in srgb, var(--room-fg) 62%, transparent);
+  --room-line: color-mix(in srgb, var(--room-fg) 20%, transparent);
+
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.75fr) 1.5fr;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  padding: calc(var(--header-h) + var(--spacing-xl)) var(--container-px) var(--spacing-3xl);
+  overflow: hidden;
+  background: var(--room-bg);
+  color: var(--room-fg);
+  perspective: 1600px;
+}
+
+.clinic {
+  --room-bg: var(--clinic-ink);
+  --room-fg: var(--clinic-bg);
+  --room-accent: var(--clinic-teal);
+}
+
+.cafe {
+  --room-bg: var(--cafe-accent);
+  --room-fg: var(--cafe-bg);
+  --room-accent: var(--cafe-espresso);
+}
+
+.store {
+  --room-bg: var(--store-night);
+  --room-fg: var(--store-bg);
+  --room-accent: var(--store-sand);
+}
+
+/* Huge name drifting behind, in scan-line stripes */
+.bigname {
+  position: absolute;
+  left: 0;
+  bottom: -0.12em;
+  z-index: 0;
+  font-family: var(--display);
+  font-size: clamp(90px, 17vw, 330px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: transparent;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--room-fg) 0,
+    var(--room-fg) 0.04em,
+    transparent 0.04em,
+    transparent 0.08em
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+}
+
+.info,
+.stage {
+  position: relative;
+  z-index: 1;
+}
+
 .info {
   display: flex;
   flex-direction: column;
@@ -97,7 +204,7 @@
 .badge {
   padding: 6px 12px;
   border-radius: var(--rounded-full);
-  border: 1px dashed var(--fg);
+  border: 1px dashed var(--room-fg);
   font-family: var(--mono);
   font-size: var(--font-size-2xs);
   letter-spacing: 0.12em;
@@ -107,23 +214,22 @@
 .num {
   font-family: var(--mono);
   font-size: var(--font-size-xs);
-  color: var(--fg-mute);
+  color: var(--room-mute);
 }
 
 .name {
-  font-size: var(--font-size-6xl);
-  font-weight: var(--display-weight);
-  letter-spacing: -0.05em;
-  color: var(--fg);
+  font-size: clamp(40px, 4.4vw, 84px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
 }
 
 .sector {
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-ms);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--room-accent);
 }
 
 .brief {
@@ -131,7 +237,7 @@
   max-width: 420px;
   font-size: var(--font-size-md);
   line-height: 1.6;
-  color: var(--fg-mute);
+  color: var(--room-mute);
 }
 
 .built {
@@ -144,14 +250,14 @@
 .built li {
   padding: 6px 12px;
   border-radius: var(--rounded-full);
-  background: var(--bg);
-  font-size: var(--font-size-sm);
-  color: var(--fg);
+  border: 1px solid var(--room-line);
+  font-size: var(--font-size-xs);
 }
 
 .foot {
-  margin-top: auto;
-  padding-top: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--room-line);
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -164,18 +270,16 @@
   flex-direction: column;
   gap: 4px;
   font-family: var(--display);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
+  font-size: var(--font-size-md);
+  letter-spacing: -0.02em;
 }
 
 .pkgLabel {
   font-family: var(--mono);
   font-size: var(--font-size-2xs);
-  font-weight: 400;
   letter-spacing: 0.12em;
-  color: var(--fg-mute);
+  text-transform: uppercase;
+  color: var(--room-mute);
 }
 
 .hint {
@@ -186,64 +290,143 @@
   font-size: var(--font-size-2xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--fg-mute);
 }
 
 .hintDot {
   width: 8px;
   height: 8px;
   border-radius: var(--rounded-full);
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(var(--signal-rgb), 0.2);
+  background: var(--room-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--room-accent) 30%, transparent);
 }
 
-/* ── Preview column ────────────────────────────────────────────── */
-.preview {
-  position: relative;
-  min-height: 420px;
+/* ── The live site, in a browser window ────────────────────────── */
+.stage {
+  transform-style: preserve-3d;
+}
+
+.device {
+  display: flex;
+  flex-direction: column;
   border-radius: var(--rounded-xl);
   overflow: hidden;
-  container-type: inline-size;
-  box-shadow: 0 30px 60px -30px var(--shadow-ink);
+  background: var(--white);
+  box-shadow: 0 50px 100px -30px var(--shadow-ink), 0 0 0 1px var(--room-line);
+  transform-origin: left center;
+  will-change: transform;
 }
 
-/* ── Responsive ────────────────────────────────────────────────── */
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  height: 34px;
+  padding: 0 var(--spacing-md);
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--rounded-full);
+  background: var(--dot-red);
+}
+
+.dots i:nth-child(2) {
+  background: var(--dot-yellow);
+}
+
+.dots i:nth-child(3) {
+  background: var(--dot-green);
+}
+
+.url {
+  flex: 1;
+  max-width: 320px;
+  margin-inline: auto;
+  padding: 4px 12px;
+  border-radius: var(--rounded-full);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  text-align: center;
+  color: var(--stone);
+}
+
+.preview {
+  position: relative;
+  height: min(68svh, 720px);
+  min-height: 420px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* ── Progress (horizontal mode) ────────────────────────────────── */
+.progress {
+  display: none;
+}
+
+.section[data-mode="horizontal"] .progress {
+  display: block;
+  position: absolute;
+  left: var(--container-px);
+  right: var(--container-px);
+  bottom: var(--spacing-lg);
+  z-index: 2;
+}
+
+.progressTrack {
+  display: block;
+  height: 1px;
+  background: color-mix(in srgb, var(--fg) 25%, transparent);
+}
+
+.progressBar {
+  display: block;
+  height: 100%;
+  background: var(--fg);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* ── Stacked layout ────────────────────────────────────────────── */
 @media screen and (max-width: 1023px) {
-  .head {
+  .indexFoot {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "label"
-      "title"
-      "intro";
+    gap: var(--spacing-xl);
   }
 
-  .card {
-    position: relative;
-    top: 0;
+  .room {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-3xl) var(--container-px);
   }
 
-  .cardInner {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    padding: var(--spacing-lg);
+  .bigname {
+    top: var(--spacing-md);
+    bottom: auto;
+    font-size: 26vw;
   }
 
   .preview {
+    height: auto;
     min-height: 0;
     aspect-ratio: 4 / 5;
-  }
-
-  .metaRow {
-    margin-bottom: var(--spacing-lg);
   }
 }
 
 @media screen and (max-width: 479px) {
-  .cardInner {
-    padding: var(--spacing-md);
-  }
-
   .preview {
     aspect-ratio: 3 / 4.4;
+  }
+
+  .url {
+    display: none;
   }
 }

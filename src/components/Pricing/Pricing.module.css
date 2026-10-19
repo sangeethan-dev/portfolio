@@ -37,7 +37,7 @@
 /* ── Cards ─────────────────────────────────────────────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-md);
   align-items: stretch;
 }
@@ -351,12 +351,6 @@
 }
 
 /* ── Responsive ────────────────────────────────────────────────── */
-@media screen and (max-width: 1279px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media screen and (max-width: 1023px) {
   .head {
     grid-template-columns: 1fr;
@@ -367,7 +361,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1023px) {
   .grid {
     grid-template-columns: 1fr;
   }

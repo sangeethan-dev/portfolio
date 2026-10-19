@@ -81,49 +81,61 @@
   color: var(--fg-mute);
 }
 
-/* ── Services: card grid ───────────────────────────────────────── */
+/* ── Services: stacked index of big titles ─────────────────────── */
 .services {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-md);
+  border-top: 1px solid var(--line);
 }
 
 .service {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  min-height: 240px;
-  padding: var(--spacing-lg);
-  border: 1px solid var(--line);
-  border-radius: var(--rounded-xl);
-  background: var(--surface);
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px 1.3fr 1fr 40px;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  isolation: isolate;
   color: var(--fg);
-  transition: background var(--dur-fast) var(--ease-smooth),
-    color var(--dur-fast) var(--ease-smooth);
+  transition: color var(--dur-base) var(--ease-smooth);
 }
 
-.service:hover {
-  background: var(--ink);
+/* set by the hover handler, so text and fill always switch together */
+.service[data-hot="true"] {
   color: var(--bone);
+}
+
+/* ink that floods the row from the bottom on hover (GSAP) */
+.serviceFill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ink);
+  transform: scaleY(0);
 }
 
 .serviceNum {
   font-family: var(--mono);
   font-size: var(--font-size-xs);
-  opacity: 0.6;
+  color: var(--accent);
 }
 
 .serviceTitle {
-  margin-top: auto;
-  font-size: var(--font-size-3xl);
+  font-size: clamp(28px, 4.2vw, 76px);
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em;
 }
 
 .serviceDesc {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   line-height: 1.5;
-  opacity: 0.75;
+  opacity: 0.7;
+}
+
+.serviceArrow {
+  justify-self: end;
+  font-size: var(--font-size-2xl);
+  transform: rotate(-45deg);
 }
 
 /* ── Rates ─────────────────────────────────────────────────────── */
@@ -157,7 +169,7 @@
 
 .rates {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line);
 }
 
@@ -183,6 +195,12 @@
   color: var(--fg-mute);
 }
 
+.rateBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
 .rateAmount {
   font-family: var(--display);
   font-size: clamp(32px, 3.2vw, 56px);
@@ -203,26 +221,19 @@
   color: var(--fg);
 }
 
-.rateCta {
-  align-self: flex-start;
-  display: inline-flex;
-  justify-content: space-between;
-  gap: var(--spacing-2xl);
-  min-width: 230px;
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--fg);
+.ratePrefix {
   font-family: var(--mono);
   font-size: var(--font-size-xs);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--fg);
-  transition: color var(--dur-fast) var(--ease-smooth),
-    border-color var(--dur-fast) var(--ease-smooth);
+  color: var(--fg-mute);
 }
 
-.rateCta:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+.rateNote {
+  max-width: 32ch;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--fg-mute);
 }
 
 /* ── Process: one track, six stops ─────────────────────────────── */
@@ -291,13 +302,17 @@
 }
 
 /* ── Responsive ────────────────────────────────────────────────── */
-@media screen and (max-width: 1279px) {
-  .services {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @media screen and (max-width: 1023px) {
+  .service {
+    grid-template-columns: 40px 1fr 28px;
+    gap: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .serviceDesc {
+    grid-column: 2 / 3;
+    grid-row: 2;
+  }
+
   .head {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -312,19 +327,6 @@
 
   .rowDesc {
     grid-column: 2;
-  }
-
-  .services {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .rates {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .rate:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
   }
 
   /* track turns vertical down the left edge */
@@ -357,15 +359,7 @@
   }
 }
 
-@media screen and (max-width: 639px) {
-  .services {
-    grid-template-columns: 1fr;
-  }
-
-  .service {
-    min-height: 0;
-  }
-
+@media screen and (max-width: 767px) {
   .rates {
     grid-template-columns: 1fr;
   }
@@ -374,4 +368,8 @@
     padding-left: 0;
     border-left: 0;
   }
+}
+
+.rateCta {
+  align-self: flex-start;
 }

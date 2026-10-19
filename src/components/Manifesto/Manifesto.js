@@ -4,13 +4,19 @@ import { useRef } from "react";
 import { gsap, SplitText, MQ, useGSAP } from "@/lib/gsap";
 import { scrollToSection } from "@/lib/lenis/useLenis";
 import { manifesto } from "@/content/site";
+import ArrowLink from "@/components/ArrowLink/ArrowLink";
 import styles from "./Manifesto.module.css";
 
 /*
  * The studio statement. Words start dim and light up one by one as the
  * paragraph scrolls through the viewport (scrubbed, so it reverses too).
+ * Reused on /agencies with its own copy.
  */
-export default function Manifesto() {
+export default function Manifesto({
+  fig = "Fig. 02 — Statement",
+  content = manifesto,
+  more = { href: "#about", label: "More about me" },
+}) {
   const rootRef = useRef(null);
   const statementRef = useRef(null);
 
@@ -53,33 +59,33 @@ export default function Manifesto() {
   return (
     <section id="statement" ref={rootRef} className={styles.section} data-theme-section="blueprint">
       <div className="container">
-        <span className="label">Fig. 02 — Statement</span>
+        <span className="label">{fig}</span>
 
         <p ref={statementRef} className={styles.statement}>
-          {manifesto.statement}
+          {content.statement}
         </p>
 
         <span className={styles.cross} aria-hidden="true" />
 
         <div className={styles.foot} data-mf-foot>
           <p className={styles.pillars} data-mf-fade>
-            {manifesto.pillars.map((p) => (
+            {content.pillars.map((p) => (
               <span key={p}>{p}</span>
             ))}
           </p>
 
           <div className={styles.mission} data-mf-fade>
-            <p>{manifesto.mission}</p>
-            <a
-              href="#about"
+            <p>{content.mission}</p>
+            <ArrowLink
+              href={more.href}
               className={styles.more}
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection("#about", 0);
+                scrollToSection(more.href, 0);
               }}
             >
-              More about me <span aria-hidden="true">→</span>
-            </a>
+              {more.label}
+            </ArrowLink>
           </div>
         </div>
       </div>

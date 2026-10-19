@@ -1,0 +1,26 @@
+/* Full-bleed wordmark at the foot of the footer, on the footer's own
+   background */
+.field {
+  margin-top: auto;
+  padding: var(--spacing-2xl) 0 var(--spacing-md);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: clamp(150px, 21vw, 380px);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+@media screen and (max-width: 639px) {
+  .stage {
+    height: clamp(110px, 32vw, 180px);
+  }
+}

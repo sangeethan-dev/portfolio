@@ -1,37 +1,47 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap, SplitText, MQ, useGSAP } from "@/lib/gsap";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { gsap, MQ, useGSAP } from "@/lib/gsap";
 import { onPreloaderDone } from "@/lib/preloader";
 import { scrollToSection } from "@/lib/lenis/useLenis";
-import useMagnetic from "@/lib/gsap/useMagnetic";
-import { offer, aud, stats } from "@/content/site";
+import { offer, aud, stats, spotlight } from "@/content/site";
+import ArrowLink from "@/components/ArrowLink/ArrowLink";
 import BlueprintGrid from "./BlueprintGrid";
 import styles from "./Hero.module.css";
 
+/* Photos that roll through the reel inside the headline */
+const REEL = [0, 1, 3, 4, 5, 7].map((i) => spotlight.frames[i]);
+const HOLD_MS = 0.45; // how long a press takes to switch to the blueprint
+
+function Words({ text, className = "" }) {
+  return text.split(" ").map((w, i, all) => (
+    <span key={i}>
+      <span className={`${styles.word} ${className}`} data-word>
+        {w}
+      </span>
+      {i < all.length - 1 && " "}
+    </span>
+  ));
+}
+
+/*
+ * Hero. Words come into focus (blur → sharp), the photo pills open up
+ * inside the headline, then the reel keeps rolling through real practices.
+ *
+ * Press and hold anywhere (or use the button) to see the blueprint behind
+ * the page: the type turns to outlines, images become wireframe boxes and
+ * the build notes appear. Let go and it builds itself back.
+ */
 export default function Hero() {
   const rootRef = useRef(null);
   const innerRef = useRef(null);
-  const headWrapRef = useRef(null);
-  const h1Ref = useRef(null);
-  const moveRef = useRef(null);
-  const wRef = useRef(null);
-  const hRef = useRef(null);
+  const reelRef = useRef(null);
+  const ringRef = useRef(null);
   const guideXRef = useRef(null);
   const guideYRef = useRef(null);
-  const primaryRef = useMagnetic(0.4);
-
-  /* ── Live dimension readout around the headline ──────────────── */
-  useEffect(() => {
-    const el = headWrapRef.current;
-    const ro = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      wRef.current.textContent = `W ${Math.round(width)}px`;
-      hRef.current.textContent = `H ${Math.round(height)}px`;
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
+  const [xray, setXray] = useState(false);
+  const xrayRef = useRef(false);
 
   /* ── Ruler guides that follow the pointer ────────────────────── */
   useEffect(() => {
@@ -59,114 +69,145 @@ export default function Hero() {
     };
   }, []);
 
-  /* ── Intro, hover physics, scroll-out ─────────────────────────── */
+  /* ── Intro, photo reel, scroll-out ───────────────────────────── */
   useGSAP(
     () => {
       const q = gsap.utils.selector(rootRef);
-      const lines = q(`.${styles.line}`);
-      const split = SplitText.create(h1Ref.current, { type: "words,chars" });
-      const chars = split.chars;
-      const moveChars = chars.filter((c) => moveRef.current.contains(c));
       const mm = gsap.matchMedia();
+
+      mm.add(MQ.motion, () => {
+        const words = q("[data-word]");
+        const pills = q("[data-pill]");
+        const frames = reelRef.current.children.length;
+
+        gsap.set(words, { yPercent: 40, opacity: 0, filter: "blur(14px)" });
+        gsap.set(pills, { width: 0 });
+        gsap.set(q("[data-hero-fade]"), { autoAlpha: 0, y: 20 });
+
+        const intro = gsap
+          .timeline({ paused: true })
+          .to(words, {
+            yPercent: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 1.3,
+            ease: "expo.out",
+            stagger: 0.07,
+          })
+          .to(pills, { width: (i, el) => el.dataset.w, duration: 1.2, ease: "expo.inOut", stagger: 0.15 }, 0.35)
+          .to(q("[data-hero-fade]"), { autoAlpha: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.07 }, 0.8)
+          // pills lose their fixed width so they scale with the type again
+          .add(() => gsap.set(pills, { clearProps: "width" }));
+
+        // Reel: one frame every 1.8s, slot-machine style; the last child is a
+        // copy of the first so the loop is seamless
+        const reel = gsap.timeline({ repeat: -1, paused: true });
+        for (let i = 1; i < frames; i++) {
+          reel.to(reelRef.current, { yPercent: (-100 * i) / frames, duration: 0.9, ease: "expo.inOut" }, `+=${i === 1 ? 1.2 : 0.9}`);
+        }
+        reel.set(reelRef.current, { yPercent: 0 });
+
+        const off = onPreloaderDone(() => {
+          intro.play();
+          gsap.delayedCall(1.6, () => reel.play());
+        });
+
+        // Scroll-out: content drifts up and dims as the next section takes over
+        gsap.to(innerRef.current, {
+          yPercent: -10,
+          autoAlpha: 0.25,
+          ease: "none",
+          scrollTrigger: { trigger: rootRef.current, start: "top top", end: "bottom top", scrub: true },
+        });
+
+        return () => {
+          off();
+          reel.kill();
+        };
+      });
 
       mm.add(MQ.reduced, () => {
         gsap.set(q("[data-hero-fade]"), { autoAlpha: 1 });
       });
 
-      mm.add(MQ.motion, () => {
-        gsap.set(chars, { yPercent: 115 });
-        gsap.set(lines, { overflow: "hidden" });
-        gsap.set(q("[data-dim-h]"), { scaleX: 0 });
-        gsap.set(q("[data-dim-v]"), { scaleY: 0 });
-        gsap.set(q("[data-hero-fade]"), { autoAlpha: 0, y: 20 });
-
-        const intro = gsap.timeline({ paused: true });
-        intro
-          .to(chars, {
-            yPercent: 0,
-            duration: 1.2,
-            ease: "expo.out",
-            stagger: 0.022,
-            onComplete: () => gsap.set(lines, { overflow: "visible" }),
-          })
-          .to(q("[data-dim-h]"), { scaleX: 1, duration: 0.9, ease: "expo.inOut" }, 0.55)
-          .to(q("[data-dim-v]"), { scaleY: 1, duration: 0.9, ease: "expo.inOut" }, 0.65)
-          .to(
-            q("[data-hero-fade]"),
-            { autoAlpha: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.07 },
-            0.7
-          );
-
-        // "move." keeps moving — a wave every few seconds
-        const wave = gsap.timeline({ repeat: -1, repeatDelay: 2.6, paused: true });
-        wave.to(moveChars, {
-          yPercent: -28,
-          rotate: -6,
-          duration: 0.35,
-          ease: "power2.out",
-          stagger: 0.06,
-        }).to(
-          moveChars,
-          { yPercent: 0, rotate: 0, duration: 0.9, ease: "elastic.out(1, 0.35)", stagger: 0.06 },
-          0.3
-        );
-
-        const off = onPreloaderDone(() => {
-          intro.play();
-          gsap.delayedCall(2, () => wave.play());
-        });
-
-        // Letters hop when the pointer touches them
-        function hop(e) {
-          const c = e.currentTarget;
-          if (gsap.isTweening(c)) return;
-          gsap
-            .timeline()
-            .to(c, { yPercent: -22, duration: 0.18, ease: "power2.out" })
-            .to(c, { yPercent: 0, duration: 0.9, ease: "elastic.out(1, 0.3)" });
-        }
-        const hoppable = window.matchMedia(MQ.finePointer).matches
-          ? chars.filter((c) => !moveRef.current.contains(c))
-          : [];
-        hoppable.forEach((c) => c.addEventListener("pointerenter", hop));
-
-        // Scroll-out: content drifts up and dims as the build story takes over
-        gsap.to(innerRef.current, {
-          yPercent: -12,
-          autoAlpha: 0.25,
-          ease: "none",
-          scrollTrigger: {
-            trigger: rootRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-
-        return () => {
-          off();
-          hoppable.forEach((c) => c.removeEventListener("pointerenter", hop));
-        };
-      });
-
-      return () => {
-        mm.revert();
-        split.revert();
-      };
+      return () => mm.revert();
     },
     { scope: rootRef }
   );
 
+  /* ── Blueprint x-ray: one CSS variable (--xray 0 → 1) drives it all ── */
+  function setBlueprint(on) {
+    if (xrayRef.current === on) return;
+    xrayRef.current = on;
+    setXray(on);
+    const reduced = window.matchMedia(MQ.reduced).matches;
+    gsap.to(rootRef.current, {
+      "--xray": on ? 1 : 0,
+      duration: reduced ? 0 : on ? 0.7 : 0.9,
+      ease: on ? "expo.out" : "expo.inOut",
+      overwrite: true,
+    });
+  }
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const ring = ringRef.current;
+    let start = null;
+    let fill = null;
+
+    function cancelFill() {
+      if (fill) fill.kill();
+      fill = null;
+      gsap.to(ring, { drawSVG: "0%", duration: 0.3, ease: "power2.out", overwrite: true });
+    }
+
+    function onDown(e) {
+      if (e.button !== 0 || e.target.closest("a, button, input")) return;
+      start = { x: e.clientX, y: e.clientY };
+      fill = gsap.fromTo(
+        ring,
+        { drawSVG: "0%" },
+        { drawSVG: "100%", duration: HOLD_MS, ease: "none", onComplete: () => setBlueprint(true) }
+      );
+    }
+    function onMove(e) {
+      // a drag (or a scroll on touch) is not a hold
+      if (start && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 10 && !xrayRef.current) {
+        start = null;
+        cancelFill();
+      }
+    }
+    function onUp() {
+      if (!start && !xrayRef.current) return;
+      start = null;
+      cancelFill();
+      setBlueprint(false);
+    }
+
+    gsap.set(ring, { drawSVG: "0%" });
+    root.addEventListener("pointerdown", onDown);
+    root.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    return () => {
+      root.removeEventListener("pointerdown", onDown);
+      root.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+    };
+  }, []);
+
   return (
-    <section
-      id="top"
-      ref={rootRef}
-      className={styles.hero}
-      data-theme-section="blueprint"
-    >
+    <section id="top" ref={rootRef} className={styles.hero} data-theme-section="blueprint">
       <BlueprintGrid className={styles.grid} />
       <span ref={guideXRef} className={styles.guideX} aria-hidden="true" />
       <span ref={guideYRef} className={styles.guideY} aria-hidden="true" />
+
+      {/* registration marks on the sheet's corners */}
+      <i className={`${styles.mark} ${styles.mTL}`} aria-hidden="true" />
+      <i className={`${styles.mark} ${styles.mTR}`} aria-hidden="true" />
+      <i className={`${styles.mark} ${styles.mBL}`} aria-hidden="true" />
+      <i className={`${styles.mark} ${styles.mBR}`} aria-hidden="true" />
 
       <div ref={innerRef} className={`container ${styles.inner}`}>
         <div className={styles.topRow} data-hero-fade>
@@ -176,79 +217,103 @@ export default function Hero() {
           </span>
         </div>
 
-        <div ref={headWrapRef} className={styles.headWrap}>
-          {/* measurement annotations */}
-          <span className={styles.dimTop} aria-hidden="true">
-            <i className={styles.dimLineH} data-dim-h />
-            <span ref={wRef} className={styles.dimLabel} data-hero-fade>
-              W 0px
-            </span>
+        <h1 className={styles.headline}>
+          <span className={styles.note} aria-hidden="true">
+            &lt;h1&gt; Familjen Grotesk 500 · 9.6vw
           </span>
-          <span className={styles.dimSide} aria-hidden="true">
-            <i className={styles.dimLineV} data-dim-v />
-            <span ref={hRef} className={`${styles.dimLabel} ${styles.dimLabelV}`} data-hero-fade>
-              H 0px
-            </span>
-          </span>
-          <i className={`${styles.corner} ${styles.tl}`} data-hero-fade />
-          <i className={`${styles.corner} ${styles.tr}`} data-hero-fade />
-          <i className={`${styles.corner} ${styles.bl}`} data-hero-fade />
-          <i className={`${styles.corner} ${styles.br}`} data-hero-fade />
 
-          <h1 ref={h1Ref} className={styles.headline}>
-            <span className={styles.line}>I design &amp;</span>
-            <span className={`${styles.line} ${styles.outline}`}>build sites</span>
-            <span className={styles.line}>
-              that{" "}
-              <span ref={moveRef} className={styles.move}>
-                move.
+          <span className={styles.line}>
+            <Words text="I" />{" "}
+            <span className={`${styles.pill} ${styles.face}`} data-pill data-w="0.78em">
+              <Image src="/portfolio/profile-headshot.webp" alt="" width={180} height={180} priority />
+              <span className={styles.wire} aria-hidden="true">
+                <span>img 1:1</span>
+              </span>
+            </span>{" "}
+            <Words text="build websites" />
+          </span>
+
+          <span className={styles.line}>
+            <Words text="that get" />{" "}
+            <span className={`${styles.pill} ${styles.reelPill}`} data-pill data-w="1.9em">
+              <span ref={reelRef} className={styles.reel}>
+                {[...REEL, REEL[0]].map((f, i) => (
+                  <span key={i} className={styles.frame}>
+                    <Image src={f.src} alt="" fill sizes="(max-width: 767px) 30vw, 360px" priority={i < 2} />
+                  </span>
+                ))}
+              </span>
+              <span className={styles.wire} aria-hidden="true">
+                <span>img reel × {REEL.length} · 2:1</span>
               </span>
             </span>
-          </h1>
-        </div>
+          </span>
+
+          <span className={styles.line}>
+            <Words text="you" /> <Words text="booked." className={styles.accent} />
+          </span>
+        </h1>
 
         <div className={styles.bottom}>
-          <div className={styles.ctas} data-hero-fade>
-            <a
-              ref={primaryRef}
+          <div className={`${styles.ctas} ${styles.box}`} data-hero-fade>
+            <span className={styles.boxTag} aria-hidden="true">
+              &lt;a&gt; × 2
+            </span>
+            <ArrowLink
               href="#build"
-              className={styles.primary}
+              arrow="down"
               data-cursor="Scroll"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("#build", 0);
               }}
             >
-              <span data-magnetic-inner>
-                Watch it build <span aria-hidden="true">↓</span>
-              </span>
-            </a>
-            <a
+              Watch it build
+            </ArrowLink>
+            <ArrowLink
               href="#pricing"
-              className={styles.secondary}
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("#pricing", 0);
               }}
             >
-              Websites {aud(offer.website)} <span aria-hidden="true">→</span>
-            </a>
+              {`Websites ${aud(offer.website)}`}
+            </ArrowLink>
           </div>
 
-          <div className={styles.side} data-hero-fade>
+          <button
+            type="button"
+            className={styles.hold}
+            aria-pressed={xray}
+            onClick={(e) => {
+              // pointer holds are handled above; this is the keyboard path
+              if (e.detail === 0) setBlueprint(!xrayRef.current);
+            }}
+            data-hero-fade
+          >
+            <svg viewBox="0 0 24 24" className={styles.ring} aria-hidden="true">
+              <circle cx="12" cy="12" r="10" className={styles.ringTrack} />
+              <circle ref={ringRef} cx="12" cy="12" r="10" className={styles.ringFill} />
+            </svg>
+            <span className={styles.holdText}>
+              {xray ? "Release to build it back" : "Hold to see the blueprint"}
+            </span>
+          </button>
+
+          <div className={`${styles.side} ${styles.box}`} data-hero-fade>
+            <span className={styles.boxTag} aria-hidden="true">
+              &lt;aside&gt;
+            </span>
             <div className={styles.plate}>
-              <span className={styles.plateCell}>
-                <svg viewBox="0 0 28 28" className={styles.plateIcon} aria-hidden="true">
-                  <circle cx="14" cy="14" r="12.5" />
-                  <path d="M1.5 14h25M14 1.5c-4 4-4 21 0 25M14 1.5c4 4 4 21 0 25" />
-                </svg>
-                {stats[0].value} yrs
+              <span className={styles.plateNum}>
+                {stats[0].value}
+                <small>yrs</small>
               </span>
-              <span className={styles.plateCell}>Building websites people find, trust &amp; book.</span>
+              <span className={styles.plateText}>Building websites people find, trust &amp; book.</span>
             </div>
             <p className={styles.sideNote}>
-              Websites for local practices and small businesses. The kind people find on Google, trust straight
-              away, and book from in a couple of taps.
+              For local practices and small businesses. Found on Google, trusted at first glance, booked in a
+              couple of taps.
             </p>
           </div>
         </div>
