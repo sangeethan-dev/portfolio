@@ -1,0 +1,226 @@
+.section {
+  position: relative;
+  padding-block: var(--spacing-6xl);
+}
+
+/* ── Head ──────────────────────────────────────────────────────── */
+.head {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 420px);
+  grid-template-areas:
+    "label label"
+    "title side";
+  align-items: end;
+  gap: var(--spacing-lg) var(--spacing-2xl);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.head > :global(.label) {
+  grid-area: label;
+}
+
+.title {
+  grid-area: title;
+  font-size: clamp(48px, 9vw, 170px);
+  line-height: 0.88;
+  letter-spacing: -0.065em;
+  color: var(--fg);
+}
+
+.side {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.intro {
+  font-size: var(--font-size-md);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+/* ── One row per group ─────────────────────────────────────────── */
+.group {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.32fr) 1fr;
+  gap: var(--spacing-lg) var(--spacing-2xl);
+  padding-block: var(--spacing-xl);
+}
+
+.group:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left center;
+}
+
+.groupHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-top: 0.6em;
+}
+
+.num {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  color: var(--accent);
+}
+
+.groupLabel {
+  font-size: var(--font-size-2xl);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.count {
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-width: 0;
+}
+
+/* Tool names as one flowing line of big type, slash-separated */
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.32em;
+  row-gap: 0.04em;
+  font-size: clamp(30px, 4.6vw, 84px);
+}
+
+.mask {
+  display: inline-flex;
+  align-items: baseline;
+  overflow: hidden;
+  /* room for descenders inside the reveal mask */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.slash {
+  display: inline-block;
+  margin-left: 0.32em;
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--line);
+}
+
+.tool {
+  position: relative;
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 1em;
+  font-weight: var(--display-weight);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--fg);
+  transition: color var(--dur-fast) var(--ease-smooth);
+}
+
+/* the rest of the row steps back while one tool is active */
+.group[data-active="true"] .tool {
+  color: var(--fg-mute);
+}
+
+.group[data-active="true"] .tool.toolOn {
+  color: var(--accent);
+}
+
+.dot {
+  display: inline-block;
+  width: 0.16em;
+  height: 0.16em;
+  min-width: 7px;
+  min-height: 7px;
+  margin-left: 0.08em;
+  vertical-align: 0.9em;
+  border-radius: var(--rounded-full);
+  background: var(--accent);
+}
+
+.legend .dot {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.note {
+  min-height: 1.5em;
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.group[data-active="true"] .note {
+  color: var(--fg);
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media screen and (max-width: 1023px) {
+  .head {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "title"
+      "side";
+  }
+
+  .group {
+    grid-template-columns: 1fr;
+  }
+
+  .groupHead {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    padding-top: 0;
+  }
+
+  .count {
+    margin-left: auto;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  .tools {
+    font-size: clamp(28px, 9vw, 44px);
+  }
+
+  .note {
+    min-height: 3em;
+  }
+}

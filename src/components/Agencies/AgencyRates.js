@@ -35,7 +35,7 @@ export default function AgencyRates() {
   return (
     <section id="rates" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 05 — Rates</span>
+        <span className="label">Fig. 06 — Rates</span>
         <h2 ref={titleRef} className={styles.title}>
           Fixed rates. Your margin stays yours.
         </h2>

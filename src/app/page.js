@@ -6,6 +6,7 @@ import BuildStory from "@/components/BuildStory/BuildStory";
 import Spotlight from "@/components/Spotlight/Spotlight";
 import Work from "@/components/Work/Work";
 import Playground from "@/components/Playground/Playground";
+import Stack from "@/components/Stack/Stack";
 import Pricing from "@/components/Pricing/Pricing";
 import About from "@/components/About/About";
 import FAQ from "@/components/FAQ/FAQ";
@@ -25,6 +26,7 @@ export default function Home() {
         <Spotlight />
         <Work />
         <Playground />
+        <Stack />
         <Pricing />
         <About />
         <FAQ />

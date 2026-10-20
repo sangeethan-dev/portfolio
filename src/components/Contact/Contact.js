@@ -23,7 +23,7 @@ const EMPTY = { name: "", email: "", service: "", message: "", company: "", agen
 /* Copy per form. "agency" is the /agencies form (agency name, website, need). */
 const VARIANTS = {
   home: {
-    fig: "Fig. 10 — Contact",
+    fig: "Fig. 11 — Contact",
     title: "Let's build",
     titleAccent: "yours.",
     sub: "Tell me a bit about your practice and what you want from your website. I'll get back to you within 24 hours with honest advice and what I'd suggest next.",
@@ -38,7 +38,7 @@ const VARIANTS = {
     file: "new-enquiry.form",
   },
   agency: {
-    fig: "Fig. 09 — Contact",
+    fig: "Fig. 10 — Contact",
     title: "Let's work",
     titleAccent: "together.",
     sub: "Tell me about your agency and the work you have coming up. I'll reply within 24 hours with questions, a rough timeline and how I'd quote it.",

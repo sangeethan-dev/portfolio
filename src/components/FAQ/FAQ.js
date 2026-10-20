@@ -33,7 +33,7 @@ function Typing() {
  */
 export default function FAQ({
   items = faqs,
-  fig = "Fig. 09 — FAQ",
+  fig = "Fig. 10 — FAQ",
   title = "Questions, answered.",
   intro = DEFAULT_INTRO,
 }) {

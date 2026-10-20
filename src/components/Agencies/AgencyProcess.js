@@ -44,7 +44,7 @@ export default function AgencyProcess() {
   return (
     <section ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 06 — Process</span>
+        <span className="label">Fig. 07 — Process</span>
         <h2 ref={titleRef} className={styles.title}>
           From brief to launch, under your brand.
         </h2>

@@ -231,11 +231,55 @@ export const stats = [
   { value: 1, suffix: "", label: "Person you deal with" },
 ];
 
-export const skills = [
-  "HTML", "CSS", "JavaScript", "React", "Next.js", "GSAP", "WordPress",
-  "Shopify", "Liquid", "PHP", "Figma", "Lenis", "Canvas", "SEO",
-  "Node.js", "Vercel", "Matter.js", "Framer Motion",
-];
+/* ── Stack section ────────────────────────────────────────────────
+   live: true = running on this site right now (gets the ● marker).
+   note = what I use it for; shown when the tool is hovered/tapped. */
+export const stack = {
+  title: "The stack.",
+  intro:
+    "The tools I build with, grouped by the job they do. Hover one to see what I use it for. The ones marked ● are running on this page right now.",
+  groups: [
+    {
+      id: "build",
+      label: "Build",
+      blurb: "What every site is made of.",
+      tools: [
+        { name: "Next.js", live: true, note: "This site, and most of my custom builds." },
+        { name: "React", live: true, note: "Every interactive part of this page is a React component." },
+        { name: "JavaScript", live: true, note: "Hand-written, no page builder underneath." },
+        { name: "TypeScript", note: "For bigger codebases and shared projects." },
+        { name: "HTML & CSS", live: true, note: "Semantic, accessible and mobile first." },
+        { name: "Tailwind", note: "When a project or team already uses it." },
+      ],
+    },
+    {
+      id: "motion",
+      label: "Motion",
+      blurb: "What makes it move.",
+      tools: [
+        { name: "GSAP", live: true, note: "Every animation on this site, including the one under your cursor." },
+        { name: "Lenis", live: true, note: "The smooth scroll you're feeling right now." },
+        { name: "Canvas", live: true, note: "The hero's blueprint grid and the glyphs in the footer." },
+        { name: "Three.js", note: "3D scenes and shaders, like my ink fluid experiment." },
+        { name: "WebGL", note: "GPU effects when CSS isn't enough." },
+        { name: "Framer Motion", note: "Motion inside React projects that already use it." },
+        { name: "Matter.js", note: "Real physics: things you can drag, throw and drop." },
+      ],
+    },
+    {
+      id: "cms",
+      label: "CMS & commerce",
+      blurb: "Sites your clients can run themselves.",
+      tools: [
+        { name: "WordPress", note: "Custom themes your team can edit without calling me." },
+        { name: "Elementor", note: "Page-builder sites that agencies can hand over." },
+        { name: "Shopify", note: "Online stores, from theme tweaks to full builds." },
+        { name: "Liquid", note: "Custom Shopify sections and templates." },
+        { name: "PHP", note: "Custom WordPress themes and plugins." },
+      ],
+    },
+  ],
+};
 
 /* ── The Lab (Experiments section) ─────────────────────────────────
    The experiments live in a separate project (sangee-inspirations). Each
