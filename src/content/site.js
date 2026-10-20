@@ -288,13 +288,15 @@ export const stack = {
 const labItem = (item) => ({
   ...item,
   href: `${contact.inspirations}showcase/${item.id}`,
+  // the bare experiment (no gallery chrome), embedded live in the scanner
+  run: `${contact.inspirations}showcases/${item.id}/index.html`,
   img: `/portfolio/lab/${item.id}.webp`,
 });
 
 export const lab = {
   title: "Things I build for fun.",
   intro:
-    "When I'm not on client work, I build experiments: cursors, loaders, marquees and other small interactions. The good ones end up in real projects. Drag one into the scanner to see it.",
+    "When I'm not on client work, I build experiments: cursors, loaders, marquees and other small interactions. The good ones end up in real projects. Drag one into the scanner to run it.",
   items: [
     {
       id: "ascii-glyph-field",
@@ -513,7 +515,7 @@ export const agency = {
   lab: {
     title: "What I can build for you.",
     intro:
-      "Agency work goes out under your brand, so I don't show it publicly. These experiments show the motion and interaction I can bring to your clients' sites. Drag one into the scanner to see it, and ask me for relevant examples on a call.",
+      "Agency work goes out under your brand, so I don't show it publicly. These experiments show the motion and interaction I can bring to your clients' sites. Drag one into the scanner to run it, and ask me for relevant examples on a call.",
   },
   faqs: [
     {

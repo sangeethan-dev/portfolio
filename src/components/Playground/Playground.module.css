@@ -46,6 +46,9 @@
 /* ── Stage ─────────────────────────────────────────────────────── */
 .stage {
   position: relative;
+  /* Draggable boosts card z-indexes into the thousands; keep that contained
+     so cards never ride over the header or the full-screen run */
+  isolation: isolate;
   height: clamp(680px, 90svh, 900px);
 }
 
@@ -257,8 +260,138 @@
   text-transform: uppercase;
 }
 
+.actions {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--spacing-xs);
+}
+
 .run {
   min-width: 200px;
+}
+
+/* ── Live run ──────────────────────────────────────────────────── */
+/* the experiment is laid out at desktop width, then scaled to the scanner */
+.frameWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px; /* FRAME_W in Playground.js */
+  height: var(--frame-h, 880px);
+  border: 0;
+  background: var(--ink-2);
+  transform: scale(var(--frame-scale, 0.5));
+  transform-origin: 0 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.scannerLive {
+  border-color: var(--accent);
+}
+
+.scannerLive .frame {
+  pointer-events: auto;
+}
+
+/* over a running experiment the readouts sit on ink chips to stay legible */
+.statusOn span {
+  padding: 4px 8px;
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.statusOn span:first-child::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: 1px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.smallLink {
+  min-width: 0;
+}
+
+.done {
+  position: absolute;
+  top: 9px;
+  right: 40px;
+  z-index: 4;
+  min-height: 30px;
+  padding-inline: 10px;
+  background: var(--ink);
+  color: var(--bone);
+  font-size: var(--font-size-2xs);
+}
+
+/* full screen */
+.full {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.fullBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-bottom: 1px solid rgba(var(--bone-rgb), 0.15);
+}
+
+.fullTitle {
+  display: flex;
+  gap: var(--spacing-md);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fullTitle span:first-child {
+  color: var(--accent);
+}
+
+.fullActions {
+  display: flex;
+  gap: var(--spacing-xl);
+}
+
+.fullStage {
+  position: relative;
+}
+
+.fullFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--ink);
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* ── Cards ─────────────────────────────────────────────────────── */

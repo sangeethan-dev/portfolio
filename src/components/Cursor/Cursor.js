@@ -75,6 +75,12 @@ export default function Cursor() {
     }
 
     function onOver(e) {
+      // an embedded page (a running Lab experiment) draws its own cursor;
+      // ours would freeze at its edge, so step aside until the next move here
+      if (e.target.tagName === "IFRAME") {
+        onLeaveDoc();
+        return;
+      }
       const t = e.target.closest("[data-cursor], a, button, label, input, select, textarea");
       setState(t);
     }
