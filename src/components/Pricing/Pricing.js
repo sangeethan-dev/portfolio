@@ -123,7 +123,7 @@ export default function Pricing() {
           >
             <div className={styles.cardTop}>
               <span className={styles.cardNum}>{p.num}</span>
-              {p.was && <span className={styles.flag}>Intro offer</span>}
+              {p.was && <span className={styles.flag}>{offer.label}</span>}
             </div>
 
             <h3 className={styles.cardTitle}>{p.title}</h3>

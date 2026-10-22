@@ -23,9 +23,11 @@ export const contact = {
   clientTimeLabel: "AEST",
 };
 
-/* ── Pricing / introductory offer — change prices here only ──────── */
+/* ── Pricing / current offer — change prices here only ────────────
+   Shown as a plain "current offer", never as an intro/launch price: it
+   shouldn't read like I'm looking for my first clients. ──────────── */
 export const offer = {
-  label: "Introductory offer",
+  label: "Current offer",
   website: 2000,
   websiteWas: 2900,
   care: 100,
@@ -53,9 +55,9 @@ export const agencyNav = [
   { label: "Contact", href: "#contact" },
 ];
 
-/* Pages linked from the footer and the mobile menu (not the desktop nav) */
+/* Pages linked from the footer. /agencies is deliberately not here: it's
+   shared directly in agency outreach and never linked from the main site. */
 export const pageLinks = {
-  agencies: { label: "For agencies", href: "/agencies" },
   privacy: { label: "Privacy", href: "/privacy" },
 };
 
@@ -284,6 +286,9 @@ export const stack = {
 /* ── The Lab (Experiments section) ─────────────────────────────────
    The experiments live in a separate project (sangee-inspirations). Each
    one's thumbnail is its preview.webp, copied to public/portfolio/lab/<id>.webp,
+   (960x600 webp). Only list experiments that are plain pages (they have an
+   index.html): the scanner runs <inspirations>/showcases/<id>/index.html live,
+   and React showcases (component.tsx) have no such page.
    and its page is <inspirations>/showcase/<id>. Copy from its meta.json. */
 const labItem = (item) => ({
   ...item,
@@ -296,7 +301,7 @@ const labItem = (item) => ({
 export const lab = {
   title: "Things I build for fun.",
   intro:
-    "When I'm not on client work, I build experiments: cursors, loaders, marquees and other small interactions. The good ones end up in real projects. Drag one into the scanner to run it.",
+    "When I'm not on client work, I build experiments: cursors, loaders, heroes and other small interactions. The good ones end up in real projects. Drag one into the scanner to run it.",
   items: [
     {
       id: "ascii-glyph-field",
@@ -313,46 +318,11 @@ export const lab = {
       tech: ["WebGL", "Three.js", "Fluid Sim"],
     },
     {
-      id: "guiding-light",
-      title: "Guiding Light",
-      category: "Cursor",
-      desc: "A procedural flame follows your cursor through a dark forest, revealing only what its light touches.",
-      tech: ["Canvas", "Particles", "CSS Mask"],
-    },
-    {
-      id: "magnetic-marquee",
-      title: "Magnetic Marquee",
-      category: "Cursor",
-      desc: "An image strip that follows the cursor, steers with your sideways motion and shoulders the copy out of its way.",
-      tech: ["Marquee", "Physics", "Blend Mode"],
-    },
-    {
-      id: "untouchable-contact",
-      title: "Untouchable Contact",
-      category: "Scroll",
-      desc: "An endless contact list that parts around a chrome object as you scroll — and an object that dodges every attempt to touch it.",
-      tech: ["Infinite Scroll", "Physics", "Cursor"],
-    },
-    {
-      id: "magnetic-cards",
-      title: "Magnetic Cards",
-      category: "Cards",
-      desc: "A photo zine's four prints held in a stack — push them with your cursor and they spring back, dragging their neighbours along.",
-      tech: ["GSAP", "Physics", "Cursor"],
-    },
-    {
-      id: "testimonials-marquee",
-      title: "Testimonials Marquee",
-      category: "Testimonials",
-      desc: "Guest notes for a coastal hotel in three columns drifting at different speeds — hover eases a column to rest.",
-      tech: ["Framer Motion", "Marquee", "Cards"],
-    },
-    {
-      id: "scroll-reveal-grid",
-      title: "Scroll Reveal Grid",
-      category: "Reveal",
-      desc: "An architecture portfolio whose projects wipe into view with settling zoom and parallax as you scroll.",
-      tech: ["IntersectionObserver", "Clip Path", "Parallax"],
+      id: "acronym-intro-hero",
+      title: "Acronym Intro Hero",
+      category: "Hero",
+      desc: "A landscape practice's homepage: an acronym intro opens into the hero through a chamfered frame, then sector cards slide over it as you scroll.",
+      tech: ["Preloader", "Sticky", "Lenis"],
     },
     {
       id: "morph-loader",
@@ -362,6 +332,20 @@ export const lab = {
       tech: ["SVG", "Path Morph", "Clip Path"],
     },
     {
+      id: "liquid-reveal-hero",
+      title: "Liquid Reveal Hero",
+      category: "Hero",
+      desc: "A fashion lookbook hero where photography pours in through a liquid displacement field, with a word-by-word headline reveal.",
+      tech: ["SVG Filter", "Displacement", "Reveal"],
+    },
+    {
+      id: "guiding-light",
+      title: "Guiding Light",
+      category: "Cursor",
+      desc: "A procedural flame follows your cursor through a dark forest, revealing only what its light touches.",
+      tech: ["Canvas", "Particles", "CSS Mask"],
+    },
+    {
       id: "infinite-marquee",
       title: "Infinite Marquee",
       category: "Marquee",
@@ -369,11 +353,11 @@ export const lab = {
       tech: ["Vanilla JS", "Loop", "Drag"],
     },
     {
-      id: "liquid-reveal-hero",
-      title: "Liquid Reveal Hero",
-      category: "Hero",
-      desc: "A fashion lookbook hero where photography pours in through a liquid displacement field, with a word-by-word headline reveal.",
-      tech: ["SVG Filter", "Displacement", "Reveal"],
+      id: "magnetic-cards",
+      title: "Magnetic Cards",
+      category: "Cards",
+      desc: "A photo zine's four prints held in a stack — push them with your cursor and they spring back, dragging their neighbours along.",
+      tech: ["GSAP", "Physics", "Cursor"],
     },
   ].map(labItem),
 };
@@ -384,7 +368,7 @@ export const faqs = [
     a: [
       "A website of up to 7 pages, designed for your practice. Usually that's home, services, team, fees, about, contact and booking.",
       "It works well on phones, it's set up so people nearby can find you on Google, and every Book Now button goes straight to your booking system.",
-      `${aud(offer.website)} is an introductory price. It's normally ${aud(offer.websiteWas)}, and we agree the final price before I start.`,
+      `${aud(offer.website)} is my current offer. It's normally ${aud(offer.websiteWas)}, and we agree the final price before I start.`,
     ],
   },
   {

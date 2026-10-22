@@ -7,7 +7,7 @@ import { setScrollLocked } from "@/lib/lenis/useLenis";
 import useSectionNav, { sectionHref } from "@/lib/lenis/useSectionNav";
 import useScramble from "@/lib/gsap/useScramble";
 import useMagnetic from "@/lib/gsap/useMagnetic";
-import { nav, agencyNav, pageLinks, offerLine } from "@/content/site";
+import { nav, agencyNav, offerLine } from "@/content/site";
 import styles from "./Header.module.css";
 
 function NavLink({ label, href, pathname, onNavigate }) {
@@ -29,11 +29,9 @@ export default function Header() {
   const go = useSectionNav();
   const onAgencies = pathname.startsWith("/agencies");
   const links = onAgencies ? agencyNav : nav;
-  // the mobile menu also carries the page links (desktop nav does not)
-  const menuLinks = [
-    ...links,
-    onAgencies ? { label: "Home", href: "/" } : pageLinks.agencies,
-  ];
+  // /agencies is shared directly, never linked from the main site; its own
+  // mobile menu links back home (the desktop nav does not)
+  const menuLinks = onAgencies ? [...links, { label: "Home", href: "/" }] : links;
 
   /* ── Hide on scroll down, reveal on scroll up ────────────────── */
   useEffect(() => {
