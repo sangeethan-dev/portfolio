@@ -10,13 +10,13 @@
 /* ── Site URL — the ONE place to change when moving to a custom domain.
    Used for canonical tags, og:url, sitemap.xml and robots.txt.
    Can also be set per environment with NEXT_PUBLIC_SITE_URL. ───────── */
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://sangeethan.vercel.app").replace(/\/$/, "");
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.sangeethan.com").replace(/\/$/, "");
 
 export const contact = {
   email: "email2geethan@gmail.com",
   phoneDisplay: "+94 75 6144113",
   whatsapp: "https://wa.me/94756144113",
-  inspirations: "https://sangee-inspirations.vercel.app/",
+  inspirations: "https://lab.sangeethan.com/",
   city: "Colombo",
   timeZone: "Asia/Colombo",
   clientTimeZone: "Australia/Brisbane",

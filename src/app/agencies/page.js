@@ -14,7 +14,8 @@ import ThemeFlip from "@/components/ThemeFlip/ThemeFlip";
 import { agency } from "@/content/site";
 import { pageMeta } from "@/lib/meta";
 
-export const metadata = pageMeta({ ...agency.meta, path: "/agencies" });
+// shared directly with agencies, not meant to be found through search
+export const metadata = pageMeta({ ...agency.meta, path: "/agencies", noindex: true });
 
 export default function AgenciesPage() {
   return (
