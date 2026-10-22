@@ -145,18 +145,22 @@
   gap: var(--spacing-lg);
 }
 
+/* first-project offer: one ink panel under the rate cards */
 .offer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--spacing-ms);
+  gap: var(--spacing-sm) var(--spacing-ms);
   padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--rounded-full);
+  border-radius: var(--rounded-xl);
+  line-height: 1.5;
   background: var(--ink);
   color: var(--bone);
   font-size: var(--font-size-md);
 }
 
 .offerTag {
+  flex-shrink: 0;
   padding: 4px 10px;
   border-radius: var(--rounded-full);
   background: var(--glow);

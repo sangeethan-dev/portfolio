@@ -39,6 +39,8 @@ export const aud = (n) => `AUD ${n.toLocaleString("en-AU")}`;
 
 /* Short lines reused in the hero, menu, footer and metadata */
 export const offerLine = `Websites ${aud(offer.website)} · Care Plan ${aud(offer.care)}/mo for ${offer.careMonths} months`;
+// on /agencies instead: the direct price above would undercut the agency rates
+export const agencyLine = "For agencies · Fixed quotes in AUD · Invoiced to you, never your client";
 
 export const nav = [
   { label: "Build", href: "#build" },
@@ -275,6 +277,7 @@ export const stack = {
       tools: [
         { name: "WordPress", note: "Custom themes your team can edit without calling me." },
         { name: "Elementor", note: "Page-builder sites that agencies can hand over." },
+        { name: "Webflow", note: "Designs built with clean classes and a CMS your team can edit." },
         { name: "Shopify", note: "Online stores, from theme tweaks to full builds." },
         { name: "Liquid", note: "Custom Shopify sections and templates." },
         { name: "PHP", note: "Custom WordPress themes and plugins." },
@@ -426,23 +429,26 @@ export const faqs = [
 
 /* ── /agencies — white-label offer ─────────────────────────────────
    Rates are null until set: a null rate shows "On request" and a null
-   firstProject hides the offer line, so the page is safe to ship as is. */
+   firstProject hides the offer line, so the page is safe to ship as is.
+   No care plans for agencies: ongoing work is hourly, no retainer. */
+const AGENCY_HOURLY = 35;
+
 export const agency = {
   meta: {
     title: "White-Label Web Developer Australia — Sangeethan",
     description:
-      "White-label web developer for Australian digital marketing agencies. WordPress, Shopify and Next.js builds, landing pages, fixes and care plans, delivered under your brand with fixed quotes.",
+      "White-label web developer for Australian digital marketing agencies. WordPress, Webflow, Shopify and Next.js builds, landing pages and fixes, delivered under your brand with fixed quotes.",
   },
   hero: {
     title: "Your white-label web developer.",
-    sub: "I build and maintain websites for Australian digital marketing agencies, under your brand. You keep the client relationship; I deliver on time and stay invisible.",
+    sub: "I build websites for Australian digital marketing agencies, under your brand. You keep the client relationship; I deliver on time and stay invisible.",
   },
   statement: {
     statement:
       "I'm the developer behind the websites your agency sells. You keep the client and the credit. I keep the deadline.",
     pillars: ["Your brand.", "Fixed quotes.", "On time."],
     mission:
-      "Overflow work, a one-off build or care for every client site. I fit into the way your team already works, and nobody outside it needs to know I'm there.",
+      "Overflow work, a one-off build or a fix that can't wait. I fit into the way your team already works, and nobody outside it needs to know I'm there.",
   },
   mantra: {
     label: "Your brand, my code, on time",
@@ -459,12 +465,16 @@ export const agency = {
   ],
   services: [
     { title: "WordPress", desc: "Elementor or custom themes, built so your team can edit them." },
+    { title: "Webflow", desc: "Your designs built in Webflow, with clean classes and a CMS your team can edit." },
     { title: "Shopify", desc: "Theme builds and customisation, with product pages that sell." },
     { title: "Next.js builds", desc: "Fast, custom sites for when a page builder won't cut it." },
     { title: "Landing pages", desc: "Campaign pages built to your designs, ready for tracking." },
     { title: "Redesigns & migrations", desc: "Move a client site without losing content or Google rankings." },
     { title: "Speed, SEO & technical fixes", desc: "Core Web Vitals, broken pages, redirects, schema and security warnings." },
-    { title: "Ongoing maintenance", desc: "Updates, backups and small edits for your clients' sites, every month." },
+    {
+      title: "Edits & fixes on call",
+      desc: `Small changes, plugin updates and broken pages, billed hourly at ${aud(AGENCY_HOURLY)}. No retainer.`,
+    },
   ],
   // prefix "From" = starting price; a null amount shows "On request"
   rates: [
@@ -482,19 +492,23 @@ export const agency = {
     },
     {
       label: "Hourly / overflow",
-      amount: 35,
+      amount: AGENCY_HOURLY,
       suffix: "/ hr",
       note: "Invoiced when done.",
     },
   ],
-  firstProject: null, // e.g. "20% off your first project"
+  // shown under the rate cards; matches the offer in every outreach email (null hides it)
+  firstProject: {
+    tag: "First project together?",
+    text: "Take 20% off the first site, or start with a small paid test task, like one landing page, and see how I work before you commit.",
+  },
   process: [
     { title: "Brief", desc: "You send the brief, the designs or a call recording." },
     { title: "Fixed quote", desc: "A fixed price and timeline, usually within a day." },
     { title: "Build on staging", desc: "I build on a private staging link, never on the live site." },
     { title: "Your review", desc: "You and your client review it. Revisions are part of the quote." },
     { title: "Launch under your brand", desc: "It goes live with your agency's name on it, not mine." },
-    { title: "Optional care", desc: "I keep the site updated and backed up, billed to you." },
+    { title: "After launch", desc: "Need changes later? Send them over and I bill the time at the hourly rate. No retainer, no lock-in." },
   ],
   lab: {
     title: "What I can build for you.",
@@ -529,7 +543,7 @@ export const agency = {
     {
       q: "What are your payment terms?",
       a: [
-        "For builds, 50% upfront and 50% at launch. Fixes and hourly work are invoiced when done. Care plans are billed monthly.",
+        "For builds, 50% upfront and 50% at launch. Fixes and hourly work are invoiced when done.",
         "All prices are in AUD and invoiced to your agency, never to your client.",
       ],
     },
@@ -538,7 +552,7 @@ export const agency = {
       a: ["Never. I only talk to your team, unless you ask me to join a call as part of your agency."],
     },
   ],
-  needs: ["Overflow builds", "Ongoing partnership", "One project", "Maintenance"],
+  needs: ["Overflow builds", "Ongoing partnership", "One project", "Edits & fixes"],
 };
 
 /* ── /privacy ──────────────────────────────────────────────────────── */

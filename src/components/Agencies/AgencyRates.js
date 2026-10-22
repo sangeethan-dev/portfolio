@@ -46,12 +46,6 @@ export default function AgencyRates() {
       </div>
 
       <div className={`container ${styles.rateWrap}`}>
-        {agency.firstProject && (
-          <p className={styles.offer}>
-            <span className={styles.offerTag}>First project</span> {agency.firstProject}
-          </p>
-        )}
-
         <dl className={styles.rates} data-rates>
           {agency.rates.map((r) => (
             <div key={r.label} className={styles.rate} data-rate>
@@ -73,6 +67,13 @@ export default function AgencyRates() {
             </div>
           ))}
         </dl>
+
+        {agency.firstProject && (
+          <p className={styles.offer} data-rate>
+            <span className={styles.offerTag}>{agency.firstProject.tag}</span>
+            <span>{agency.firstProject.text}</span>
+          </p>
+        )}
 
         <ArrowLink href="#contact" className={styles.rateCta} onClick={(e) => go("#contact", e)}>
           Get a fixed quote
