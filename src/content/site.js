@@ -432,6 +432,8 @@ export const faqs = [
    firstProject hides the offer line, so the page is safe to ship as is.
    No care plans for agencies: ongoing work is hourly, no retainer. */
 const AGENCY_HOURLY = 35;
+const AGENCY_SITE = 1800; // 5–7 pages, built from your design
+const AGENCY_SITE_DESIGNED = 2200; // …and I design it too
 
 export const agency = {
   meta: {
@@ -476,13 +478,50 @@ export const agency = {
       desc: `Small changes, plugin updates and broken pages, billed hourly at ${aud(AGENCY_HOURLY)}. No retainer.`,
     },
   ],
+  /* "Send me the design" — the build-to-design promise for design-led
+     studios. A sticky browser frame acts out each point as it scrolls past;
+     `shots` are the same page (a Lab experiment) at each screen size and
+     `caption` is the frame's readout for that point. */
+  handover: {
+    title: "Send me the design. I'll match it.",
+    intro: "Figma, Adobe XD or a PDF mock-up all work.",
+    files: ["Figma", "Adobe XD", "PDF mock-up"],
+    shots: {
+      desktop: "/portfolio/handover/desktop.webp",
+      tablet: "/portfolio/handover/tablet.webp",
+      phone: "/portfolio/handover/phone.webp",
+    },
+    url: "staging.your-agency.com.au",
+    points: [
+      {
+        title: "Every screen size",
+        caption: "Desktop · tablet · phone",
+        desc: "Built to your design at desktop, tablet and phone sizes. Where the design doesn't show a breakpoint, I ask before I guess.",
+      },
+      {
+        title: "Your system, not a theme's",
+        caption: "Your fonts, colours and spacing",
+        desc: "Your fonts, colours and spacing, not a theme's defaults.",
+      },
+      {
+        title: "Motion as designed",
+        caption: "Design → build",
+        desc: "Animations and hover states built the way your designer meant them. The Lab below shows what's possible.",
+      },
+      {
+        title: "No design yet?",
+        caption: "Wireframe → design",
+        desc: `I can design it in your client's brand for ${aud(AGENCY_SITE_DESIGNED)} instead of ${aud(AGENCY_SITE)}.`,
+      },
+    ],
+  },
   // prefix "From" = starting price; a null amount shows "On request"
   rates: [
     {
       label: "5–7 page website",
       prefix: "From",
-      amount: 1800,
-      note: "Built from your design. AUD 2,200 if I design it too.",
+      amount: AGENCY_SITE,
+      note: `Built from your design. ${aud(AGENCY_SITE_DESIGNED)} if I design it too.`,
     },
     {
       label: "Landing page",
@@ -501,6 +540,20 @@ export const agency = {
   firstProject: {
     tag: "First project together?",
     text: "Take 20% off the first site, or start with a small paid test task, like one landing page, and see how I work before you commit.",
+  },
+  /* Typical turnarounds, drawn as bars on a `scale`-working-day axis
+     (20 = 4 weeks). min/max are working days; max - min is the lighter
+     "range" part of the bar. */
+  timelines: {
+    title: "How long things take.",
+    intro: "Every quote comes with a date. These are typical, counted from when I have the designs and content.",
+    scale: 20,
+    items: [
+      { label: "Fixes and small edits", time: "Usually by your next morning", min: 0.5, max: 0.5 },
+      { label: "Landing page", time: "3–5 working days", min: 3, max: 5 },
+      { label: "5–7 page website", time: "3–4 weeks", min: 15, max: 20 },
+    ],
+    note: "Running against a launch date? Tell me in the brief and I'll say up front whether I can hit it.",
   },
   process: [
     { title: "Brief", desc: "You send the brief, the designs or a call recording." },

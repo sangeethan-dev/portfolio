@@ -3,7 +3,9 @@ import AgencyWhy from "@/components/Agencies/AgencyWhy";
 import Manifesto from "@/components/Manifesto/Manifesto";
 import Mantra from "@/components/Mantra/Mantra";
 import AgencyServices from "@/components/Agencies/AgencyServices";
+import AgencyHandover from "@/components/Agencies/AgencyHandover";
 import AgencyRates from "@/components/Agencies/AgencyRates";
+import AgencyTimelines from "@/components/Agencies/AgencyTimelines";
 import AgencyProcess from "@/components/Agencies/AgencyProcess";
 import Playground from "@/components/Playground/Playground";
 import Stack from "@/components/Stack/Stack";
@@ -30,13 +32,15 @@ export default function AgenciesPage() {
         <AgencyWhy />
         <Mantra content={agency.mantra} />
         <AgencyServices />
-        <Stack fig="Fig. 05 — Stack" />
+        <AgencyHandover />
+        <Stack fig="Fig. 06 — Stack" />
         <AgencyRates />
+        <AgencyTimelines />
         <AgencyProcess />
-        <Playground fig="Fig. 08 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
+        <Playground fig="Fig. 10 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
         <FAQ
           items={agency.faqs}
-          fig="Fig. 09 — FAQ"
+          fig="Fig. 11 — FAQ"
           title="Agency questions."
           intro="What agency owners and project managers ask before sending the first brief."
         />

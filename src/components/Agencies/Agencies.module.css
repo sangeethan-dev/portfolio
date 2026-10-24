@@ -1,4 +1,4 @@
-/* Shared by the /agencies content sections (Why, Services, Rates, Process) */
+/* Shared by the /agencies content sections (Why, Services, Rates, Timelines, Process) */
 
 .section {
   position: relative;
@@ -305,6 +305,440 @@
   color: var(--fg-mute);
 }
 
+/* ── Handover: sticky browser frame + scrolling points ─────────── */
+.hoFiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+}
+
+.hoFiles li {
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--rounded-full);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.hoLayout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: start;
+  gap: var(--spacing-3xl);
+}
+
+/* the visual stays put while the points scroll past */
+.hoStick {
+  position: sticky;
+  top: calc(var(--header-h) + 6vh);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.hoStage {
+  position: relative;
+  aspect-ratio: 16 / 11;
+}
+
+/* browser frame; GSAP tweens its width between screen sizes */
+.hoDevice {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--rounded-lg);
+  background: var(--ink);
+  transform: translateX(-50%);
+  box-shadow: 0 30px 60px -30px var(--shadow-ink);
+}
+
+.hoBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  height: 30px;
+  flex-shrink: 0;
+  padding-inline: 12px;
+  border-bottom: 1px solid rgba(var(--bone-rgb), 0.12);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.04em;
+  color: rgba(var(--bone-rgb), 0.6);
+  white-space: nowrap;
+}
+
+.hoDots {
+  display: flex;
+  gap: 5px;
+}
+
+.hoDots i {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--rounded-full);
+  background: rgba(var(--bone-rgb), 0.25);
+}
+
+.hoUrl {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hoSize {
+  color: var(--signal);
+}
+
+.hoScreen {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.hoShot {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.hoScreen [data-shot="tablet"],
+.hoScreen [data-shot="phone"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hoLayer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hoImgDesign {
+  filter: grayscale(1) contrast(0.85) brightness(1.08);
+}
+
+/* blueprint grid over the design file */
+.hoGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--signal) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--signal) 22%, transparent) 1px, transparent 1px);
+  background-size: 8.333% 12.5%;
+}
+
+/* redline measurements, like a design file's inspect panel */
+.redline {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  color: var(--signal);
+}
+
+.redline b {
+  padding: 1px 6px;
+  background: var(--signal);
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  font-weight: 500;
+}
+
+.redW {
+  top: 9%;
+  left: 3%;
+  right: 3%;
+  height: 12px;
+  border-inline: 1px solid currentColor;
+  background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}
+
+.redH {
+  top: 30%;
+  bottom: 44%;
+  left: 47%;
+  width: 12px;
+  border-block: 1px solid currentColor;
+  background: linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat;
+}
+
+.hoSpec {
+  position: absolute;
+  left: 3%;
+  top: 52%;
+  padding: 4px 10px;
+  border: 1px dashed var(--signal);
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.06em;
+}
+
+/* the token panel overhangs the frame's bottom-right corner */
+.hoTokens {
+  position: absolute;
+  right: -3%;
+  bottom: -6%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+  padding: var(--spacing-sm);
+  border: 1px solid rgba(var(--bone-rgb), 0.14);
+  border-radius: var(--rounded-lg);
+  background: var(--ink-2);
+  color: var(--bone);
+  box-shadow: 0 24px 50px -20px var(--shadow-ink);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hoToken {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  padding: 8px 10px;
+  border-radius: var(--rounded-sm);
+  background: rgba(var(--bone-rgb), 0.05);
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hoToken span {
+  color: rgba(var(--bone-rgb), 0.6);
+}
+
+.hoAa {
+  font-family: var(--display);
+  font-size: var(--font-size-xl);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.hoSwatches {
+  display: flex;
+  gap: 4px;
+}
+
+.hoSwatches i {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--rounded-full);
+  border: 1px solid rgba(var(--bone-rgb), 0.3);
+}
+
+.hoSwatches i:nth-child(1) { background: var(--signal); }
+.hoSwatches i:nth-child(2) { background: var(--bone); }
+.hoSwatches i:nth-child(3) { background: var(--ink); }
+
+.hoSpacing {
+  font-weight: 400;
+  color: var(--signal);
+}
+
+/* 04: blank wireframe of the same page */
+.hoWire {
+  background: var(--ink-2);
+}
+
+.hoWireX {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hoWireX line {
+  stroke: rgba(var(--bone-rgb), 0.08);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.hoWire i {
+  position: absolute;
+  height: 1.6%;
+  border-radius: var(--rounded-xs);
+  background: rgba(var(--bone-rgb), 0.22);
+  transform-origin: left center;
+}
+
+.hoWire .hoWireBig {
+  height: 7%;
+  background: rgba(var(--bone-rgb), 0.32);
+}
+
+.hoWire .hoWireBtn {
+  height: 6%;
+  border-radius: var(--rounded-full);
+  background: color-mix(in srgb, var(--signal) 55%, transparent);
+}
+
+.hoCaption {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* the points: tall, so each one holds the stage for a while */
+.hoSteps {
+  display: flex;
+  flex-direction: column;
+}
+
+.hoStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-md);
+  min-height: 70vh;
+  border-top: 1px solid var(--line);
+}
+
+.hoStep:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.hoStepNum {
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.hoStepTitle {
+  font-size: clamp(30px, 3.4vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--fg);
+}
+
+.hoStepDesc {
+  max-width: 34ch;
+  font-size: var(--font-size-lg);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
+/* ── Timelines: bars on a four-week axis ───────────────────────── */
+.tlRows {
+  display: flex;
+  flex-direction: column;
+}
+
+.tlRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 2fr minmax(200px, 0.9fr);
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding-block: var(--spacing-xl);
+}
+
+.tlAxis {
+  padding-block: 0 var(--spacing-sm);
+}
+
+/* week labels sit at the right end of each quarter of the track */
+.tlScale {
+  position: relative;
+  height: 1em;
+  font-family: var(--mono);
+  font-size: var(--font-size-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}
+
+.tlScale span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-100%);
+  padding-right: 6px;
+  white-space: nowrap;
+}
+
+.tlLabel {
+  font-size: clamp(22px, 2.4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  color: var(--fg);
+}
+
+/* the track: a hairline grid, one line per week */
+.tlTrack {
+  position: relative;
+  height: 36px;
+  border-left: 1px solid var(--line);
+  background-image: linear-gradient(to right, transparent calc(100% - 1px), var(--line) calc(100% - 1px));
+  background-size: 25% 100%;
+}
+
+.tlBar {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  min-width: 6px;
+  height: 14px;
+  margin-top: -7px;
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  transform-origin: left center;
+}
+
+.tlUsual {
+  position: absolute;
+  inset: 0 auto 0 0;
+  min-width: 6px;
+  background: var(--accent);
+}
+
+.tlTime {
+  justify-self: end;
+  text-align: right;
+  font-family: var(--display);
+  font-size: clamp(20px, 2vw, 32px);
+  font-weight: var(--display-weight);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+}
+
+.tlFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--line);
+}
+
+.tlNote {
+  max-width: 52ch;
+  font-size: var(--font-size-md);
+  line-height: 1.55;
+  color: var(--fg-mute);
+}
+
 /* ── Responsive ────────────────────────────────────────────────── */
 @media screen and (max-width: 1023px) {
   .service {
@@ -327,6 +761,44 @@
 
   .row {
     grid-template-columns: 48px 1fr;
+  }
+
+  /* phones/tablets: the stage sticks under the header, points scroll beneath */
+  .hoLayout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .hoStick {
+    top: var(--header-h);
+    z-index: 3;
+    padding-block: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg);
+  }
+
+  .hoStage {
+    width: min(100%, 520px);
+    margin-inline: auto;
+  }
+
+  .hoTokens {
+    right: 0;
+    bottom: -4%;
+    min-width: 0;
+    scale: 0.72; /* separate from the transform GSAP slides it in with */
+    transform-origin: bottom right;
+  }
+
+  .hoStep {
+    min-height: 55vh;
+  }
+
+  .hoStepTitle {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hoStepDesc {
+    font-size: var(--font-size-md);
   }
 
   .rowDesc {
@@ -364,6 +836,27 @@
 }
 
 @media screen and (max-width: 767px) {
+  /* label + time on one line, the bar full width underneath */
+  .tlRow {
+    grid-template-columns: 1fr auto;
+    gap: var(--spacing-sm) var(--spacing-md);
+    padding-block: var(--spacing-lg);
+  }
+
+  .tlTrack {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .tlAxis {
+    display: none;
+  }
+
+  .tlTime {
+    font-size: var(--font-size-md);
+    max-width: 16ch;
+  }
+
   .rates {
     grid-template-columns: 1fr;
   }
