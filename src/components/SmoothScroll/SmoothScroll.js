@@ -10,7 +10,7 @@ export default function SmoothScroll({ children }) {
   const pathname = usePathname();
 
   // Lenis lives in the layout, so it survives page changes — start each
-  // new page at the top unless the link points at a section ("/#pricing").
+  // new page at the top unless the link points at a section ("/#playground").
   useEffect(() => {
     const lenis = getLenis();
     if (!lenis) return;

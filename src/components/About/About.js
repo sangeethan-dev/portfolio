@@ -101,12 +101,12 @@ export default function About() {
     <section id="about" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.grid}`}>
         <div className={styles.copy}>
-          <span className="label">Fig. 09 — About</span>
+          <span className="label">Fig. 07 — About</span>
           <p ref={statementRef} className={styles.statement}>
-            Hi, I&apos;m Sangeethan. I&apos;ve been building websites for eight years, and I started out at a
-            digital marketing agency. Now I build sites for small practices and local businesses that want to
-            look professional, show up in local searches, and make booking easy. You&apos;ll work with me
-            directly, from the first call to launch day.
+            Hi, I&apos;m Sangeethan. I&apos;m a creative web developer passionate about combining animation,
+            storytelling and precision to build memorable digital experiences. I&apos;ve been building websites
+            for eight years, starting at a digital marketing agency. You&apos;ll work with me directly, from the
+            first call to launch day.
           </p>
 
           <dl className={styles.stats}>

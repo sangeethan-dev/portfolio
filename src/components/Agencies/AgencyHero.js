@@ -10,7 +10,7 @@ import ArrowLink from "@/components/ArrowLink/ArrowLink";
 import styles from "./AgencyHero.module.css";
 
 /* Experiment previews that roll through the reel in the headline */
-const REEL = ["liquid-reveal-hero", "scroll-reveal-grid", "morph-loader", "magnetic-cards", "ascii-glyph-field"]
+const REEL = ["liquid-reveal-hero", "ink-fluid-cursor", "morph-loader", "magnetic-cards", "ascii-glyph-field"]
   .map((id) => lab.items.find((i) => i.id === id))
   .filter(Boolean);
 

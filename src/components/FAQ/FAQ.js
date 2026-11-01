@@ -9,7 +9,7 @@ import { faqs } from "@/content/site";
 import styles from "./FAQ.module.css";
 
 const DOT = 52; // collapsed "typing" bubble size (px)
-const DEFAULT_INTRO = "The questions practice owners ask me most, answered the way I'd answer them over chat.";
+const DEFAULT_INTRO = "The questions people ask me most, answered the way I'd answer them over chat.";
 const HEADSHOT = "/portfolio/profile-headshot.webp";
 
 function Typing() {
@@ -33,7 +33,7 @@ function Typing() {
  */
 export default function FAQ({
   items = faqs,
-  fig = "Fig. 10 — FAQ",
+  fig = "Fig. 08 — FAQ",
   title = "Questions, answered.",
   intro = DEFAULT_INTRO,
 }) {

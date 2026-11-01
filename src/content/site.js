@@ -1,10 +1,10 @@
 /*
- * All site copy in one place. Components import from here so prices,
- * FAQs and contact details are never duplicated.
+ * All site copy in one place. Components import from here so FAQs,
+ * rates and contact details are never duplicated.
  *
- * Voice: plain, warm, specific. Written for owners of small local
- * practices — people who care about being found, trusted and booked,
- * not about frameworks.
+ * Voice: plain, warm, specific. The homepage is a general portfolio with
+ * no prices: direct prices go in cold emails, so agencies only ever see
+ * their own rates on /agencies. Don't add prices or niche wording to it.
  */
 
 /* ── Site URL — the ONE place to change when moving to a custom domain.
@@ -23,29 +23,15 @@ export const contact = {
   clientTimeLabel: "AEST",
 };
 
-/* ── Pricing / current offer — change prices here only ────────────
-   Shown as a plain "current offer", never as an intro/launch price: it
-   shouldn't read like I'm looking for my first clients. ──────────── */
-export const offer = {
-  label: "Current offer",
-  website: 2000,
-  websiteWas: 2900,
-  care: 100,
-  careWas: 150,
-  careMonths: 12,
-};
-
 export const aud = (n) => `AUD ${n.toLocaleString("en-AU")}`;
 
-/* Short lines reused in the hero, menu, footer and metadata */
-export const offerLine = `Websites ${aud(offer.website)} · Care Plan ${aud(offer.care)}/mo for ${offer.careMonths} months`;
-// on /agencies instead: the direct price above would undercut the agency rates
+/* Foot of the mobile menu on /agencies (menuLine elsewhere) */
 export const agencyLine = "For agencies · Fixed quotes in AUD · Invoiced to you, never your client";
 
 export const nav = [
   { label: "Build", href: "#build" },
-  { label: "Work", href: "#work" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Lab", href: "#playground" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -66,93 +52,54 @@ export const pageLinks = {
 /* ── Story beats (Statement + Mantra) ────────────────────────────── */
 export const manifesto = {
   statement:
-    "I'm an independent web developer building websites that get local practices found, trusted and booked.",
-  pillars: ["Clarity first.", "Craft always.", "Built to last."],
+    "I'm an independent web developer building fast websites with motion people remember.",
+  pillars: ["One person.", "Fixed quote.", "No hand-offs."],
   mission:
-    "Your website should do some of the work for you: answer the common questions, show who you are, and make booking easy. That's the whole job, and I do it by hand.",
+    "Eight years in, I still do it by hand: clean code, sharp type, and animation that earns its place. You get one person from the first call to launch day, and a site that's easy to run after it.",
 };
 
 export const mantra = {
-  label: "Found, trusted, booked",
-  kicker: "Three jobs. One website.",
-  words: ["Found", "Trusted", "Booked"],
-  caption: "From first search to first booking",
+  label: "Designed, built, shipped",
+  kicker: "Three jobs. One developer.",
+  words: ["Designed", "Built", "Shipped"],
+  caption: "From first sketch to launch day",
+};
+
+/* "One person. No chain." section. Don't attack agencies here: they're
+   the main audience and can reach this page. The target is the chain of
+   people, not the agency. Keep the project cap in step with the FAQ. */
+export const onePerson = {
+  title: "One person. No chain.",
+  from: "Your brief",
+  chain: ["Salesperson", "Project manager", "Designer", "Developer"],
+  me: "Sangeethan",
+  to: "Your website",
+  copy: [
+    "On a bigger team, your brief passes through a salesperson, a project manager, a designer and a developer. Something gets lost at every step. With me there are no steps. The person who hears what you want is the person who builds it.",
+    "My next project depends on how this one goes. That's all the motivation I need.",
+  ],
+  wontTitle: "What I won't do",
+  wont: [
+    "Hand your project to anyone else.",
+    "Take on more than 3 projects at a time.",
+    "Promise you first place on Google. Nobody controls that.",
+  ],
 };
 
 /* Footer sign-off */
 export const signoff = {
   kicker: "Let's build a website that works as hard as you do.",
-  title: "Ready to build something bold?",
+  title: "Have a project in mind?",
 };
 
-/* Contact-form option for one-off fixes to an existing site */
-export const FIX_SERVICE = "Fix something on my website";
-
-export const packages = [
-  {
-    id: "website",
-    num: "01",
-    title: "Business Website",
-    currency: "AUD",
-    amount: offer.website,
-    was: offer.websiteWas,
-    note: "Fixed price, agreed before we start",
-    desc: "A website made for your practice, not a template with your logo on it. It looks the part and makes booking easy.",
-    features: [
-      "Up to 7 pages (services, team, fees and so on)",
-      "Designed from scratch for you",
-      "Works properly on phones",
-      "Basic SEO so people nearby can find you",
-      "Book Now buttons linked to your booking system",
-    ],
-    cta: "Claim the offer",
-    featured: true,
-  },
-  {
-    id: "care",
-    num: "02",
-    title: "Website Care Plan",
-    currency: "AUD",
-    amount: offer.care,
-    was: offer.careWas,
-    suffix: "/ month",
-    note: `First ${offer.careMonths} months, then ${aud(offer.careWas)}/month`,
-    desc: "I look after your website every month, so you never have to think about updates, backups or something breaking.",
-    features: [
-      "Software and security updates",
-      "Regular backups",
-      "Uptime monitoring",
-      "Small edits each month, like new staff, hours or fees",
-    ],
-    cta: "Add the Care Plan",
-  },
-  {
-    id: "custom",
-    num: "03",
-    title: "Online Stores & Custom Projects",
-    amount: null,
-    priceLabel: "Custom quote",
-    desc: "Need more than a standard site? An online shop, several locations, or something built around how you work. I'll quote it properly.",
-    features: [
-      "Shopify online stores",
-      "Sites beyond 7 pages",
-      "Multi-location websites",
-      "Custom features & integrations",
-    ],
-    cta: "Get a quote",
-  },
-];
-
 /* Options for the contact form's service select */
-export const WEBSITE_WITH_CARE = "Business Website + Care Plan";
-
 export const serviceOptions = [
-  FIX_SERVICE,
-  "Business Website",
-  WEBSITE_WITH_CARE,
+  "New website",
   "Redesign of my current website",
-  "Website Care Plan",
-  "Online Stores & Custom Projects",
+  "Online store",
+  "Landing page",
+  "Fix something on my website",
+  "Looking after my website",
   "Not sure yet",
 ];
 
@@ -160,72 +107,22 @@ export const buildSteps = [
   {
     num: "01",
     title: "Wireframe",
-    desc: "First we work out what people need to find quickly: your services, fees, where you are, and how to book.",
+    desc: "First we work out what people need to find quickly, and what you want them to do next.",
   },
   {
     num: "02",
     title: "Design",
-    desc: "Then I design it to feel like your practice. You see it, tell me what you think, and we adjust it together.",
+    desc: "Then it gets a look that's yours. You see it, tell me what you think, and we adjust it together.",
   },
   {
     num: "03",
     title: "Code",
-    desc: "I build it by hand so it loads quickly on a phone, with basic SEO set up so local searches can find you.",
+    desc: "I build it by hand so it loads quickly on a phone, moves well, and shows up properly on Google.",
   },
   {
     num: "04",
     title: "Live",
-    desc: "We test it, launch it, and it starts taking bookings. On the Care Plan, I keep it updated and backed up after that.",
-  },
-];
-
-/* "Who I build for" magnetic strip — photos from Unsplash (free licence) */
-export const spotlight = {
-  title: "Built for the people who keep you moving",
-  sub: "Websites for local practices and studios",
-  copy: [
-    "You spend your day looking after people. Your website should do some of that work for you: answer the common questions, show who you are, and make booking easy.",
-    "I build sites for small practices and studios that want to look as good online as they are in person, without spending their evenings fixing them.",
-  ],
-  frames: [
-    { src: "/portfolio/practices/01-assess.webp", alt: "Practitioner assessing a patient's leg on a treatment table", caption: "Assess" },
-    { src: "/portfolio/practices/02-reformer.webp", alt: "Woman stretching on a Pilates reformer in a bright arched studio", caption: "Reformer" },
-    { src: "/portfolio/practices/03-coastline.webp", alt: "Aerial view of a coastline with a headland and long beach", caption: "Coastline" },
-    { src: "/portfolio/practices/04-adjust.webp", alt: "Hands-on treatment to a patient's upper back", caption: "Adjust" },
-    { src: "/portfolio/practices/05-studio.webp", alt: "Modern Pilates studio with rows of reformer machines", caption: "Studio" },
-    { src: "/portfolio/practices/06-release.webp", alt: "Close-up of a massage therapist's hands at work", caption: "Release" },
-    { src: "/portfolio/practices/07-golden-hour.webp", alt: "Surfers in the water at sunset beside a rocky shore", caption: "Golden hour" },
-    { src: "/portfolio/practices/08-recover.webp", alt: "Practitioner supporting a patient's shoulder during an assessment", caption: "Recover" },
-  ],
-};
-
-export const concepts = [
-  {
-    id: "clinic",
-    name: "Tidewater Physio",
-    sector: "Physiotherapy · Burleigh Heads",
-    package: "Business Website + Care Plan",
-    brief: "Two physios whose old site hid the Book button three clicks deep. Now services, fees and the next free times are right there, so a new client can book in under a minute.",
-    built: ["6 pages", "Online booking flow", "Practitioner profiles", "Fees & rebates page"],
-    hint: "Book an appointment",
-  },
-  {
-    id: "cafe",
-    name: "Grounds & Co.",
-    sector: "Café · Melbourne",
-    package: "Business Website",
-    brief: "A local café that wanted its website to feel as warm as walking in, with the menu one tap away.",
-    built: ["5 pages", "Interactive menu", "Opening hours & map", "Mobile-first"],
-    hint: "Try the menu",
-  },
-  {
-    id: "store",
-    name: "Salt & Fern",
-    sector: "Homewares · Byron Bay",
-    package: "Online Store — custom quote",
-    brief: "A small homewares brand moving from weekend markets to selling online. Product pages you almost want to touch, and a checkout that doesn't get in the way.",
-    built: ["Shopify store", "Colour variants", "Animated cart", "Product storytelling"],
-    hint: "Pick a colour, add to bag",
+    desc: "We test it, launch it, and hand it over. I can stay on to keep it updated, or leave you with everything you need.",
   },
 ];
 
@@ -234,6 +131,9 @@ export const stats = [
   { value: 50, suffix: "+", label: "Projects delivered" },
   { value: 1, suffix: "", label: "Person you deal with" },
 ];
+
+/* Foot of the mobile menu */
+export const menuLine = `Independent web developer · ${stats[0].value} years · ${stats[1].value}${stats[1].suffix} projects`;
 
 /* ── Stack section ────────────────────────────────────────────────
    live: true = running on this site right now (gets the ● marker).
@@ -304,7 +204,7 @@ const labItem = (item) => ({
 export const lab = {
   title: "Things I build for fun.",
   intro:
-    "When I'm not on client work, I build experiments: cursors, loaders, heroes and other small interactions. The good ones end up in real projects. Drag one into the scanner to run it.",
+    "Most of my client work went out under other brands, so it isn't mine to show. These are the experiments I build between projects: cursors, loaders, heroes and other interactions. Drag one into the scanner to run it.",
   items: [
     {
       id: "ascii-glyph-field",
@@ -367,26 +267,24 @@ export const lab = {
 
 export const faqs = [
   {
-    q: `What do I get for ${aud(offer.website)}?`,
+    q: "What kind of projects do you take on?",
     a: [
-      "A website of up to 7 pages, designed for your practice. Usually that's home, services, team, fees, about, contact and booking.",
-      "It works well on phones, it's set up so people nearby can find you on Google, and every Book Now button goes straight to your booking system.",
-      `${aud(offer.website)} is my current offer. It's normally ${aud(offer.websiteWas)}, and we agree the final price before I start.`,
+      "Websites, online stores and landing pages, mostly in Next.js, WordPress, Webflow and Shopify.",
+      "I can design it too, or build from designs you already have. If you want motion and interaction, that's the part I enjoy most.",
     ],
   },
   {
-    q: "Will it work with my booking system?",
+    q: "Why not use a bigger team?",
     a: [
-      "Yes. I'll connect it to whatever you already use, whether that's Cliniko, Nookal, Halaxy, HotDoc, Jane or something else.",
-      "Clients can book from any page in a couple of taps.",
+      "For a very large project, a bigger team can be the right call. For most websites, it just puts more people between you and the work.",
+      "With me, the person you talk to is the person who builds it, and I take on 3 projects at a time.",
     ],
   },
   {
-    q: "What does the Care Plan cover?",
+    q: "How much does a website cost?",
     a: [
-      "Updates, security, backups, and keeping an eye on whether your site is up.",
-      "It also covers small changes each month, like a new team member, different hours or updated fees.",
-      `It's ${aud(offer.care)}/month for the first ${offer.careMonths} months, then ${aud(offer.careWas)}. It's optional, but it means nothing gets left to slide.`,
+      "It depends on the size of the site and what it needs to do, so I don't publish one price.",
+      "Tell me what you have in mind and you'll get a fixed quote before I start. No hourly surprises.",
     ],
   },
   {
@@ -399,16 +297,8 @@ export const faqs = [
   {
     q: "Do I need to write all the content?",
     a: [
-      "No. Send me the basics: what you offer, your fees and who's on the team.",
+      "No. Send me the basics: what you do and who it's for.",
       "I'll turn that into clear pages, and nothing goes live until you've approved every word.",
-    ],
-  },
-  {
-    q: "Does my website have to follow health advertising rules?",
-    a: [
-      "If your profession is registered with Ahpra, then yes, its advertising guidelines cover your website too.",
-      "For example, no testimonials about clinical care and no promises about outcomes.",
-      "I keep those rules in mind while writing, and you sign off everything before it goes live.",
     ],
   },
   {
@@ -416,6 +306,13 @@ export const faqs = [
     a: [
       "Usually 2 to 4 weeks from our first call to launch.",
       "The biggest factor is how quickly content and feedback come back to me.",
+    ],
+  },
+  {
+    q: "What happens after launch?",
+    a: [
+      "You own the site and everything in it, and I make sure you can update it yourself.",
+      "If you'd rather not think about it, I can look after updates, backups and small changes for you.",
     ],
   },
   {
@@ -459,11 +356,16 @@ export const agency = {
     caption: "Invisible on purpose",
   },
   why: [
+    {
+      title: "You brief the developer, not an account manager",
+      desc: "Many white-label shops put someone between you and the person doing the work. With me, the person who quotes it builds it.",
+    },
+    { title: "Only 3 agencies at a time", desc: "I work with 3 agencies at a time, so your job doesn't wait behind a bigger client." },
     { title: "8 years, 50+ projects", desc: "I started at a digital marketing agency, so I know how briefs, deadlines and client sign-offs really work." },
     { title: "White-label by default", desc: "Your brand on everything: the site, the staging link, the handover. I never appear in front of your client." },
     { title: "Fixed quotes before starting", desc: "You get a fixed price up front, so your margin is known before a line of code is written." },
+    { title: "Colombo overheads, Australian standards", desc: "I work from Colombo for Australian agencies, so you get senior work at rates that leave real room for your margin." },
     { title: "Ready by your next morning", desc: "I'm 4.5 hours behind AEST. Send changes at the end of your day and they're done when you're back in." },
-    { title: "One developer, no hand-offs", desc: "The person who quotes your project is the person who builds it. Nothing gets lost between teams." },
   ],
   services: [
     { title: "WordPress", desc: "Elementor or custom themes, built so your team can edit them." },
@@ -563,6 +465,19 @@ export const agency = {
     { title: "Launch under your brand", desc: "It goes live with your agency's name on it, not mine." },
     { title: "After launch", desc: "Need changes later? Send them over and I bill the time at the hourly rate. No retainer, no lock-in." },
   ],
+  /* A checklist any agency can use on any developer. Only list questions
+     with an answer that's true: this is what the section is selling. */
+  questions: {
+    title: "Questions to ask any white-label developer.",
+    intro: "Ask these before you hand over a client. Here are my answers.",
+    items: [
+      { q: "Who actually writes the code?", a: "I do, on every project. Nothing gets passed to a junior or a subcontractor." },
+      { q: "Who will I actually talk to?", a: "Me, on every call and message. There's no account manager in between." },
+      { q: "Will my client ever see your name?", a: "No. Not in the footer, the code or the handover." },
+      { q: "Is the quote fixed before you start?", a: "Yes. You get a fixed price and a date first, and anything outside the brief gets a quick quote before I start on it." },
+      { q: "Who owns the code and logins?", a: "Your agency or your client, from launch day. I hand over all logins and files." },
+    ],
+  },
   lab: {
     title: "What I can build for you.",
     intro:
@@ -580,6 +495,13 @@ export const agency = {
       a: [
         "Whatever your team already uses: Slack, email or WhatsApp. I can join your Slack as a guest.",
         "You get one point of contact, me, for every project.",
+      ],
+    },
+    {
+      q: "You're overseas. Why would I trust that?",
+      a: [
+        "You're not hiring an offshore team. You're hiring one named person, with a face, a phone number and WhatsApp.",
+        "If something goes wrong, you know exactly who to call.",
       ],
     },
     {
@@ -610,12 +532,12 @@ export const agency = {
 
 /* ── /privacy ──────────────────────────────────────────────────────── */
 export const privacy = {
-  updated: "18 October 2026",
+  updated: "31 October 2026",
   sections: [
     {
       title: "What the contact forms collect",
       body: [
-        "When you send an enquiry, I collect what you type in: your name, email address, the package or service you choose, and your message.",
+        "When you send an enquiry, I collect what you type in: your name, email address, the service you choose, and your message.",
         "The agency form also collects your agency's name, its website and the kind of help you need.",
         "A hidden spam-trap field is checked and thrown away. The forms don't set cookies.",
       ],

@@ -7,7 +7,6 @@ import { gsap, MQ } from "@/lib/gsap";
 import useSplitReveal from "@/lib/gsap/useSplitReveal";
 import useMagnetic from "@/lib/gsap/useMagnetic";
 import { SCRAMBLE_CHARS } from "@/lib/gsap/useScramble";
-import { onSelectService } from "@/lib/enquiry";
 import { contact, serviceOptions, agency, pageLinks } from "@/content/site";
 import styles from "./Contact.module.css";
 
@@ -23,22 +22,22 @@ const EMPTY = { name: "", email: "", service: "", message: "", company: "", agen
 /* Copy per form. "agency" is the /agencies form (agency name, website, need). */
 const VARIANTS = {
   home: {
-    fig: "Fig. 11 — Contact",
+    fig: "Fig. 09 — Contact",
     title: "Let's build",
     titleAccent: "yours.",
-    sub: "Tell me a bit about your practice and what you want from your website. I'll get back to you within 24 hours with honest advice and what I'd suggest next.",
+    sub: "Tell me about your project and what you want from it. I'll get back to you within 24 hours with honest advice and what I'd suggest next.",
     serviceLabel: "What do you need?",
-    servicePlaceholder: "Choose a package (optional)",
+    servicePlaceholder: "Choose one (optional)",
     options: serviceOptions,
-    messageLabel: "Tell me about your practice",
+    messageLabel: "Tell me about the project",
     messagePlaceholder:
-      "What you do, who you help, and what you'd like the website to do for you. More bookings? A fresh look? Easier updates?",
-    emailPlaceholder: "jane@yourpractice.com.au",
+      "What you do, who it's for, and what you'd like the website to do. A new site? A redesign? Something that moves?",
+    emailPlaceholder: "jane@yourbusiness.com.au",
     me: "No account managers or hand-offs. The person you talk to is the person who builds your site.",
     file: "new-enquiry.form",
   },
   agency: {
-    fig: "Fig. 12 — Contact",
+    fig: "Fig. 13 — Contact",
     title: "Let's work",
     titleAccent: "together.",
     sub: "Tell me about your agency and the work you have coming up. I'll reply within 24 hours with questions, a rough timeline and how I'd quote it.",
@@ -56,26 +55,12 @@ const VARIANTS = {
 export default function Contact({ variant = "home" }) {
   const copy = VARIANTS[variant];
   const isAgency = variant === "agency";
-  const rootRef = useRef(null);
   const btnTextRef = useRef(null);
   const barRef = useRef(null);
   const titleRef = useSplitReveal({ type: "chars", stagger: 0.02 });
   const btnRef = useMagnetic(0.2);
   const [status, setStatus] = useState("idle");
   const [form, setForm] = useState(EMPTY);
-
-  /* CTAs elsewhere on the page can preselect a package */
-  useEffect(
-    () =>
-      onSelectService((value) => {
-        setForm((f) => ({ ...f, service: value }));
-        const flash = rootRef.current.querySelector("[data-flash]");
-        if (flash && !window.matchMedia(MQ.reduced).matches) {
-          gsap.fromTo(flash, { autoAlpha: 0.4 }, { autoAlpha: 0, duration: 1.6, delay: 1 });
-        }
-      }),
-    []
-  );
 
   /* Button label + progress bar follow the status */
   useEffect(() => {
@@ -141,7 +126,6 @@ export default function Contact({ variant = "home" }) {
   return (
     <section
       id="contact"
-      ref={rootRef}
       className={styles.section}
       data-theme-section="blueprint"
       data-theme-start="top 20%"
@@ -254,7 +238,6 @@ export default function Contact({ variant = "home" }) {
             <span className={styles.fieldLabel}>
               {isAgency ? "05" : "03"} · {copy.serviceLabel}
             </span>
-            <span className={styles.flash} data-flash aria-hidden="true" />
             <select name="service" value={form.service} onChange={update} required={isAgency}>
               <option value="">{copy.servicePlaceholder}</option>
               {copy.options.map((o) => (

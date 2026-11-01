@@ -3,11 +3,9 @@ import Hero from "@/components/Hero/Hero";
 import Manifesto from "@/components/Manifesto/Manifesto";
 import Mantra from "@/components/Mantra/Mantra";
 import BuildStory from "@/components/BuildStory/BuildStory";
-import Spotlight from "@/components/Spotlight/Spotlight";
-import Work from "@/components/Work/Work";
 import Playground from "@/components/Playground/Playground";
 import Stack from "@/components/Stack/Stack";
-import Pricing from "@/components/Pricing/Pricing";
+import OnePerson from "@/components/OnePerson/OnePerson";
 import About from "@/components/About/About";
 import FAQ from "@/components/FAQ/FAQ";
 import Contact from "@/components/Contact/Contact";
@@ -23,11 +21,9 @@ export default function Home() {
         <Manifesto />
         <Mantra />
         <BuildStory />
-        <Spotlight />
-        <Work />
         <Playground />
         <Stack />
-        <Pricing />
+        <OnePerson />
         <About />
         <FAQ />
         <Contact />

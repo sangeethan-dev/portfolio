@@ -2,7 +2,7 @@
   padding-block: var(--spacing-5xl) var(--spacing-6xl);
 }
 
-/* ── Header (same pattern as Pricing / Work) ───────────────────── */
+/* ── Header (same pattern as Work) ─────────────────────────────── */
 .head {
   display: grid;
   grid-template-columns: 1fr minmax(260px, 420px);

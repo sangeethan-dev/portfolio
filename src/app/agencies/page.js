@@ -7,6 +7,7 @@ import AgencyHandover from "@/components/Agencies/AgencyHandover";
 import AgencyRates from "@/components/Agencies/AgencyRates";
 import AgencyTimelines from "@/components/Agencies/AgencyTimelines";
 import AgencyProcess from "@/components/Agencies/AgencyProcess";
+import AgencyQuestions from "@/components/Agencies/AgencyQuestions";
 import Playground from "@/components/Playground/Playground";
 import Stack from "@/components/Stack/Stack";
 import FAQ from "@/components/FAQ/FAQ";
@@ -37,10 +38,11 @@ export default function AgenciesPage() {
         <AgencyRates />
         <AgencyTimelines />
         <AgencyProcess />
-        <Playground fig="Fig. 10 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
+        <AgencyQuestions />
+        <Playground fig="Fig. 11 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
         <FAQ
           items={agency.faqs}
-          fig="Fig. 11 — FAQ"
+          fig="Fig. 12 — FAQ"
           title="Agency questions."
           intro="What agency owners and project managers ask before sending the first brief."
         />

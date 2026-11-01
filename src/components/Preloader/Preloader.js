@@ -5,11 +5,11 @@ import Image from "next/image";
 import { gsap, MQ } from "@/lib/gsap";
 import { setScrollLocked } from "@/lib/lenis/useLenis";
 import { markPreloaderDone } from "@/lib/preloader";
-import { spotlight, mantra } from "@/content/site";
+import { lab, mantra } from "@/content/site";
 import styles from "./Preloader.module.css";
 
 const SEEN_KEY = "sg-preloaded";
-const PHOTOS = spotlight.frames;
+const PHOTOS = lab.items.map((i) => ({ src: i.img }));
 
 function readSeen() {
   try {
@@ -27,7 +27,7 @@ function writeSeen() {
 
 /*
  * ~3s intro on a pale sheet: a framed box draws itself between four "+"
- * marks, real practices flick through it like a contact sheet while the
+ * marks, my experiments flick through it like a contact sheet while the
  * counter runs to 100, ink fills the frame, and the frame opens up to
  * become the (ink) hero. Once per session; click to skip.
  */
@@ -45,7 +45,7 @@ export default function Preloader() {
       markPreloaderDone();
     }
 
-    // skip on a repeat visit, on a section link ("/#pricing"), or reduced motion
+    // skip on a repeat visit, on a section link ("/#playground"), or reduced motion
     if (readSeen() || window.location.hash || window.matchMedia(MQ.reduced).matches) {
       finish();
       return;

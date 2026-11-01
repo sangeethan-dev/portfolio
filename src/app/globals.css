@@ -88,40 +88,11 @@
   --accent-ink: var(--bp-accent-ink);
 
   /* Demo client site in The Build (BuildStory) */
-  --bloom-bg:     #F7E8DF;
-  --bloom-ink:    #1F2A1F;
-  --bloom-accent: #E2553B;
-  --bloom-leaf:   #7FA36B;
-  --bloom-petal:  #F2A7A0;
-  --bloom-sun:    #F4C152;
-
-  /* Concept brand palettes (Work section) */
-  --clinic-bg:    #E8F1EE;
-  --clinic-ink:   #0E3B3A;
-  --clinic-teal:  #1FA394;
-  --clinic-teal-rgb: 31, 163, 148;
-  --clinic-mute:  #5D7774;
-  --clinic-sand:  #F4EBDD;
-  --clinic-line:  #CFE0DB;
-
-  --cafe-bg:      #2A1F18;
-  --cafe-bg-2:    #3A2B21;
-  --cafe-cream:   #F3E6D3;
-  --cafe-latte:   #C89B6D;
-  --cafe-accent:  #E9B44C;
-  --cafe-espresso:#4A2C1D;
-  --cafe-chai:    #B9763F;
-  --cafe-cream-rgb: 243, 230, 211;
-
-
-  --store-bg:     #EFE9E1;
-  --store-bg-2:   #E3DACE;
-  --store-text:   #2B2622;
-  --store-mute:   #8C8279;
-  --store-sand:   #D8C3A5;
-  --store-sage:   #9CAF88;
-  --store-clay:   #C47A5A;
-  --store-night:  #3E4A5C;
+  --bloom-bg:     #F6F2EC;
+  --bloom-ink:    #14302B;
+  --bloom-accent: #1E6E5E;
+  --bloom-sage:   #9DB8A6;
+  --bloom-sand:   #D9C7AE;
 
   /* Chat bubbles (FAQ) — fixed, so they read the same on paper and on ink */
   --chat-in:       #FFFFFF;

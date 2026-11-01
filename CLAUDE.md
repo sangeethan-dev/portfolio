@@ -24,9 +24,8 @@
 
 - /app → Next.js app router (`/` is the portfolio; other routes are standalone demos)
 - /components → one folder per section
-- /content/site.js → all copy: prices, packages, FAQs, concepts, contact details,
+- /content/site.js → all copy: FAQs, contact details, Lab items,
   agency page copy/rates, privacy copy, and `siteUrl` (the one place to change the domain)
-- /content/fixes.js → "Recent fixes" strip data (strip hides when empty)
 - /lib/gsap → plugin registry, theme controller, reusable animation hooks
 - /lib/lenis → smooth scroll, `scrollToSection`, `setScrollLocked`,
   `useSectionNav` (section links that work from any route)
@@ -41,7 +40,7 @@
   `useThemeFlip` resolves the theme from positions on every scroll update
   (the last section whose top crossed its start line wins); smaller areas
   can override it with `data-tone="blueprint|live"` while they cover the
-  middle of the screen (Work rooms, BuildStory). Call `syncTheme()` from
+  middle of the screen (BuildStory). Call `syncTheme()` from
   `@/lib/gsap/theme` if something moves sections without a scroll.
 - Skin "Void → Bone" (inspired by trionn.com): near-black canvas, bone type,
   graphite hairlines, ONE ember accent (--signal) used sparingly. Headlines

@@ -77,7 +77,7 @@ export default function Footer() {
         <nav className={styles.col} aria-label="Footer">
           <span className={styles.colLabel}>Pages</span>
           {/* /agencies is shared directly, so only it links across */}
-          {pathname.startsWith("/agencies") && <Link href="/">For small businesses →</Link>}
+          {pathname.startsWith("/agencies") && <Link href="/">Main site →</Link>}
           <Link href={pageLinks.privacy.href}>{pageLinks.privacy.label}</Link>
           <a href={contact.inspirations} target="_blank" rel="noopener noreferrer">
             Experiments ↗

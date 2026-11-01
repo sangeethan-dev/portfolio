@@ -1,0 +1,161 @@
+.section {
+  position: relative;
+  padding-block: var(--spacing-6xl);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-3xl);
+}
+
+.title {
+  font-size: clamp(42px, 7vw, 132px);
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  color: var(--fg);
+}
+
+/* ── The chain: brief → people → website ───────────────────────── */
+.chain {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  min-height: 96px;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+.line i {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.end,
+.link {
+  position: relative;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--rounded-full);
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--fg-mute);
+}
+
+.end {
+  border-color: transparent;
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.meWrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.me {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 8px 22px 8px 8px;
+  border-radius: var(--rounded-full);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--display);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.03em;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.me img {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--rounded-full);
+  object-fit: cover;
+}
+
+/* ── Copy + what I won't do ────────────────────────────────────── */
+.body {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--spacing-3xl);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  font-size: clamp(20px, 2vw, 32px);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.nosTitle {
+  margin-bottom: var(--spacing-md);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.no {
+  padding-block: var(--spacing-md);
+  border-top: 1px solid var(--line);
+  font-size: var(--font-size-lg);
+  line-height: 1.45;
+  color: var(--fg-mute);
+}
+
+/* ── Phones: the chain runs down the page ──────────────────────── */
+@media screen and (max-width: 767px) {
+  .chain {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    min-height: 0;
+  }
+
+  .line {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+
+  .line i {
+    transform: scaleY(0);
+    transform-origin: center top;
+  }
+
+  .body {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+  }
+}

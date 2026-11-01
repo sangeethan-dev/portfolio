@@ -5,13 +5,16 @@ import Image from "next/image";
 import { gsap, MQ, useGSAP } from "@/lib/gsap";
 import { onPreloaderDone } from "@/lib/preloader";
 import { scrollToSection } from "@/lib/lenis/useLenis";
-import { offer, aud, stats, spotlight } from "@/content/site";
+import { stats, lab } from "@/content/site";
 import ArrowLink from "@/components/ArrowLink/ArrowLink";
 import BlueprintGrid from "./BlueprintGrid";
 import styles from "./Hero.module.css";
 
 /* Photos that roll through the reel inside the headline */
-const REEL = [0, 1, 3, 4, 5, 7].map((i) => spotlight.frames[i]);
+const REEL = ["liquid-reveal-hero", "ink-fluid-cursor", "morph-loader", "magnetic-cards", "infinite-marquee", "acronym-intro-hero"]
+  .map((id) => lab.items.find((i) => i.id === id))
+  .filter(Boolean)
+  .map((i) => ({ src: i.img }));
 const HOLD_MS = 0.45; // how long a press takes to switch to the blueprint
 
 function Words({ text, className = "" }) {
@@ -27,7 +30,7 @@ function Words({ text, className = "" }) {
 
 /*
  * Hero. Words come into focus (blur → sharp), the photo pills open up
- * inside the headline, then the reel keeps rolling through real practices.
+ * inside the headline, then the reel keeps rolling through my experiments.
  *
  * Press and hold anywhere (or use the button) to see the blueprint behind
  * the page: the type turns to outlines, images become wireframe boxes and
@@ -234,7 +237,7 @@ export default function Hero() {
           </span>
 
           <span className={styles.line}>
-            <Words text="that get" />{" "}
+            <Words text="that make" />{" "}
             <span className={`${styles.pill} ${styles.reelPill}`} data-pill data-w="1.9em">
               <span ref={reelRef} className={styles.reel}>
                 {[...REEL, REEL[0]].map((f, i) => (
@@ -250,7 +253,7 @@ export default function Hero() {
           </span>
 
           <span className={styles.line}>
-            <Words text="you" /> <Words text="booked." className={styles.accent} />
+            <Words text="people" /> <Words text="stop." className={styles.accent} />
           </span>
         </h1>
 
@@ -271,13 +274,13 @@ export default function Hero() {
               Watch it build
             </ArrowLink>
             <ArrowLink
-              href="#pricing"
+              href="#playground"
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection("#pricing", 0);
+                scrollToSection("#playground", 0);
               }}
             >
-              {`Websites ${aud(offer.website)}`}
+              See the experiments
             </ArrowLink>
           </div>
 
@@ -309,11 +312,11 @@ export default function Hero() {
                 {stats[0].value}
                 <small>yrs</small>
               </span>
-              <span className={styles.plateText}>Building websites people find, trust &amp; book.</span>
+              <span className={styles.plateText}>Design, code and motion, from one person.</span>
             </div>
             <p className={styles.sideNote}>
-              For local practices and small businesses. Found on Google, trusted at first glance, booked in a
-              couple of taps.
+              For brands, businesses and the teams behind them. Fast on every screen, and easy to run after
+              launch.
             </p>
           </div>
         </div>

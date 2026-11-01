@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap, ScrollTrigger, MQ, useGSAP } from "@/lib/gsap";
 import { setTheme } from "@/lib/gsap/theme";
 import { SCRAMBLE_CHARS } from "@/lib/gsap/useScramble";
@@ -23,6 +24,13 @@ const CODE = [
   { t: [["f", "gsap"], ["p", "."], ["f", "to"], ["p", "("], ["s", '".marquee"'], ["p", ", {"]], hl: 2 },
   { t: [["p", "  xPercent: "], ["k", "-50"], ["p", ", repeat: "], ["k", "-1"]] },
   { t: [["p", "});"]] },
+];
+
+/* Service cards on the demo site */
+const SERVICES = [
+  { title: "Osteopathy", desc: "Back, neck and joint pain", img: "/portfolio/build/osteopathy.webp" },
+  { title: "Remedial massage", desc: "Tight, sore or overworked", img: "/portfolio/build/massage.webp" },
+  { title: "Clinical Pilates", desc: "Rebuild strength safely", img: "/portfolio/build/pilates.webp" },
 ];
 
 const TOKEN_CLASS = { c: "tc", k: "tk", s: "ts", f: "tf", p: "tp" };
@@ -59,8 +67,6 @@ export default function BuildStory() {
   const pinRef = useRef(null);
   const urlRef = useRef(null);
   const badgeRef = useRef(null);
-  const countRef = useRef(null);
-  const artRef = useRef(null);
   const trackRef = useRef(null);
   const siteBtnRef = useMagnetic(0.45);
   const [stage, setStage] = useState(0);
@@ -103,26 +109,6 @@ export default function BuildStory() {
         ease: "none",
         paused: true,
       });
-      const spin = gsap.to(artRef.current, {
-        rotate: 360,
-        repeat: -1,
-        duration: 30,
-        ease: "none",
-        paused: true,
-      });
-      let counterId = 0;
-      function startCounter() {
-        if (counterId) return;
-        counterId = window.setInterval(() => {
-          const el = countRef.current;
-          el.textContent = String(parseInt(el.textContent, 10) + 1);
-          gsap.fromTo(el, { yPercent: -40, scale: 1.2 }, { yPercent: 0, scale: 1, duration: 0.5, ease: "back.out(3)" });
-        }, 1800);
-      }
-      function stopCounter() {
-        window.clearInterval(counterId);
-        counterId = 0;
-      }
 
       let current = -1;
       function applyStage(i) {
@@ -139,15 +125,8 @@ export default function BuildStory() {
         // data-tone lets the theme resolver (useThemeFlip) agree while pinned
         rootRef.current.dataset.tone = i === 3 ? "live" : "blueprint";
         setTheme(i === 3 ? "live" : "blueprint");
-        if (i === 3) {
-          marquee.play();
-          spin.play();
-          startCounter();
-        } else {
-          marquee.pause();
-          spin.pause();
-          stopCounter();
-        }
+        if (i === 3) marquee.play();
+        else marquee.pause();
       }
 
       mm.add(MQ.reduced, () => {
@@ -241,8 +220,6 @@ export default function BuildStory() {
       return () => {
         mm.revert();
         marquee.kill();
-        spin.kill();
-        stopCounter();
       };
     },
     { scope: rootRef }
@@ -281,7 +258,7 @@ export default function BuildStory() {
             </div>
 
             <p className={styles.capHint}>
-              {reduced ? "How I work, from first sketch to launch." : "Keep scrolling and watch a real site come together."}
+              {reduced ? "How I work, from first sketch to launch." : "Keep scrolling and watch a website come together."}
             </p>
           </aside>
 
@@ -293,7 +270,7 @@ export default function BuildStory() {
               <span className={`${styles.swatch} ${styles.swPetal}`} data-swatch />
               <span className={`${styles.swatch} ${styles.swLeaf}`} data-swatch />
               <span className={styles.typeChip} data-swatch>
-                Aa <small>Unbounded / Inter</small>
+                Aa <small>Familjen / Inter</small>
               </span>
             </div>
 
@@ -317,17 +294,24 @@ export default function BuildStory() {
 
                 <div className={styles.site}>
                   <Block className={styles.bNav} label="nav">
-                    <span className={styles.logo}>Wavelength</span>
+                    <span className={styles.logo}>
+                      <i className={styles.logoMark} />
+                      Wavelength
+                    </span>
                     <span className={styles.links}>
                       <span>Services</span>
-                      <span>Team</span>
+                      <span>Our team</span>
                       <span>Fees</span>
+                      <span>Contact</span>
                     </span>
-                    <span className={styles.navBtn}>Book</span>
+                    <span className={styles.navBtn}>Book now</span>
                   </Block>
 
                   <div className={styles.heroRow}>
                     <div className={styles.heroText}>
+                      <Block className={styles.bEyebrow} label="eyebrow">
+                        <p className={styles.siteEyebrow}>Osteopathy &amp; remedial care</p>
+                      </Block>
                       <Block className={styles.bH1} label="h1" hl="<h1>">
                         <p className={styles.siteH1}>
                           Feel better. <em>Move</em> freely.
@@ -345,33 +329,37 @@ export default function BuildStory() {
                           </span>
                         </Block>
                         <Block className={styles.bStat} label="stat">
-                          <span ref={countRef} className={styles.statNum}>
-                            128
-                          </span>
-                          <span className={styles.statLabel}>booked this week</span>
+                          <span className={styles.statLabel}>Next available</span>
+                          <span className={styles.statNum}>Today, 4:30 pm</span>
                         </Block>
                       </div>
                     </div>
 
                     <Block className={styles.bArt} label="img 4:5" cross>
                       <div className={styles.artBox}>
-                        <div ref={artRef} className={styles.flower}>
-                          {Array.from({ length: 8 }).map((_, i) => (
-                            <span key={i} className={styles.petal} style={{ "--i": i }} />
-                          ))}
-                          <span className={styles.flowerCore} />
-                        </div>
-                        <span className={styles.leafA} />
-                        <span className={styles.leafB} />
+                        <Image
+                          src="/portfolio/build/hero.webp"
+                          alt=""
+                          fill
+                          sizes="(max-width: 1023px) 40vw, 24vw"
+                          className={styles.artImg}
+                        />
+                        <span className={styles.artNote}>Health fund rebates on the spot</span>
                       </div>
                     </Block>
                   </div>
 
                   <div className={styles.cards}>
-                    {["Osteopathy", "Remedial massage", "Clinical Pilates"].map((c, i) => (
-                      <Block key={c} className={styles.bCard} label="card">
-                        <span className={styles.cardChip} style={{ "--c": i }} />
-                        <span className={styles.cardTitle}>{c}</span>
+                    {SERVICES.map((c) => (
+                      <Block key={c.title} className={styles.bCard} label="card">
+                        <span className={styles.cardImg}>
+                          <Image src={c.img} alt="" fill sizes="(max-width: 1023px) 12vw, 6vw" />
+                        </span>
+                        <span className={styles.cardText}>
+                          <span className={styles.cardTitle}>{c.title}</span>
+                          <span className={styles.cardDesc}>{c.desc}</span>
+                        </span>
+                        <span className={styles.cardArrow}>→</span>
                       </Block>
                     ))}
                   </div>
@@ -381,7 +369,7 @@ export default function BuildStory() {
                       <div ref={trackRef} className={styles.track}>
                         {Array.from({ length: 2 }).map((_, k) => (
                           <span key={k} className={styles.trackItem}>
-                            Book online 24/7 ✿ Health fund rebates on the spot ✿ No referral needed ✿ Book online 24/7 ✿ Health fund rebates on the spot ✿ No referral needed ✿&nbsp;
+                            Book online 24/7 &nbsp;·&nbsp; Health fund rebates on the spot &nbsp;·&nbsp; No referral needed &nbsp;·&nbsp; Early and late appointments &nbsp;·&nbsp;&nbsp;
                           </span>
                         ))}
                       </div>

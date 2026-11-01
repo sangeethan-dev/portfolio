@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import Cursor from "@/components/Cursor/Cursor";
 import Header from "@/components/Header/Header";
 import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
-import { offer, aud, siteUrl } from "@/content/site";
+import { siteUrl } from "@/content/site";
 import "./globals.css";
 
 const familjen = Familjen_Grotesk({
@@ -27,8 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const title = "Sangeethan — Custom Websites for Local Practices & Small Businesses";
-const description = `Custom websites for local practices and small businesses — easy to find on Google, trusted at first glance and simple to book. ${offer.label}: websites ${aud(offer.website)}, Care Plan ${aud(offer.care)}/month for the first ${offer.careMonths} months.`;
+const title = "Sangeethan — Independent Web Developer";
+const description =
+  "Independent web developer with 8 years and 50+ projects behind me. Fast websites with motion people remember, built in Next.js, WordPress, Webflow and Shopify.";
 
 /* Pages override title / description / alternates / openGraph.url;
    relative URLs resolve against metadataBase (siteUrl in content/site.js). */

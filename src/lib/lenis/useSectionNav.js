@@ -6,7 +6,7 @@ import { scrollToSection } from "./useLenis";
 /*
  * One click handler for "#section" and "/page" links that works on every
  * route: a hash smooth-scrolls when that section is on the current page,
- * otherwise it navigates to the homepage section ("/#pricing").
+ * otherwise it navigates to the homepage section ("/#playground").
  * Returns go(href, event?) — pass the click event to keep native
  * behaviour for ctrl/cmd-clicks.
  */

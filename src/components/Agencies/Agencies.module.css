@@ -1,4 +1,4 @@
-/* Shared by the /agencies content sections (Why, Services, Rates, Timelines, Process) */
+/* Shared by the /agencies content sections (Why, Services, Rates, Timelines, Process, Questions) */
 
 .section {
   position: relative;
@@ -739,6 +739,35 @@
   color: var(--fg-mute);
 }
 
+/* ── Questions: a checklist that ticks itself off ──────────────── */
+.qRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 80px 1.2fr 1fr;
+  gap: var(--spacing-lg);
+  align-items: center;
+  padding-block: var(--spacing-xl);
+}
+
+.qBox {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--accent);
+  border-radius: var(--rounded-sm);
+}
+
+.qBox svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* ── Responsive ────────────────────────────────────────────────── */
 @media screen and (max-width: 1023px) {
   .service {
@@ -759,8 +788,17 @@
       "intro";
   }
 
-  .row {
+  .row,
+  .qRow {
     grid-template-columns: 48px 1fr;
+  }
+
+  .qRow {
+    align-items: start;
+  }
+
+  .qRow .rowDesc {
+    grid-column: 2;
   }
 
   /* phones/tablets: the stage sticks under the header, points scroll beneath */

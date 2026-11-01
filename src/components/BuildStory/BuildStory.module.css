@@ -146,8 +146,8 @@
 
 .swInk { background: var(--bloom-ink); }
 .swAccent { background: var(--bloom-accent); }
-.swPetal { background: var(--bloom-petal); }
-.swLeaf { background: var(--bloom-leaf); }
+.swPetal { background: var(--bloom-sand); }
+.swLeaf { background: var(--bloom-sage); }
 
 .typeChip {
   display: flex;
@@ -158,7 +158,7 @@
   color: var(--ink);
   font-family: var(--display);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: var(--display-weight);
   line-height: 1;
   box-shadow: 0 8px 24px var(--shadow-ink);
 }
@@ -258,8 +258,8 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 2.2cqw;
-  padding: 2.4cqw 3cqw 0;
+  gap: 1.8cqw;
+  padding: 1.6cqw 3cqw 0;
   color: var(--bloom-ink);
   font-family: var(--sans);
 }
@@ -332,38 +332,49 @@
 .bNav .content {
   display: flex;
   align-items: center;
-  gap: 2cqw;
+  gap: 2.4cqw;
   height: 4.4cqw;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.7cqw;
+  margin-right: auto;
   font-family: var(--display);
   font-size: 1.9cqw;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  margin-right: auto;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.03em;
+}
+
+.logoMark {
+  width: 1.7cqw;
+  height: 1.7cqw;
+  border-radius: 50% 50% 50% 0;
+  background: var(--bloom-accent);
 }
 
 .links {
   display: flex;
-  gap: 2cqw;
-  font-size: 1.3cqw;
+  gap: 2.2cqw;
+  font-size: 1.2cqw;
+  opacity: 0.8;
 }
 
 .navBtn {
-  padding: 0.7cqw 1.6cqw;
+  padding: 0.75cqw 1.5cqw;
   border-radius: var(--rounded-full);
-  background: var(--bloom-ink);
+  background: var(--bloom-accent);
   color: var(--bloom-bg);
-  font-size: 1.2cqw;
+  font-size: 1.15cqw;
+  font-weight: 500;
 }
 
 /* hero row */
 .heroRow {
   display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  gap: 3cqw;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3.4cqw;
   flex: 1;
   min-height: 0;
 }
@@ -372,16 +383,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.8cqw;
+  gap: 1.5cqw;
+}
+
+.siteEyebrow {
+  font-size: 1.15cqw;
+  font-weight: 500;
+  color: var(--bloom-accent);
 }
 
 .siteH1 {
   font-family: var(--display);
-  font-size: 4.6cqw;
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
+  font-size: 6cqw;
+  font-weight: var(--display-weight);
+  line-height: 1;
+  letter-spacing: -0.045em;
 }
 
 .siteH1 em {
@@ -390,26 +406,27 @@
 }
 
 .siteP {
-  max-width: 34cqw;
-  font-size: 1.45cqw;
-  line-height: 1.45;
-  opacity: 0.75;
+  max-width: 36cqw;
+  font-size: 1.4cqw;
+  line-height: 1.5;
+  opacity: 0.72;
 }
 
 .ctaRow {
   display: flex;
   align-items: center;
   gap: 2.4cqw;
+  margin-top: 0.4cqw;
 }
 
 .siteBtn {
   display: inline-flex;
-  padding: 1.3cqw 2.4cqw;
+  padding: 1.2cqw 2.2cqw;
   border-radius: var(--rounded-full);
   background: var(--bloom-accent);
   color: var(--bloom-bg);
-  font-size: 1.35cqw;
-  font-weight: 600;
+  font-size: 1.3cqw;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -420,24 +437,22 @@
 .bStat .content {
   display: flex;
   flex-direction: column;
-  line-height: 1;
-}
-
-.statNum {
-  display: inline-block;
-  font-family: var(--display);
-  font-size: 2.6cqw;
-  font-weight: 800;
-  transform-origin: left bottom;
+  gap: 0.25cqw;
+  line-height: 1.2;
 }
 
 .statLabel {
-  margin-top: 0.4cqw;
-  font-size: 1.05cqw;
+  font-size: 1cqw;
   opacity: 0.6;
 }
 
-/* art */
+.statNum {
+  font-size: 1.3cqw;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* hero photo */
 .bArt .content {
   height: 100%;
 }
@@ -445,95 +460,85 @@
 .artBox {
   position: relative;
   height: 100%;
-  border-radius: 1.2cqw;
-  background: var(--bloom-sun);
   overflow: hidden;
+  border-radius: 1.2cqw;
+  background: var(--bloom-sand);
 }
 
-.flower {
+.artImg {
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.artNote {
   position: absolute;
-  left: 50%;
-  top: 46%;
-  width: 0;
-  height: 0;
-}
-
-.petal {
-  position: absolute;
-  left: -3.4cqw;
-  top: -9cqw;
-  width: 6.8cqw;
-  height: 9cqw;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  background: var(--bloom-petal);
-  transform-origin: 50% 100%;
-  transform: rotate(calc(var(--i) * 45deg));
-  mix-blend-mode: multiply;
-}
-
-.petal:nth-child(odd) {
-  background: var(--bloom-accent);
-}
-
-.flowerCore {
-  position: absolute;
-  left: -2.4cqw;
-  top: -2.4cqw;
-  width: 4.8cqw;
-  height: 4.8cqw;
-  border-radius: var(--rounded-full);
-  background: var(--bloom-ink);
-}
-
-.leafA,
-.leafB {
-  position: absolute;
-  bottom: -2cqw;
-  width: 10cqw;
-  height: 16cqw;
-  border-radius: 0 100% 0 100%;
-  background: var(--bloom-leaf);
-}
-
-.leafA {
-  left: 8%;
-  transform: rotate(-18deg);
-}
-
-.leafB {
-  right: 6%;
-  transform: scaleX(-1) rotate(-12deg);
+  left: 1.2cqw;
+  bottom: 1.2cqw;
+  max-width: 62%;
+  padding: 0.8cqw 1.1cqw;
+  border-radius: 0.7cqw;
+  background: var(--bloom-bg);
+  color: var(--bloom-ink);
+  font-size: 1.1cqw;
+  font-weight: 500;
+  line-height: 1.3;
+  box-shadow: 0 0.8cqw 2cqw -0.8cqw var(--shadow-ink);
 }
 
 /* cards */
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.6cqw;
+  gap: 1.4cqw;
 }
 
 .bCard .content {
   display: flex;
   align-items: center;
-  gap: 1.2cqw;
-  padding: 1.3cqw 1.4cqw;
+  gap: 1.1cqw;
+  padding: 0.8cqw;
   border-radius: 1cqw;
   background: var(--white);
 }
 
-.cardChip {
-  width: 2.6cqw;
-  height: 2.6cqw;
-  border-radius: var(--rounded-full);
-  background: var(--bloom-petal);
+.cardImg {
+  position: relative;
+  flex-shrink: 0;
+  width: 5.2cqw;
+  height: 5.2cqw;
+  overflow: hidden;
+  border-radius: 0.7cqw;
 }
 
-.bCard:nth-child(2) .cardChip { background: var(--bloom-leaf); }
-.bCard:nth-child(3) .cardChip { background: var(--bloom-sun); }
+.cardImg img {
+  object-fit: cover;
+}
+
+.cardText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.2cqw;
+  min-width: 0;
+}
 
 .cardTitle {
-  font-size: 1.4cqw;
+  font-size: 1.3cqw;
   font-weight: 600;
+}
+
+.cardDesc {
+  overflow: hidden;
+  font-size: 1cqw;
+  opacity: 0.62;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardArrow {
+  padding-right: 0.5cqw;
+  font-size: 1.3cqw;
+  color: var(--bloom-accent);
 }
 
 /* marquee */
@@ -543,7 +548,7 @@
 
 .marquee {
   overflow: hidden;
-  padding: 1.2cqw 0;
+  padding: 0.9cqw 0;
   background: var(--bloom-ink);
   color: var(--bloom-bg);
 }
@@ -554,10 +559,8 @@
 }
 
 .trackItem {
-  font-family: var(--display);
-  font-size: 1.5cqw;
-  font-weight: 600;
-  text-transform: uppercase;
+  font-size: 1.15cqw;
+  font-weight: 500;
   white-space: nowrap;
 }
 

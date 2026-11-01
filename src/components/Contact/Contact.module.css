@@ -210,16 +210,6 @@
   border-bottom-color: var(--accent);
 }
 
-.flash {
-  position: absolute;
-  inset: auto 0 0;
-  height: 48px;
-  background: var(--accent);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
 .hp {
   position: absolute;
   left: -9999px;
