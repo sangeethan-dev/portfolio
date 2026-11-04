@@ -2,25 +2,25 @@
   padding-block: var(--spacing-5xl) var(--spacing-6xl);
 }
 
-/* ── Header (same pattern as Work) ─────────────────────────────── */
-.head {
+/* heading on the left, the thread on the right */
+.layout {
   display: grid;
-  grid-template-columns: 1fr minmax(260px, 420px);
-  grid-template-areas:
-    "label label"
-    "title intro";
-  align-items: end;
-  gap: var(--spacing-lg) var(--spacing-2xl);
-  margin-bottom: var(--spacing-3xl);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: var(--spacing-3xl);
 }
 
-.head > :global(.label) {
-  grid-area: label;
+.head {
+  position: sticky;
+  top: calc(var(--header-h) + var(--spacing-xl));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
 }
 
 .title {
-  grid-area: title;
-  font-size: clamp(40px, 6.4vw, 120px);
+  font-size: clamp(40px, 5vw, 96px);
   font-weight: var(--display-weight);
   line-height: 0.9;
   letter-spacing: -0.055em;
@@ -28,7 +28,7 @@
 }
 
 .intro {
-  grid-area: intro;
+  max-width: 34ch;
   font-size: var(--font-size-lg);
   line-height: 1.55;
   color: var(--fg-mute);
@@ -48,8 +48,6 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  max-width: 880px;
-  margin-inline: auto;
   gap: var(--spacing-xl);
 }
 
@@ -117,7 +115,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: var(--spacing-md);
 }
 
 .pair {
@@ -126,44 +124,117 @@
   gap: var(--spacing-md);
 }
 
-/* rows reserve the expanded height (set in JS) so the page never jumps */
-.row {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-sm);
-}
-
 .rowQ {
+  display: flex;
   justify-content: flex-start;
 }
 
 .rowA {
+  display: flex;
+  align-items: flex-start;
   justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.rowA[hidden] {
+  display: none;
 }
 
 /* ── Bubbles ───────────────────────────────────────────────────── */
-/* Instant-messenger bubbles: incoming (visitor) on the left in white,
-   outgoing (me) on the right in blue. The small corner is the "tail",
-   pointing at whoever is speaking. */
+/* Questions (the visitor) sit on the left on the page's surface; answers
+   (me) on the right in inverted ink. Both follow the theme. The small
+   corner is the "tail", pointing at whoever is speaking. */
+.q,
 .msg {
   position: relative;
   max-width: min(76%, 560px);
-  padding: 11px 16px;
   border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 1px 2px var(--chat-shadow), 0 4px 14px var(--chat-shadow);
 }
 
+/* a question is a button: tap to open its answer */
 .q {
-  background: var(--chat-in);
-  color: var(--chat-in-ink);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: 12px 14px 12px 18px;
+  border: 1px solid var(--line);
   border-bottom-left-radius: 5px;
+  background: var(--surface);
+  color: var(--fg);
+  text-align: left;
+  transition: border-color var(--dur-fast) var(--ease-smooth);
 }
 
-.a {
-  background: var(--chat-out);
-  color: var(--chat-out-ink);
+.q[data-open="true"] {
+  border-color: var(--accent);
+}
+
+/* only with a real pointer: on touch, :hover sticks after a tap */
+@media (hover: hover) {
+  .q:hover {
+    border-color: var(--accent);
+  }
+}
+
+.q:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.qText {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+}
+
+/* + that turns into − (GSAP turns it and folds the upright bar away) */
+.icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--rounded-full);
+  background: var(--fg);
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.barH,
+.barV {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -5px;
+  border-radius: 1px;
+  background: var(--bg);
+  transition: background var(--dur-fast) var(--ease-smooth);
+}
+
+.barV {
+  width: 1.5px;
+  height: 10px;
+  margin: -5px 0 0 -0.75px;
+}
+
+.q[data-open="true"] .icon {
+  background: var(--accent);
+}
+
+.q[data-open="true"] .barH,
+.q[data-open="true"] .barV {
+  background: var(--accent-ink);
+}
+
+.msg {
+  padding: 11px 16px;
+  overflow: hidden;
   border-bottom-right-radius: 5px;
+  background: var(--fg);
+  color: var(--bg);
+  box-shadow: 0 10px 24px -16px var(--shadow-ink);
 }
 
 .content {
@@ -177,12 +248,8 @@
 .msg p {
   font-family: var(--sans);
   font-size: 17px;
-  line-height: 1.42;
+  line-height: 1.45;
   letter-spacing: -0.005em;
-}
-
-.q p {
-  font-weight: 500;
 }
 
 .avatar {
@@ -191,7 +258,7 @@
   margin-top: auto;
 }
 
-/* typing dots — hidden unless the motion build shows them */
+/* typing dots — hidden unless an answer is opening */
 .typing {
   position: absolute;
   inset: 0;
@@ -213,88 +280,47 @@
   opacity: 0.7;
 }
 
-/* ── Composer ──────────────────────────────────────────────────── */
-.composer {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  width: 100%;
-  margin-top: var(--spacing-md);
-  padding: 8px 8px 8px 24px;
-  border-radius: var(--rounded-full);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  text-align: left;
-  transition: border-color var(--dur-fast) var(--ease-smooth);
-}
-
-.composer:hover {
-  border-color: var(--accent);
-}
-
-.composerText {
-  flex: 1;
-  font-size: var(--font-size-md);
-  color: var(--fg-mute);
-}
-
-.send {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--rounded-full);
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: var(--font-size-xl);
-}
-
 /* ── Responsive ────────────────────────────────────────────────── */
 @media screen and (max-width: 1023px) {
-  .head {
+  .layout {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "label"
-      "title"
-      "intro";
+    gap: var(--spacing-2xl);
+  }
+
+  .head {
+    position: static;
   }
 }
 
 @media screen and (max-width: 639px) {
+  .q,
   .msg {
-    max-width: 84%;
-    padding: 9px 14px;
+    max-width: 88%;
     border-radius: 18px;
   }
 
   .q {
+    padding: 10px 12px 10px 14px;
     border-bottom-left-radius: 5px;
   }
 
-  .a {
+  .msg {
+    padding: 9px 14px;
     border-bottom-right-radius: 5px;
   }
 
+  .qText,
   .msg p {
     font-size: 16px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
   }
 
   .avatar {
     width: 26px;
     height: 26px;
-  }
-
-  .composer {
-    padding-left: 18px;
-  }
-
-  .composerText {
-    font-size: var(--font-size-sm);
-  }
-
-  .send {
-    width: 42px;
-    height: 42px;
   }
 }

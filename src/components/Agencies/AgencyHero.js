@@ -90,7 +90,7 @@ export default function AgencyHero() {
         <div className={styles.topRow} data-ah-fade>
           <span className="label">Fig. 01 — For agencies</span>
           <span className="label">
-            <i className={styles.liveDot} /> White-label · Fixed quotes · AU
+            <i className={styles.liveDot} /> White-label · 50+ projects · AU
           </span>
         </div>
 

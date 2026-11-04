@@ -145,7 +145,7 @@ export default function AgencyHandover() {
   return (
     <section id="handover" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 05 — Handover</span>
+        <span className="label">Fig. 04 — Handover</span>
         <h2 ref={titleRef} className={styles.title}>
           {title}
         </h2>

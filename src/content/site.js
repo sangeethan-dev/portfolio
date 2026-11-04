@@ -347,7 +347,7 @@ export const agency = {
       "I'm the developer behind the websites your agency sells. You keep the client and the credit. I keep the deadline.",
     pillars: ["Your brand.", "Fixed quotes.", "On time."],
     mission:
-      "Overflow work, a one-off build or a fix that can't wait. I fit into the way your team already works, and nobody outside it needs to know I'm there.",
+      "Eight years and 50+ projects in, starting at a digital marketing agency, I know how briefs, deadlines and client sign-offs really work. I fit into the way your team already works, and nobody outside it needs to know I'm there.",
   },
   mantra: {
     label: "Your brand, my code, on time",
@@ -355,18 +355,6 @@ export const agency = {
     words: ["Your brand", "My code", "On time"],
     caption: "Invisible on purpose",
   },
-  why: [
-    {
-      title: "You brief the developer, not an account manager",
-      desc: "Many white-label shops put someone between you and the person doing the work. With me, the person who quotes it builds it.",
-    },
-    { title: "Only 3 agencies at a time", desc: "I work with 3 agencies at a time, so your job doesn't wait behind a bigger client." },
-    { title: "8 years, 50+ projects", desc: "I started at a digital marketing agency, so I know how briefs, deadlines and client sign-offs really work." },
-    { title: "White-label by default", desc: "Your brand on everything: the site, the staging link, the handover. I never appear in front of your client." },
-    { title: "Fixed quotes before starting", desc: "You get a fixed price up front, so your margin is known before a line of code is written." },
-    { title: "Colombo overheads, Australian standards", desc: "I work from Colombo for Australian agencies, so you get senior work at rates that leave real room for your margin." },
-    { title: "Ready by your next morning", desc: "I'm 4.5 hours behind AEST. Send changes at the end of your day and they're done when you're back in." },
-  ],
   services: [
     { title: "WordPress", desc: "Elementor or custom themes, built so your team can edit them." },
     { title: "Webflow", desc: "Your designs built in Webflow, with clean classes and a CMS your team can edit." },
@@ -465,19 +453,6 @@ export const agency = {
     { title: "Launch under your brand", desc: "It goes live with your agency's name on it, not mine." },
     { title: "After launch", desc: "Need changes later? Send them over and I bill the time at the hourly rate. No retainer, no lock-in." },
   ],
-  /* A checklist any agency can use on any developer. Only list questions
-     with an answer that's true: this is what the section is selling. */
-  questions: {
-    title: "Questions to ask any white-label developer.",
-    intro: "Ask these before you hand over a client. Here are my answers.",
-    items: [
-      { q: "Who actually writes the code?", a: "I do, on every project. Nothing gets passed to a junior or a subcontractor." },
-      { q: "Who will I actually talk to?", a: "Me, on every call and message. There's no account manager in between." },
-      { q: "Will my client ever see your name?", a: "No. Not in the footer, the code or the handover." },
-      { q: "Is the quote fixed before you start?", a: "Yes. You get a fixed price and a date first, and anything outside the brief gets a quick quote before I start on it." },
-      { q: "Who owns the code and logins?", a: "Your agency or your client, from launch day. I hand over all logins and files." },
-    ],
-  },
   lab: {
     title: "What I can build for you.",
     intro:
@@ -487,44 +462,48 @@ export const agency = {
     {
       q: "Whose name goes on the site?",
       a: [
-        "Yours. White-label is the default, not an extra: no credits in the footer, no mention of me in the code or the handover.",
+        "Yours. No credits in the footer, no mention of me in the code or the handover.",
+        "And I never contact your clients, unless you ask me to join a call as part of your agency.",
       ],
     },
     {
-      q: "How do we communicate?",
+      q: "Who will I actually talk to?",
       a: [
-        "Whatever your team already uses: Slack, email or WhatsApp. I can join your Slack as a guest.",
-        "You get one point of contact, me, for every project.",
+        "Me. I write the code and answer every message, on Slack, email or WhatsApp. There's no account manager in between.",
+      ],
+    },
+    {
+      q: "How many agencies do you work with?",
+      a: ["Three at a time, so your job doesn't wait behind a bigger client."],
+    },
+    {
+      q: "Is the quote fixed before you start?",
+      a: [
+        "Yes. You get a fixed price and a date first, so your margin is known up front.",
+        "Two rounds of revisions are included. Anything outside the brief gets a quick quote before I start on it.",
       ],
     },
     {
       q: "You're overseas. Why would I trust that?",
       a: [
         "You're not hiring an offshore team. You're hiring one named person, with a face, a phone number and WhatsApp.",
-        "If something goes wrong, you know exactly who to call.",
+        "Working from Colombo also keeps my rates low enough to leave real room for your margin.",
       ],
     },
     {
       q: "How do the time zones work?",
       a: [
-        "I'm 4.5 hours behind AEST. My working day overlaps your afternoon, so we can talk live, and I keep working after you've logged off.",
-        "Changes you send in the afternoon are usually ready by your next morning.",
+        "I'm 4.5 hours behind AEST, so we overlap in your afternoon.",
+        "Changes you send then are usually ready by your next morning.",
       ],
-    },
-    {
-      q: "How many revisions are included?",
-      a: ["Two rounds of revisions are included in every fixed quote. Anything outside the brief gets a quick quote before I start on it."],
     },
     {
       q: "What are your payment terms?",
-      a: [
-        "For builds, 50% upfront and 50% at launch. Fixes and hourly work are invoiced when done.",
-        "All prices are in AUD and invoiced to your agency, never to your client.",
-      ],
+      a: ["For builds, 50% upfront and 50% at launch. Fixes and hourly work are invoiced when done, in AUD, to your agency."],
     },
     {
-      q: "Will you ever contact our clients?",
-      a: ["Never. I only talk to your team, unless you ask me to join a call as part of your agency."],
+      q: "Who owns the code and logins?",
+      a: ["Your agency or your client, from launch day. I hand over all logins and files."],
     },
   ],
   needs: ["Overflow builds", "Ongoing partnership", "One project", "Edits & fixes"],

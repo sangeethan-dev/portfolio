@@ -64,7 +64,7 @@ export default function AgencyTimelines() {
   return (
     <section id="timelines" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 08 — Timelines</span>
+        <span className="label">Fig. 06 — Timelines</span>
         <h2 ref={titleRef} className={styles.title}>
           {title}
         </h2>

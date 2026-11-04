@@ -1,4 +1,4 @@
-/* Shared by the /agencies content sections (Why, Services, Rates, Timelines, Process, Questions) */
+/* Shared by the /agencies content sections (Services, Handover, Rates, Timelines, Process) */
 
 .section {
   position: relative;
@@ -37,21 +37,7 @@
   color: var(--fg-mute);
 }
 
-/* ── Why: numbered rows ────────────────────────────────────────── */
-.rows {
-  display: flex;
-  flex-direction: column;
-}
-
-.row {
-  position: relative;
-  display: grid;
-  grid-template-columns: 80px 1.2fr 1fr;
-  gap: var(--spacing-lg);
-  align-items: baseline;
-  padding-block: var(--spacing-xl);
-}
-
+/* hairline that draws in across a row (Timelines) */
 .rule {
   position: absolute;
   top: 0;
@@ -60,25 +46,6 @@
   height: 1px;
   background: var(--line);
   transform-origin: left center;
-}
-
-.rowNum {
-  font-family: var(--mono);
-  font-size: var(--font-size-xs);
-  color: var(--accent);
-}
-
-.rowTitle {
-  font-size: clamp(26px, 3.2vw, 56px);
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--fg);
-}
-
-.rowDesc {
-  font-size: var(--font-size-md);
-  line-height: 1.55;
-  color: var(--fg-mute);
 }
 
 /* ── Services: stacked index of big titles ─────────────────────── */
@@ -739,35 +706,6 @@
   color: var(--fg-mute);
 }
 
-/* ── Questions: a checklist that ticks itself off ──────────────── */
-.qRow {
-  position: relative;
-  display: grid;
-  grid-template-columns: 80px 1.2fr 1fr;
-  gap: var(--spacing-lg);
-  align-items: center;
-  padding-block: var(--spacing-xl);
-}
-
-.qBox {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--accent);
-  border-radius: var(--rounded-sm);
-}
-
-.qBox svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 /* ── Responsive ────────────────────────────────────────────────── */
 @media screen and (max-width: 1023px) {
   .service {
@@ -786,19 +724,6 @@
       "label"
       "title"
       "intro";
-  }
-
-  .row,
-  .qRow {
-    grid-template-columns: 48px 1fr;
-  }
-
-  .qRow {
-    align-items: start;
-  }
-
-  .qRow .rowDesc {
-    grid-column: 2;
   }
 
   /* phones/tablets: the stage sticks under the header, points scroll beneath */
@@ -837,10 +762,6 @@
 
   .hoStepDesc {
     font-size: var(--font-size-md);
-  }
-
-  .rowDesc {
-    grid-column: 2;
   }
 
   /* track turns vertical down the left edge */

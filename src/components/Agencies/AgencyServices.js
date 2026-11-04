@@ -66,7 +66,7 @@ export default function AgencyServices() {
   return (
     <section id="services" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 04 — Services</span>
+        <span className="label">Fig. 03 — Services</span>
         <h2 ref={titleRef} className={styles.title}>
           What I build for your clients.
         </h2>

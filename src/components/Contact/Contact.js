@@ -37,7 +37,7 @@ const VARIANTS = {
     file: "new-enquiry.form",
   },
   agency: {
-    fig: "Fig. 13 — Contact",
+    fig: "Fig. 10 — Contact",
     title: "Let's work",
     titleAccent: "together.",
     sub: "Tell me about your agency and the work you have coming up. I'll reply within 24 hours with questions, a rough timeline and how I'd quote it.",

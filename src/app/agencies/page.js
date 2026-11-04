@@ -1,13 +1,11 @@
 import AgencyHero from "@/components/Agencies/AgencyHero";
-import AgencyWhy from "@/components/Agencies/AgencyWhy";
 import Manifesto from "@/components/Manifesto/Manifesto";
 import Mantra from "@/components/Mantra/Mantra";
 import AgencyServices from "@/components/Agencies/AgencyServices";
-import AgencyHandover from "@/components/Agencies/AgencyHandover";
+// import AgencyHandover from "@/components/Agencies/AgencyHandover"; // hidden for now (see below)
 import AgencyRates from "@/components/Agencies/AgencyRates";
 import AgencyTimelines from "@/components/Agencies/AgencyTimelines";
 import AgencyProcess from "@/components/Agencies/AgencyProcess";
-import AgencyQuestions from "@/components/Agencies/AgencyQuestions";
 import Playground from "@/components/Playground/Playground";
 import Stack from "@/components/Stack/Stack";
 import FAQ from "@/components/FAQ/FAQ";
@@ -30,19 +28,17 @@ export default function AgenciesPage() {
           content={agency.statement}
           more={{ href: "#services", label: "What I build" }}
         />
-        <AgencyWhy />
         <Mantra content={agency.mantra} />
         <AgencyServices />
-        <AgencyHandover />
-        <Stack fig="Fig. 06 — Stack" />
+        {/* <AgencyHandover /> hidden for now; it's labelled Fig. 04, so renumber when it returns */}
+        <Stack fig="Fig. 04 — Stack" />
         <AgencyRates />
         <AgencyTimelines />
         <AgencyProcess />
-        <AgencyQuestions />
-        <Playground fig="Fig. 11 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
+        <Playground fig="Fig. 08 — Lab" title={agency.lab.title} intro={agency.lab.intro} />
         <FAQ
           items={agency.faqs}
-          fig="Fig. 12 — FAQ"
+          fig="Fig. 09 — FAQ"
           title="Agency questions."
           intro="What agency owners and project managers ask before sending the first brief."
         />
