@@ -11,7 +11,7 @@ import BlueprintGrid from "./BlueprintGrid";
 import styles from "./Hero.module.css";
 
 /* Photos that roll through the reel inside the headline */
-const REEL = ["liquid-reveal-hero", "ink-fluid-cursor", "morph-loader", "magnetic-cards", "infinite-marquee", "acronym-intro-hero"]
+const REEL = ["liquid-reveal-hero", "kiln-globe", "ink-fluid-cursor", "second-scoop", "morph-loader", "magnetic-cards"]
   .map((id) => lab.items.find((i) => i.id === id))
   .filter(Boolean)
   .map((i) => ({ src: i.img }));
@@ -274,13 +274,13 @@ export default function Hero() {
               Watch it build
             </ArrowLink>
             <ArrowLink
-              href="#playground"
+              href="#work"
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection("#playground", 0);
+                scrollToSection("#work", 0);
               }}
             >
-              See the experiments
+              See my work
             </ArrowLink>
           </div>
 

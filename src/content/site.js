@@ -33,7 +33,7 @@ export const agencyLine = "For agencies · Fixed quotes in AUD · Invoiced to yo
 export const nav = [
   { label: "Services", href: "#services" },
   { label: "Build", href: "#build" },
-  { label: "Lab", href: "#playground" },
+  { label: "Work", href: "#work" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -92,6 +92,32 @@ export const onePerson = {
 export const signoff = {
   kicker: "Let's build a website that works as hard as you do.",
   title: "Have a project in mind?",
+};
+
+/* Work section. Present these simply as websites I've designed and built:
+   never call them concepts, samples or demos, and never claim they're
+   client sites. Each opens in a new tab. */
+export const work = {
+  title: "Selected work.",
+  intro: "Websites I've designed and built. Open one and have a look around.",
+  items: [
+    {
+      name: "Riptide Physio & Performance",
+      sector: "Physiotherapy",
+      line: "A sports physio site with a film-like homepage, a 3D body map to show where it hurts, and booking in a few taps.",
+      tags: ["Design", "Development", "3D body map", "Online booking"],
+      href: "/work/riptide-physio",
+      img: "/portfolio/work/riptide.webp",
+    },
+    {
+      name: "Stillwater Psychology",
+      sector: "Psychology practice",
+      line: "A calm site for a psychology practice: clear services and fees, Medicare rebates explained, and a free first call booked in a few steps.",
+      tags: ["Design", "Development", "Fees & rebates", "Booking flow"],
+      href: "/work/stillwater-psychology",
+      img: "/portfolio/work/stillwater.webp",
+    },
+  ],
 };
 
 /* "Everything taken care of": what's included, shown on the homepage.
@@ -225,11 +251,25 @@ export const lab = {
     "Most of my client work went out under other brands, so it isn't mine to show. These are the experiments I build between projects: cursors, loaders, heroes and other interactions. Drag one into the scanner to run it.",
   items: [
     {
+      id: "kiln-globe",
+      title: "Kiln Globe",
+      category: "Cards",
+      desc: "A pottery studio's work on a slowly turning globe of photos. Drag to throw it, hover to stop it, click to lift a piece out.",
+      tech: ["3D Projection", "Drag Inertia", "FLIP"],
+    },
+    {
       id: "ascii-glyph-field",
       title: "ASCII Glyph Field",
       category: "Cursor",
       desc: "A word built from thousands of scrambling glyphs that scatter from your cursor, heat up as they move, and morph on every click.",
       tech: ["Canvas", "Physics", "ASCII"],
+    },
+    {
+      id: "second-scoop",
+      title: "Second Scoop",
+      category: "Scroll",
+      desc: "A gelato shop's home page you fly through: scroll drives the camera forward through headlines, photos and scoops.",
+      tech: ["3D Fly-Through", "CSS Perspective", "Scroll Scrub"],
     },
     {
       id: "ink-fluid-cursor",
@@ -239,18 +279,11 @@ export const lab = {
       tech: ["WebGL", "Three.js", "Fluid Sim"],
     },
     {
-      id: "acronym-intro-hero",
-      title: "Acronym Intro Hero",
-      category: "Hero",
-      desc: "A landscape practice's homepage: an acronym intro opens into the hero through a chamfered frame, then sector cards slide over it as you scroll.",
-      tech: ["Preloader", "Sticky", "Lenis"],
-    },
-    {
-      id: "morph-loader",
-      title: "Morph Loader",
-      category: "Loader",
-      desc: "A photographer's intro: a morphing shape flip-books portraits while loading, then blooms into the full-screen hero.",
-      tech: ["SVG", "Path Morph", "Clip Path"],
+      id: "field-notes",
+      title: "Field Notes",
+      category: "Scroll",
+      desc: "A photographer's notes written along an endless wave as you scroll, with polaroids swinging into focus beside the words.",
+      tech: ["Canvas", "Text on Path", "Spring Physics"],
     },
     {
       id: "liquid-reveal-hero",
@@ -260,18 +293,25 @@ export const lab = {
       tech: ["SVG Filter", "Displacement", "Reveal"],
     },
     {
-      id: "guiding-light",
-      title: "Guiding Light",
-      category: "Cursor",
-      desc: "A procedural flame follows your cursor through a dark forest, revealing only what its light touches.",
-      tech: ["Canvas", "Particles", "CSS Mask"],
+      id: "word-lineage",
+      title: "Word Lineage",
+      category: "Text Animation",
+      desc: "A studio's services on one calm line: scroll and the heading rolls to the next service while the sentence rearranges to follow.",
+      tech: ["Scroll Scrub", "Mask Reveal", "Word Morph"],
     },
     {
-      id: "infinite-marquee",
-      title: "Infinite Marquee",
-      category: "Marquee",
-      desc: "A film studio's reel in three seamless rows — hover eases a row to rest, scroll speeds it up, drag scrubs with inertia.",
-      tech: ["Vanilla JS", "Loop", "Drag"],
+      id: "morph-loader",
+      title: "Morph Loader",
+      category: "Loader",
+      desc: "A photographer's intro: a morphing shape flip-books portraits while loading, then blooms into the full-screen hero.",
+      tech: ["SVG", "Path Morph", "Clip Path"],
+    },
+    {
+      id: "thread-clock",
+      title: "Thread Clock",
+      category: "Experimental",
+      desc: "A live clock where every second hangs on its own thread. The threads lag and sway, and your cursor plucks them aside.",
+      tech: ["Canvas", "Spring Physics", "Live Time"],
     },
     {
       id: "magnetic-cards",

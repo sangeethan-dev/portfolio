@@ -16,14 +16,16 @@ const RUN_MQ = "(min-width: 1024px) and (pointer: fine)";
 /* Where each card rests around the scanner (desktop), as % of the stage:
    two staggered columns either side, like trionn's team wall */
 const HOME = [
-  { left: 0.5, top: 3, r: -5 },
-  { left: 14, top: 25, r: 4 },
-  { left: 1.5, top: 50, r: 3 },
-  { left: 14.5, top: 74, r: -4 },
-  { left: 75, top: 5, r: 4 },
-  { left: 87, top: 28, r: -5 },
-  { left: 75.5, top: 52, r: -3 },
-  { left: 86.5, top: 76, r: 4 },
+  { left: 0.5, top: 2, r: -5 },
+  { left: 14, top: 20, r: 4 },
+  { left: 1.5, top: 39, r: 3 },
+  { left: 14.5, top: 57, r: -4 },
+  { left: 0.5, top: 76, r: -2 },
+  { left: 75, top: 3, r: 4 },
+  { left: 87, top: 21, r: -5 },
+  { left: 75.5, top: 40, r: -3 },
+  { left: 86.5, top: 58, r: 4 },
+  { left: 75, top: 77, r: -4 },
 ];
 
 /*
