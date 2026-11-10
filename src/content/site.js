@@ -2,9 +2,11 @@
  * All site copy in one place. Components import from here so FAQs,
  * rates and contact details are never duplicated.
  *
- * Voice: plain, warm, specific. The homepage is a general portfolio with
- * no prices: direct prices go in cold emails, so agencies only ever see
- * their own rates on /agencies. Don't add prices or niche wording to it.
+ * Voice: plain, warm, specific. The homepage presents a web development
+ * consultant & creative developer who designs, builds and looks after the
+ * whole website. It never shows prices or mentions a subscription or
+ * monthly fee: that offer goes in cold emails, and agencies only ever see
+ * their own rates on /agencies.
  */
 
 /* ── Site URL — the ONE place to change when moving to a custom domain.
@@ -29,9 +31,9 @@ export const aud = (n) => `AUD ${n.toLocaleString("en-AU")}`;
 export const agencyLine = "For agencies · Fixed quotes in AUD · Invoiced to you, never your client";
 
 export const nav = [
+  { label: "Services", href: "#services" },
   { label: "Build", href: "#build" },
   { label: "Lab", href: "#playground" },
-  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -52,17 +54,17 @@ export const pageLinks = {
 /* ── Story beats (Statement + Mantra) ────────────────────────────── */
 export const manifesto = {
   statement:
-    "I'm an independent web developer building fast websites with motion people remember.",
-  pillars: ["One person.", "Fixed quote.", "No hand-offs."],
+    "I'm a web development consultant and creative developer. I design, build and look after your website, so you never have to think about the technical side.",
+  pillars: ["One person.", "Fully looked after.", "No hand-offs."],
   mission:
-    "Eight years in, I still do it by hand: clean code, sharp type, and animation that earns its place. You get one person from the first call to launch day, and a site that's easy to run after it.",
+    "You get one person for all of it: the design, the hosting, the updates and the advice when you need it. All you need is your domain name. I'll take care of the rest.",
 };
 
 export const mantra = {
-  label: "Designed, built, shipped",
+  label: "Designed, built, looked after",
   kicker: "Three jobs. One developer.",
-  words: ["Designed", "Built", "Shipped"],
-  caption: "From first sketch to launch day",
+  words: ["Designed", "Built", "Looked after"],
+  caption: "From first sketch to every update after",
 };
 
 /* "One person. No chain." section. Don't attack agencies here: they're
@@ -92,6 +94,21 @@ export const signoff = {
   title: "Have a project in mind?",
 };
 
+/* "Everything taken care of": what's included, shown on the homepage.
+   No price and no "monthly" or "subscription" wording here. */
+export const services = {
+  title: "Everything taken care of.", // keeps "care of." on one line
+  intro: "From the first design to every update after launch, I handle the technical side, so you can get on with running your business.",
+  items: [
+    { title: "Custom website design", desc: "A professional, mobile-friendly website designed around your business." },
+    { title: "Hosting & security", desc: "Australian hosting, SSL, security monitoring and regular backups." },
+    { title: "Ongoing maintenance", desc: "WordPress, plugin and software updates, so everything keeps running smoothly." },
+    { title: "Online bookings", desc: "Connected to the booking system you already use, where it applies." },
+    { title: "Local search", desc: "Help with your Google Business Profile and showing up in local searches." },
+    { title: "Easy updates", desc: "Your own login to change text, images and other content whenever you need." },
+  ],
+};
+
 /* Options for the contact form's service select */
 export const serviceOptions = [
   "New website",
@@ -100,6 +117,7 @@ export const serviceOptions = [
   "Landing page",
   "Fix something on my website",
   "Looking after my website",
+  "Help with Google and local search",
   "Not sure yet",
 ];
 
@@ -122,7 +140,7 @@ export const buildSteps = [
   {
     num: "04",
     title: "Live",
-    desc: "We test it, launch it, and hand it over. I can stay on to keep it updated, or leave you with everything you need.",
+    desc: "We test it and launch it. After that I look after the hosting, security and updates, so it keeps running smoothly.",
   },
 ];
 
@@ -133,7 +151,7 @@ export const stats = [
 ];
 
 /* Foot of the mobile menu */
-export const menuLine = `Independent web developer · ${stats[0].value} years · ${stats[1].value}${stats[1].suffix} projects`;
+export const menuLine = `Web development consultant · Creative developer · ${stats[0].value} years`;
 
 /* ── Stack section ────────────────────────────────────────────────
    live: true = running on this site right now (gets the ● marker).
@@ -267,10 +285,10 @@ export const lab = {
 
 export const faqs = [
   {
-    q: "What kind of projects do you take on?",
+    q: "What do you take care of?",
     a: [
-      "Websites, online stores and landing pages, mostly in Next.js, WordPress, Webflow and Shopify.",
-      "I can design it too, or build from designs you already have. If you want motion and interaction, that's the part I enjoy most.",
+      "Everything to do with the website: the design, hosting, security, updates and the technical setup.",
+      "All you need is your domain name. I'll take care of the rest.",
     ],
   },
   {
@@ -281,11 +299,22 @@ export const faqs = [
     ],
   },
   {
-    q: "How much does a website cost?",
+    q: "How much does it cost?",
     a: [
-      "It depends on the size of the site and what it needs to do, so I don't publish one price.",
-      "Tell me what you have in mind and you'll get a fixed quote before I start. No hourly surprises.",
+      "It depends on what your business needs, so I don't publish one price.",
+      "Tell me a bit about it and I'll suggest the simplest option, with the full cost explained up front.",
     ],
+  },
+  {
+    q: "Can I update the website myself?",
+    a: [
+      "Yes. You get your own login to change text, images and other content whenever you need.",
+      "Or send the change to me and I'll do it.",
+    ],
+  },
+  {
+    q: "Will it work with my booking system?",
+    a: ["Yes, where it can. I'll connect it to the booking system you already use, so clients can book in a couple of taps."],
   },
   {
     q: "I already have a website. Can you redesign it?",
@@ -295,24 +324,10 @@ export const faqs = [
     ],
   },
   {
-    q: "Do I need to write all the content?",
-    a: [
-      "No. Send me the basics: what you do and who it's for.",
-      "I'll turn that into clear pages, and nothing goes live until you've approved every word.",
-    ],
-  },
-  {
     q: "How long does it take?",
     a: [
       "Usually 2 to 4 weeks from our first call to launch.",
       "The biggest factor is how quickly content and feedback come back to me.",
-    ],
-  },
-  {
-    q: "What happens after launch?",
-    a: [
-      "You own the site and everything in it, and I make sure you can update it yourself.",
-      "If you'd rather not think about it, I can look after updates, backups and small changes for you.",
     ],
   },
   {

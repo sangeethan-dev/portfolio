@@ -44,7 +44,7 @@ const HOME = [
  * screenshot only (plus the link to open the experiment).
  */
 /* Reused on /agencies with its own label and intro */
-export default function Playground({ fig = "Fig. 04 — Lab", title = lab.title, intro = lab.intro }) {
+export default function Playground({ fig = "Fig. 05 — Lab", title = lab.title, intro = lab.intro }) {
   const rootRef = useRef(null);
   const stageRef = useRef(null);
   const scannerRef = useRef(null);

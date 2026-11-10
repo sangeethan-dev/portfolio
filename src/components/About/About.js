@@ -103,10 +103,10 @@ export default function About() {
         <div className={styles.copy}>
           <span className="label">Fig. 07 — About</span>
           <p ref={statementRef} className={styles.statement}>
-            Hi, I&apos;m Sangeethan. I&apos;m a creative web developer passionate about combining animation,
-            storytelling and precision to build memorable digital experiences. I&apos;ve been building websites
-            for eight years, starting at a digital marketing agency. You&apos;ll work with me directly, from the
-            first call to launch day.
+            Hi, I&apos;m Sangeethan, a web development consultant and creative developer. I&apos;m passionate
+            about combining animation, storytelling and precision to build memorable digital experiences.
+            I&apos;ve been building websites for eight years, starting at a digital marketing agency, and
+            you&apos;ll work with me directly, from the first call to every update after launch.
           </p>
 
           <dl className={styles.stats}>

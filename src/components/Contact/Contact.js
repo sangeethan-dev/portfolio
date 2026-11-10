@@ -25,11 +25,11 @@ const VARIANTS = {
     fig: "Fig. 09 — Contact",
     title: "Let's build",
     titleAccent: "yours.",
-    sub: "Tell me about your project and what you want from it. I'll get back to you within 24 hours with honest advice and what I'd suggest next.",
+    sub: "Tell me about your business and what you need from your website. I'll get back to you within 24 hours with honest advice and what I'd suggest next.",
     serviceLabel: "What do you need?",
     servicePlaceholder: "Choose one (optional)",
     options: serviceOptions,
-    messageLabel: "Tell me about the project",
+    messageLabel: "Tell me about your business",
     messagePlaceholder:
       "What you do, who it's for, and what you'd like the website to do. A new site? A redesign? Something that moves?",
     emailPlaceholder: "jane@yourbusiness.com.au",

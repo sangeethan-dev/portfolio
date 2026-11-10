@@ -1,0 +1,214 @@
+.section {
+  position: relative;
+  padding: clamp(100px, 16vh, 180px) 0;
+  background: var(--rt-bar);
+}
+
+.wrap {
+  max-width: var(--rt-max);
+  margin: 0 auto;
+  padding: 0 var(--rt-gutter);
+}
+
+.label {
+  display: flex;
+  justify-content: center;
+}
+
+.titleCard {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  margin: clamp(48px, 8vh, 90px) 0 clamp(56px, 10vh, 110px);
+  text-align: center;
+}
+
+
+.title {
+  font-size: var(--rt-t-mega);
+  letter-spacing: 0.04em;
+}
+
+.cast {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+}
+
+.photoBtn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 18px;
+}
+
+.photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--rt-navy-2);
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.12) brightness(0.88);
+  transition: filter 0.5s ease;
+}
+
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, var(--rt-scrim) 100%);
+}
+
+.photoBtn:hover .photo img,
+.photoBtn:focus-visible .photo img {
+  filter: grayscale(0) contrast(1.04) brightness(0.95) saturate(0.85);
+}
+
+.role {
+  font-size: var(--rt-t-micro);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rt-coral);
+}
+
+.name {
+  margin-top: 8px;
+  font-size: clamp(1.9rem, 2.6vw, 2.6rem);
+}
+
+.spec {
+  margin: 8px 0 14px;
+  font-size: 0.94rem;
+  color: var(--rt-fg-mute);
+}
+
+.also {
+  display: grid;
+  gap: 10px;
+  max-width: 640px;
+  margin: clamp(64px, 10vh, 110px) auto 0;
+  text-align: center;
+}
+
+.alsoLabel {
+  margin-bottom: 8px;
+  font-family: var(--rt-serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--rt-fg-mute);
+}
+
+.alsoRow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.alsoRow span {
+  font-size: 0.9rem;
+  color: var(--rt-fg-mute);
+  text-align: left;
+}
+
+.alsoRow i {
+  flex: 1;
+  border-bottom: 1px dotted var(--rt-line-strong);
+}
+
+.alsoRow strong {
+  font-family: var(--rt-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Bio drawer */
+.bio {
+  display: grid;
+  justify-items: start;
+}
+
+.bioPhoto {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  margin: 18px 0 24px;
+  overflow: hidden;
+  border-radius: var(--rt-radius-lg);
+}
+
+.bioPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85);
+}
+
+.bioName {
+  margin-top: 8px;
+  font-size: clamp(2.6rem, 6vw, 3.8rem);
+}
+
+.bioSpec {
+  margin-top: 8px;
+  font-family: var(--rt-serif);
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.bioText {
+  margin-top: 16px;
+  color: var(--rt-fg-mute);
+}
+
+.quals {
+  display: grid;
+  width: 100%;
+  margin: 24px 0 28px;
+  list-style: none;
+  border-top: 1px solid var(--rt-line);
+}
+
+.quals li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rt-line);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .cast {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 48px;
+  }
+}
+
+@media (max-width: 520px) {
+  .cast {
+    grid-template-columns: 1fr;
+  }
+
+  .alsoRow {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px 10px;
+  }
+
+  .alsoRow i {
+    display: none;
+  }
+}

@@ -1,0 +1,19 @@
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--rt-sans);
+  font-size: var(--rt-t-micro);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rt-fg);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rt-coral);
+  box-shadow: 0 0 0 4px var(--rt-coral-wash);
+}

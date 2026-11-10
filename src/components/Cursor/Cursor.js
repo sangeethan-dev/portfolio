@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { gsap, MQ } from "@/lib/gsap";
+import { isStandalone } from "@/lib/standalone";
 import styles from "./Cursor.module.css";
 
 /*
@@ -10,7 +12,7 @@ import styles from "./Cursor.module.css";
  * Hovering anything with data-cursor="Label" swells into a labelled pill;
  * plain links/buttons get a softer grow.
  */
-export default function Cursor() {
+function SiteCursor() {
   const rootRef = useRef(null);
   const coordsRef = useRef(null);
   const blobRef = useRef(null);
@@ -125,4 +127,11 @@ export default function Cursor() {
       </span>
     </div>
   );
+}
+
+/* Standalone /work/… sites bring their own chrome */
+export default function Cursor() {
+  const pathname = usePathname();
+  if (isStandalone(pathname)) return null;
+  return <SiteCursor />;
 }

@@ -312,11 +312,11 @@ export default function Hero() {
                 {stats[0].value}
                 <small>yrs</small>
               </span>
-              <span className={styles.plateText}>Design, code and motion, from one person.</span>
+              <span className={styles.plateText}>Web development consultant & creative developer.</span>
             </div>
             <p className={styles.sideNote}>
-              For brands, businesses and the teams behind them. Fast on every screen, and easy to run after
-              launch.
+              I design, build and look after your website: hosting, security, updates and all. All you need is
+              your domain name.
             </p>
           </div>
         </div>

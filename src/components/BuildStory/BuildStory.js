@@ -236,7 +236,7 @@ export default function BuildStory() {
         <div className={`container ${styles.layout}`}>
           {/* ── Captions ─────────────────────────────────────────── */}
           <aside className={styles.captions}>
-            <span className="label">Fig. 03 — The build</span>
+            <span className="label">Fig. 04 — The build</span>
 
             <div className={styles.captionBody}>
               <div className={styles.rail} aria-hidden="true">

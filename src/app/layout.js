@@ -27,9 +27,9 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const title = "Sangeethan — Independent Web Developer";
+const title = "Sangeethan — Web Development Consultant & Creative Developer";
 const description =
-  "Independent web developer with 8 years and 50+ projects behind me. Fast websites with motion people remember, built in Next.js, WordPress, Webflow and Shopify.";
+  "Web development consultant and creative developer. I design, build and look after websites for businesses: hosting, security, updates, bookings and local search, all taken care of.";
 
 /* Pages override title / description / alternates / openGraph.url;
    relative URLs resolve against metadataBase (siteUrl in content/site.js). */

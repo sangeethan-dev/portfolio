@@ -11,7 +11,13 @@ import styles from "./Agencies.module.css";
  * Rows rise in on scroll; on hover a row floods with ink from the bottom and
  * its arrow swings round.
  */
-export default function AgencyServices() {
+/* Reused on the homepage with its own list and copy */
+export default function AgencyServices({
+  fig = "Fig. 03 — Services",
+  title = "What I build for your clients.",
+  intro = "The work agencies send me most. If it's a website and it's on your client list, I can probably take it off your hands.",
+  items = agency.services,
+}) {
   const rootRef = useRef(null);
   const titleRef = useSplitReveal({ type: "lines" });
 
@@ -66,18 +72,15 @@ export default function AgencyServices() {
   return (
     <section id="services" ref={rootRef} className={styles.section} data-theme-section="live">
       <div className={`container ${styles.head}`}>
-        <span className="label">Fig. 03 — Services</span>
+        <span className="label">{fig}</span>
         <h2 ref={titleRef} className={styles.title}>
-          What I build for your clients.
+          {title}
         </h2>
-        <p className={styles.intro}>
-          The work agencies send me most. If it&apos;s a website and it&apos;s on your client list, I can probably take
-          it off your hands.
-        </p>
+        <p className={styles.intro}>{intro}</p>
       </div>
 
       <ol className={`container ${styles.services}`}>
-        {agency.services.map((s, i) => (
+        {items.map((s, i) => (
           <li key={s.title} className={styles.service} data-service>
             <span className={styles.serviceFill} data-fill aria-hidden="true" />
             <span className={styles.serviceNum} data-cell>

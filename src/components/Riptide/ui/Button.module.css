@@ -1,0 +1,75 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 999px;
+  font-family: var(--rt-sans);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.md {
+  min-height: 52px;
+  padding: 0 24px 0 26px;
+  font-size: 0.95rem;
+}
+
+.sm {
+  min-height: 42px;
+  padding: 0 16px 0 18px;
+  font-size: 0.85rem;
+  gap: 8px;
+}
+
+.lg {
+  min-height: 62px;
+  padding: 0 30px 0 34px;
+  font-size: 1.05rem;
+}
+
+.icon {
+  display: inline-flex;
+}
+
+.solid {
+  background: var(--rt-coral);
+  color: var(--rt-coral-ink);
+}
+
+.solid:hover {
+  background: var(--rt-coral-hi);
+}
+
+.ghost {
+  border: 1px solid var(--rt-line-strong);
+  color: var(--rt-fg);
+  background: var(--rt-scrim-soft);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ghost:hover {
+  border-color: var(--rt-fg);
+  background: var(--rt-fg);
+  color: var(--rt-ink);
+}
+
+.text {
+  min-height: 0;
+  padding: 4px 0;
+  border-radius: 0;
+  color: var(--rt-fg);
+  border-bottom: 1px solid var(--rt-line-strong);
+}
+
+.text:hover {
+  color: var(--rt-coral);
+  border-color: var(--rt-coral);
+}

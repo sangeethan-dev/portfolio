@@ -13,7 +13,7 @@ import styles from "./Stack.module.css";
  * ember, and the row's note scrambles into what I use it for. Tools marked
  * with a dot are running on this page right now.
  */
-export default function Stack({ fig = "Fig. 05 — Stack" }) {
+export default function Stack({ fig = "Fig. 06 — Stack" }) {
   const rootRef = useRef(null);
   const noteRefs = useRef([]);
   const titleRef = useSplitReveal({ type: "lines" });

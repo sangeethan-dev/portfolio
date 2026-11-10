@@ -1,0 +1,175 @@
+/*
+ * Riptide Physio & Performance — design tokens + base.
+ * The only file with raw colour values for this site. Tokens live on <html>
+ * (only while a Riptide page is mounted) so overscroll, body and portals all
+ * see them; everything is prefixed --rt- so it never meets the portfolio's.
+ */
+:global(html):has(.root) {
+  /* Deep ocean → near black */
+  --rt-ink: #04070d;
+  --rt-navy: #07101d;
+  --rt-navy-2: #0b1828;
+  --rt-navy-3: #122339;
+  --rt-steel: #1d3350;
+
+  /* Bone type */
+  --rt-fg: #f2ece3;
+  --rt-fg-mute: color-mix(in srgb, var(--rt-fg) 66%, transparent);
+  --rt-fg-faint: color-mix(in srgb, var(--rt-fg) 42%, transparent);
+  --rt-line: color-mix(in srgb, var(--rt-fg) 14%, transparent);
+  --rt-line-strong: color-mix(in srgb, var(--rt-fg) 28%, transparent);
+
+  /* One accent: sunrise coral */
+  --rt-coral: #ff6f4f;
+  --rt-coral-hi: #ff8b6f;
+  --rt-coral-ink: #1c0904;
+  --rt-coral-wash: color-mix(in srgb, var(--rt-coral) 14%, transparent);
+  --rt-gold: #f5b77a;
+
+  /* 3D body map: skin, light and eye colours (read by BodyScene) */
+  --rt-skin: #ad7b66;
+  --rt-skin-blush: #c0614c;
+  --rt-skin-deep: #5c2f22;
+  --rt-skin-sheen: #ffb39a;
+  --rt-light-key: #fff0e2;
+  --rt-light-cool: #a9c1e0;
+  --rt-iris: #3a2619;
+
+  /* Film */
+  --rt-bar: #000000;
+  --rt-scrim: color-mix(in srgb, var(--rt-ink) 78%, transparent);
+  --rt-scrim-soft: color-mix(in srgb, var(--rt-ink) 38%, transparent);
+  --rt-glass: color-mix(in srgb, var(--rt-navy) 76%, transparent);
+  --rt-shadow: color-mix(in srgb, var(--rt-bar) 55%, transparent);
+  --rt-white: #ffffff;
+
+  /* Layout */
+  --rt-gutter: clamp(16px, 4.2vw, 64px);
+  --rt-max: 1480px;
+  --rt-nav-h: 68px;
+  --rt-radius: 4px;
+  --rt-radius-lg: 14px;
+
+  /* Type scale */
+  --rt-t-mega: clamp(3.4rem, min(12.5vw, 17vh), 13.5rem);
+  --rt-t-hero: clamp(3rem, min(9.6vw, 13vh), 9.6rem);
+  --rt-t-h2: clamp(2.6rem, min(6.6vw, 11vh), 6.6rem);
+  --rt-t-h3: clamp(1.9rem, 3.4vw, 3.2rem);
+  --rt-t-lead: clamp(1.08rem, 1.45vw, 1.38rem);
+  --rt-t-body: 1rem;
+  --rt-t-small: 0.875rem;
+  --rt-t-micro: 0.72rem;
+
+  /* Motion */
+  --rt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layers */
+  --rt-z-nav: 60;
+  --rt-z-sticky: 55;
+  --rt-z-grain: 70;
+  --rt-z-drawer: 90;
+
+  background-color: var(--rt-ink);
+}
+
+@media (max-width: 767px) {
+  :global(html):has(.root) {
+    --rt-nav-h: 60px;
+  }
+}
+
+:global(body):has(.root) {
+  background-color: var(--rt-ink);
+}
+
+/* The portfolio's own grain sits on body::before; Riptide brings its own */
+:global(body):has(.root)::before {
+  display: none;
+}
+
+.root {
+  --rt-display: var(--font-rt-display), "Arial Narrow", sans-serif;
+  --rt-serif: var(--font-rt-serif), Georgia, serif;
+  --rt-sans: var(--font-rt-sans), system-ui, sans-serif;
+
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--rt-ink);
+  color: var(--rt-fg);
+  font-family: var(--rt-sans);
+  font-size: var(--rt-t-body);
+  line-height: 1.6;
+  font-feature-settings: "ss01";
+  cursor: auto;
+}
+
+.root :where(a, button, summary, label, [role="button"]) {
+  cursor: pointer;
+}
+
+.root a[href^="tel:"] {
+  white-space: nowrap;
+}
+
+.root :where(input, textarea) {
+  cursor: text;
+}
+
+.root :where(h1, h2, h3, h4) {
+  font-family: var(--rt-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+.root :where(em) {
+  font-family: var(--rt-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.root ::selection {
+  background: var(--rt-coral);
+  color: var(--rt-coral-ink);
+}
+
+.root :focus-visible {
+  outline: 2px solid var(--rt-coral);
+  outline-offset: 3px;
+}
+
+/* Shared helpers other Riptide modules compose */
+.wrap {
+  width: 100%;
+  max-width: var(--rt-max);
+  margin: 0 auto;
+  padding: 0 var(--rt-gutter);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.skip {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: calc(var(--rt-z-drawer) + 1);
+  padding: 10px 16px;
+  background: var(--rt-coral);
+  color: var(--rt-coral-ink);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+
+.skip:focus {
+  transform: none;
+}

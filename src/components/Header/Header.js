@@ -8,6 +8,7 @@ import useSectionNav, { sectionHref } from "@/lib/lenis/useSectionNav";
 import useScramble from "@/lib/gsap/useScramble";
 import useMagnetic from "@/lib/gsap/useMagnetic";
 import { nav, agencyNav, menuLine, agencyLine } from "@/content/site";
+import { isStandalone } from "@/lib/standalone";
 import styles from "./Header.module.css";
 
 function NavLink({ label, href, pathname, onNavigate }) {
@@ -19,7 +20,7 @@ function NavLink({ label, href, pathname, onNavigate }) {
   );
 }
 
-export default function Header() {
+function SiteHeader() {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const menuTl = useRef(null);
@@ -181,4 +182,11 @@ export default function Header() {
       </div>
     </>
   );
+}
+
+/* Standalone /work/… sites bring their own chrome */
+export default function Header() {
+  const pathname = usePathname();
+  if (isStandalone(pathname)) return null;
+  return <SiteHeader />;
 }
